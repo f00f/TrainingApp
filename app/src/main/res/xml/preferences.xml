@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <de.uwr1.training.TrimmedEditTextPreference
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:key="username"
+        android:title="@string/pref_username_title"
+        android:hint="@string/pref_username_title"
+        android:defaultValue="@string/pref_username_default"
+        android:summary="@string/pref_username_summary_default"
+        android:inputType="textPersonName"
+        android:persistent="true" />
+    <ListPreference
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:key="club"
+        android:title="@string/pref_club_title"
+        android:defaultValue="@string/pref_club_default"
+        android:entries="@array/pref_club_entries"
+        android:entryValues="@array/pref_club_entryValues"
+        android:summary="@string/pref_club_summary_default"
+        android:persistent="true" />
+</PreferenceScreen>
