@@ -20,7 +20,6 @@ import java.util.Random;
 
 
 /* TODO
- * + Add app icon
  * + Add version auto-inc
  * + Make cache persistent
  * + Add link to Einteilung (or software)
@@ -199,7 +198,7 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
 
         Log.d("UWR_Training::ShowTraining::render", "Rendering new data.");
 
-        boolean hatZugesagt = Training.hatZugesagt(Config.getUsername(this));
+        boolean hatZugesagt = Training.hatZugesagt();
         boolean hatAbgesagt = false;
         Button btnYes = (Button) findViewById(R.id.buttonYes);
         Button btnNo = (Button) findViewById(R.id.buttonNo);
@@ -208,8 +207,8 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
         if (hatZugesagt) {
             btnNo.setBackgroundColor(getResources().getColor(android.R.color.secondary_text_light));
             btnNo.setTextColor(getResources().getColor(android.R.color.primary_text_dark));
-        }else {
-            hatAbgesagt = Training.hatAbgesagt(Config.getUsername(this));
+        } else {
+            hatAbgesagt = Training.hatAbgesagt();
             if (hatAbgesagt) {
                 btnYes.setBackgroundColor(getResources().getColor(android.R.color.secondary_text_light));
                 btnYes.setTextColor(getResources().getColor(android.R.color.primary_text_dark));

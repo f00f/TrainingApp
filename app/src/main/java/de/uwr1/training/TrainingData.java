@@ -65,7 +65,7 @@ public class TrainingData {
     // check if the training data is for a session in the past
     public boolean isExpired() {
         long now = new Date().getTime();
-        return now > Expires;
+        return now > (this.Expires * 1000);
     }
 
     // Load data from several JSON strings

@@ -19,6 +19,8 @@ public class Training implements OnApiCallCompletedListener {
     private static HashMap<String, TrainingData> cache = new HashMap<String, TrainingData>();
     private static final int CACHE_MAX_AGE = 5 * 60; // cache lifetime in seconds
 
+    private boolean serverRefreshRequested = false;
+
     // PUBLIC METHODS
 
     private Training() {}
@@ -52,10 +54,13 @@ public class Training implements OnApiCallCompletedListener {
         }
 
         if (Training.data.isExpired()) {
-            // issue reload, data reload will happen in callbacks
             Training.data = null;
-            url = Config.getURL(context, Config.KEY_REFRESH_URL);
-            new API_CALL(new Training()).execute(url);
+            if (!serverRefreshRequested) {
+                // issue server refresh, data reload will happen in callbacks
+                RequestServerRefresh();
+            } else {
+                serverRefreshRequested = false;
+            }
             return;
         }
 
@@ -113,7 +118,7 @@ public class Training implements OnApiCallCompletedListener {
         return data.getNumNixsager();
     }
 
-    // check whether a user will not participate
+    // check whether the current user will not participate
     public static boolean hatAbgesagt() {
         return hatAbgesagt(Config.getUsername(context));
     }
@@ -122,7 +127,7 @@ public class Training implements OnApiCallCompletedListener {
         return data.hatAbgesagt(username);
     }
 
-    // check whether a user will participate
+    // check whether the current user will participate
     public static boolean hatZugesagt() {
         return hatZugesagt(Config.getUsername(context));
     }
@@ -142,6 +147,12 @@ public class Training implements OnApiCallCompletedListener {
 
     // PRIVATE METHODS
 
+    private void RequestServerRefresh() {
+        String url = Config.getURL(context, Config.KEY_REFRESH_URL);
+        serverRefreshRequested = true;
+        new API_CALL(this).execute(url);
+    }
+
     // Load data from web, cached
     private static void loadTrainingDataCached(String url, boolean forceReload) {
         if (!forceReload) {
@@ -150,7 +161,7 @@ public class Training implements OnApiCallCompletedListener {
                 long now = new Date().getTime();
                 long age = now - Training.data.Timestamp;
                 if (age < CACHE_MAX_AGE * 1000) {
-                    if ((Training.data.Expires * 1000) > now){
+                    if (!Training.data.isExpired()){
                         Log.w("UWR_Training::Training::loadTrainingDataCached", "Found valid cache entry.");
                         onTrainingDataLoadedListener.onTrainingDataLoaded();
                         return;
