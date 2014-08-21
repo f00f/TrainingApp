@@ -9,9 +9,9 @@
     android:orientation="vertical"
     tools:context=".ShowTraining">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout android:id="@+id/view_loading"
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/view_loading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -37,174 +37,188 @@
 
     </LinearLayout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/view_show_overview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".OverviewShowData">
+    <ScrollView android:id="@+id/view_show_overview"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
-        <TextView
-            android:text="@string/title_meta"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/training_meta"
-            android:text="@string/lbl_meta_default"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold" />
-
-        <RelativeLayout
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context=".OverviewShowData">
 
             <TextView
-                android:id="@+id/others"
-                android:text="@string/lbl_others"
+                android:text="@string/title_general_info"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/sum_zu"
-                style="@android:style/TextAppearance.Medium"
-                />
+                android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/sum_zu"
-                android:text="--"
+                android:id="@+id/training_general_info"
+                android:text="@string/lbl_general_info_default"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@+id/sep_sum"
-                style="@android:style/TextAppearance.Medium"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:id="@+id/others"
+                    android:text="@string/lbl_others"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/sum_zu"
+                    style="@android:style/TextAppearance.Medium"
+                    />
+
+                <TextView
+                    android:id="@+id/sum_zu"
+                    android:text="--"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/sep_sum"
+                    style="@android:style/TextAppearance.Medium"
+                    android:textColor="@color/uwr_green" />
+
+                <TextView
+                    android:id="@+id/sep_sum"
+                    android:text=" / "
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/sum_ab"
+                    android:layout_alignBaseline="@+id/sum_zu"
+                    style="@android:style/TextAppearance.Medium" />
+
+                <TextView
+                    android:id="@+id/sum_ab"
+                    android:text="--"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignBaseline="@+id/sum_zu"
+                    style="@android:style/TextAppearance.Medium"
+                    android:textColor="@color/uwr_red" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/you"
+                    android:text="@string/lbl_you"
+                    style="@android:style/TextAppearance.Large"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignBaseline="@+id/buttonYes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/yes"
+                    android:id="@+id/buttonYes"
+                    android:background="@color/uwr_green"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/buttonNo"
+                    android:onClick="onYesNoClick" />
+
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no"
+                    android:id="@+id/buttonNo"
+                    android:background="@color/uwr_red"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:onClick="onYesNoClick" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/view_reason"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp">
+                <TextView
+                    android:id="@+id/title_reason"
+                    android:text="@string/lbl_comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignBaseline="@+id/edit_comment" />
+                <EditText
+                    android:id="@+id/edit_comment"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/title_reason" />
+            </RelativeLayout>
+
+            <TextView
+                android:text="@string/title_zusagen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@android:style/TextAppearance.Large"
+                android:layout_marginTop="15dp"
+                android:autoText="false"
                 android:textColor="@color/uwr_green" />
 
             <TextView
-                android:id="@+id/sep_sum"
-                android:text=" / "
+                android:id="@+id/training_zu"
+                android:text="---"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toLeftOf="@+id/sum_ab"
-                android:layout_alignBaseline="@+id/sum_zu"
-                style="@android:style/TextAppearance.Medium" />
+                android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/sum_ab"
-                android:text="--"
+                android:text="@string/title_absagen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignBaseline="@+id/sum_zu"
                 style="@android:style/TextAppearance.Medium"
+                android:layout_marginTop="15dp"
                 android:textColor="@color/uwr_red" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
 
             <TextView
-                android:id="@+id/you"
-                android:text="@string/lbl_you"
-                style="@android:style/TextAppearance.Large"
-                android:layout_alignParentLeft="true"
-                android:layout_alignBaseline="@+id/buttonYes"
+                android:id="@+id/training_ab"
+                android:text="---"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
+                android:layout_height="wrap_content" />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:id="@+id/buttonYes"
-                android:background="@color/uwr_green"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/buttonNo"
-                android:onClick="onYesNoClick" />
-
-            <Button
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:id="@+id/buttonNo"
-                android:background="@color/uwr_red"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:onClick="onYesNoClick" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/view_reason"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dp">
             <TextView
-                android:id="@+id/title_reason"
-                android:text="@string/lbl_comment"
+                android:id="@+id/training_stats"
+                android:text="Stats: ---"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignBaseline="@+id/edit_comment" />
-            <EditText
-                android:id="@+id/edit_comment"
-                android:layout_width="fill_parent"
+                android:layout_marginTop="15dp" />
+
+            <TextView
+                android:text="@string/title_nixsagen"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/title_reason" />
-        </RelativeLayout>
+                style="@android:style/TextAppearance.Medium"
+                android:layout_marginTop="15dp"
+                android:textColor="@android:color/secondary_text_light" />
 
-        <TextView
-            android:text="@string/title_zusagen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@android:style/TextAppearance.Large"
-            android:layout_marginTop="15dp"
-            android:autoText="false"
-            android:textColor="@color/uwr_green" />
+            <TextView
+                android:id="@+id/training_nix"
+                android:text="Gibt's noch net :-("
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/secondary_text_light"
+                android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/training_zu"
-            android:text="---"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <ListView
+                android:id="@+id/training_nix_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        <TextView
-            android:text="@string/title_absagen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@android:style/TextAppearance.Medium"
-            android:layout_marginTop="15dp"
-            android:textColor="@color/uwr_red" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/training_ab"
-            android:text="---"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:text="@string/title_nixsagen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@android:style/TextAppearance.Medium"
-            android:layout_marginTop="15dp"
-            android:textColor="@android:color/secondary_text_light" />
-
-        <TextView
-            android:id="@+id/training_nix"
-            android:text="Gibt's noch net :-("
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/secondary_text_light"
-            android:visibility="gone" />
-
-        <ListView
-            android:id="@+id/training_nix_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
+    </ScrollView>
 </LinearLayout>
