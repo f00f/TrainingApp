@@ -2,7 +2,9 @@ package de.uwr1.training;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 
 import java.io.UnsupportedEncodingException;
@@ -15,7 +17,6 @@ import java.util.Map;
  * Created by f00f on 03.07.2014.
  */
 public class Config {
-    public static final String KEY_VERSION = "VERSION";
     public static final String KEY_BASE_URL = "BASE_URL";
     public static final String KEY_JSON_BASE_URL = "JSON_BASE_URL";
     public static final String KEY_JSON_URL = "JSON_URL";
@@ -29,7 +30,6 @@ public class Config {
     private static final Map<String, String> APP_CONFIG;
     static {
         Map<String, String> aMap = new HashMap<String, String>();
-        aMap.put(KEY_VERSION, "1");
         aMap.put(KEY_BASE_URL, "http://%club_id%.uwr1.de/training/");
         aMap.put(KEY_JSON_BASE_URL, aMap.get(KEY_BASE_URL) + "json/");
         aMap.put(KEY_JSON_URL, aMap.get(KEY_JSON_BASE_URL) + "training.json");
@@ -78,7 +78,17 @@ public class Config {
     public static String getUsername(Context ctx) {
         return Config.getUserConfigValue(ctx, SettingsActivity.KEY_PREF_USERNAME).trim();
     }
-    public static String getVersion() {
-        return Config.getAppConfigValue(KEY_VERSION);
+    public static String getVersion(Fragment f) {
+        return getVersion(f.getActivity());
+    }
+    public static String getVersion(Context ctx) {
+        String myVersionName = "not available"; // initialize String
+
+        try {
+            myVersionName = ctx.getPackageManager().getPackageInfo(ctx.getPackageName(), 0).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return myVersionName;
     }
 }
