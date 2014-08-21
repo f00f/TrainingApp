@@ -1,6 +1,24 @@
 apply plugin: 'android'
 
 android {
+    final Console console = System.console();
+    if (console != null) {
+        // Building from console
+        signingConfigs {
+            release {
+                storeFile file(System.console().readLine("\n\$ Enter keystore path: "))
+                storePassword new String(System.console().readPassword("\n\$ Enter keystore password: "))
+                keyAlias System.console().readLine("\n\$ Enter key alias: ")
+                keyPassword new String(System.console().readPassword("\n\$ Enter key password: "))
+            }
+        }
+    } else {
+        // Building from IDE's "Run" button
+        signingConfigs {
+            release {
+            }
+        }
+    }
     compileSdkVersion 17
     buildToolsVersion '19.1.0'
     defaultConfig {
@@ -12,8 +30,9 @@ android {
     }
     buildTypes {
         release {
-            runProguard false
+            runProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     productFlavors {
