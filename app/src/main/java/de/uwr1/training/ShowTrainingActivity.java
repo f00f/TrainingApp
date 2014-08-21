@@ -18,21 +18,6 @@ import android.widget.Toast;
 
 import java.util.Random;
 
-
-/* TODO
- * + Add version auto-inc
- * + Make cache persistent
- * + Add link to Einteilung (or software)
- * + Add Badbild (PHOTO_[THUMB_]URL, replace ${location}, temp replace path in JSON pic.thumb/full)
- * + Show Temp
- * + Show stats: TimeStamp, Updated, etc.
- * + Nachfragen, x Std vorm Training nachfragen: hey, was is los?
- * + Add Nichtsgesagt list / load all-players JSON / an-/abmelden von anderen
- * + Push-Notifications (mit ja/nein)
- * + Toasts abwechslungsreich machen
- * + Toasts erst zeigen, nachdem der Async call fertig ist.
- * + Tilman: Fahrplanung, Statistik-Tool
- */
 public class ShowTrainingActivity extends ActionBarActivity implements OnTrainingDataLoadedListener, OnApiCallCompletedListener {
     private static final String[] othersTexts = new String[] {
             "Die Anderen:",
@@ -104,7 +89,7 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
     private void ChangeButtonTexts() {
         Random rand = new Random();
         int padding = 16;
-        int maxButtonTextIndex = Math.min(7, buttonTexts.length);
+        int maxButtonTextIndex = Math.min(10, buttonTexts.length);
         buttonTextIndex = rand.nextInt(maxButtonTextIndex);
         Button btnYes = (Button)findViewById(R.id.buttonYes);
         Button btnNo = (Button)findViewById(R.id.buttonNo);
