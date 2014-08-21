@@ -39,12 +39,13 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
             "Die Gang:",
     };
     private static final String[][] buttonTexts = new String[][] {
+            {"Zusage", "Absage"},
+            {"Zu", "Ab"},
             {"Yo", "No"},
             {"Yay", "Nay"},
             {"Ja", "Nein"},
             {"Jarp", "Narp"},
             {"Yes", "No"},
-            {"Zu", "Ab"},
             {"Go", "Low"},
             {"Dabei", "Daheim"},
             {"+1", "-1"},
