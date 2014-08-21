@@ -1,6 +1,10 @@
 TrainingApp
 ===========
 
+Play Store Link
+===============
+The app is also available in Google's [Play Store](https://play.google.com/store/apps/details?id=de.uwr1.training).
+
 Acknowledgements
 ================
 The app uses the android support libraries v4 and v7 by Google. They are licensed under Apache License 2.0
