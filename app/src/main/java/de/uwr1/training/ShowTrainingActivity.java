@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -184,6 +186,8 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
 
         Log.d("UWR_Training::ShowTraining::render", "Rendering new data.");
 
+        findViewById(R.id.view_show_overview).scrollTo(0, 0);
+
         boolean hatZugesagt = Training.hatZugesagt();
         boolean hatAbgesagt = false;
         Button btnYes = (Button) findViewById(R.id.buttonYes);
@@ -205,7 +209,7 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
         findViewById(R.id.view_loading).setVisibility(View.GONE);
         findViewById(R.id.view_show_overview).setVisibility(View.VISIBLE);
 
-        ((TextView) findViewById(R.id.training_meta)).setText(Training.getMeta());
+        ((TextView) findViewById(R.id.training_general_info)).setText(Training.getGeneralInfo());
         ((TextView) findViewById(R.id.sum_zu)).setText(Integer.toString(Training.getNumZusagen()));
         ((TextView) findViewById(R.id.sum_ab)).setText(Integer.toString(Training.getNumAbsagen()));
 
@@ -223,8 +227,21 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
             ArrayAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, Training.getNixsagerArray());
             nixListView.setAdapter(adapter);
         }
+
+        // update stats
+        StringBuilder stats = new StringBuilder();
+        stats.append("Daten geladen:  \t").append(formatDateTime(Training.getTimestampOfDownload())).append("\n");
+        stats.append("Letzte Meldung:\t").append(formatDateTime(Training.getTimestampOfLastEntry()));
+        if (Training.hasExtraTemp()) {
+            stats.append("\n")
+                .append("Temperatur: ").append(Training.getExtraTemp()).append("\t").append(formatDateTime(Training.getExtraTempUpdated())).append("");
+        }
+        ((TextView)findViewById(R.id.training_stats)).setText(stats);
     }
 
+    private CharSequence formatDateTime(long time) {
+        return DateUtils.getRelativeTimeSpanString(time);
+    }
     //
     public void onYesNoClick(View view) {
         boolean success = false;

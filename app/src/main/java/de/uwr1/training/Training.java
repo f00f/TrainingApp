@@ -3,8 +3,6 @@ package de.uwr1.training;
 import android.content.Context;
 import android.util.Log;
 
-import org.apache.http.protocol.HTTP;
-
 import java.util.Date;
 import java.util.HashMap;
 
@@ -95,8 +93,24 @@ public class Training implements OnApiCallCompletedListener {
     }
 
     // compose string with meta information about the training
-    public static String getMeta() {
-        return data.getMeta();
+    public static String getGeneralInfo() {
+        return data.getGeneralInfo();
+    }
+
+    public static long getTimestampOfDownload() {
+        return data.Timestamp;
+    }
+    public static long getTimestampOfLastEntry() {
+        return data.Updated * 1000;
+    }
+    public static boolean hasExtraTemp() {
+        return true;
+    }
+    public static String getExtraTemp() {
+        return data.Temp;
+    }
+    public static long getExtraTempUpdated() {
+        return data.TempUpdated * 1000;
     }
 
     public static String getZusagen() {

@@ -36,11 +36,11 @@ public class TrainingData {
     // PUBLIC METHODS
 
     // compose string with meta information about the training
-    public String getMeta() {
-        String meta = Date + " um " + Time + " in " + Location;
+    public String getGeneralInfo() {
+        String info = Date + " um " + Time + " in " + Location;
         if (null != Wochentag)
-            meta = Wochentag + ", " + meta;
-        return meta;
+            info = Wochentag + ", " + info;
+        return info;
     }
 
     public int getNumZusagen() {
