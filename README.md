@@ -7,8 +7,6 @@ The app is also available in Google's [Play Store](https://play.google.com/store
 
 Todo
 ====
-+ Show Temp
-+ Show stats: TimeStamp, Updated, etc.
 + Add link to Einteilung (or implement it)
 + x Std vorm Training nachfragen: hey, was is los?
 + Improve caching logic.
