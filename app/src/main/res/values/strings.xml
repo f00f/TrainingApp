@@ -5,8 +5,8 @@
     <string name="action_refresh">Aktualisieren</string>
     <string name="action_settings">Einstellungen</string>
     <string name="loading_data">Lade Daten...</string>
-    <string name="title_meta">Nächstes Training:</string>
-    <string name="lbl_meta_default">Mo, 01.01. um 11:30 - 12:30 in Zapfendorf</string>
+    <string name="title_general_info">Nächstes Training:</string>
+    <string name="lbl_general_info_default">Mo, 01.01. um 11:30 - 12:30 in Zapfendorf</string>
     <string name="title_zusagen">Zusagen:</string>
     <string name="title_absagen">Absagen:</string>
     <string name="title_nixsagen">Nichtssagend:</string>
