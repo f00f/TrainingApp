@@ -261,7 +261,7 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
         boolean success = false;
         String msg = getString(R.string.msg_reply_failed);
 
-        String text = Config.getUsername(this) + "@";
+        String text = Config.getUsername(this);
         String comment = ((EditText)findViewById(R.id.edit_comment)).getText().toString();
         if (!comment.isEmpty()) {
             text += " (" + comment + ")";
@@ -295,48 +295,6 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
                 break;
         }
     }
-	private void setSectionVisibility(TextView header, TextView content, boolean visible) {
-		int newVisibility;
-		if (visible) {
-			newVisibility = View.VISIBLE;
-			hideExpandIcon(header);
-		} else {
-			newVisibility = View.Gone;
-			showExpandIcon(header);
-		}
-		content.setVisibility(newVisibility);
-
-		// save to prefs
-		String key = "";
-		switch (header.getId()) {
-            case R.id.title_absagen:
-				key = SettingsActivity.KEY_PREF_ABSAGER_VISIBLE;
-				break;
-            case R.id.title_nixsagen:
-				key = SettingsActivity.KEY_PREF_NIXSAGER_VISIBLE;
-				break;
-		}
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        sharedPref.setBoolean(key, visible);
-	}
-	private void toggleSectionVisibility(TextView header, TextView content) {
-		setVisibility(header, content, View.GONE == content.getVisibility());
-	}
-	private void showExpandIcon(TextView view) {
-		String text = view.getText();
-		if (!text.endsWith("+")) {
-			text = text + "+";
-			view.setText(text);
-		}
-	}
-	private void hideExpandIcon(TextView view) {
-		String text = view.getText();
-		if (text.endsWith("+")) {
-			text = text.substring(0, text.length - 1).trim();
-			view.setText(text);
-		}
-	}
-
     public void onSettingsClick(View view) {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
@@ -384,6 +342,48 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
         boolean forceReload = true;
         refresh(forceReload);
     }
+
+	private void setSectionVisibility(TextView header, TextView content, boolean visible) {
+		int newVisibility;
+		if (visible) {
+			newVisibility = View.VISIBLE;
+			hideExpandIcon(header);
+		} else {
+			newVisibility = View.Gone;
+			showExpandIcon(header);
+		}
+		content.setVisibility(newVisibility);
+
+		// save to prefs
+		String key = "";
+		switch (header.getId()) {
+            case R.id.title_absagen:
+				key = SettingsActivity.KEY_PREF_ABSAGER_VISIBLE;
+				break;
+            case R.id.title_nixsagen:
+				key = SettingsActivity.KEY_PREF_NIXSAGER_VISIBLE;
+				break;
+		}
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPref.setBoolean(key, visible);
+	}
+	private void toggleSectionVisibility(TextView header, TextView content) {
+		setVisibility(header, content, View.GONE == content.getVisibility());
+	}
+	private void showExpandIcon(TextView view) {
+		String text = view.getText();
+		if (!text.endsWith("+")) {
+			text = text + "+";
+			view.setText(text);
+		}
+	}
+	private void hideExpandIcon(TextView view) {
+		String text = view.getText();
+		if (text.endsWith("+")) {
+			text = text.substring(0, text.length - 1).trim();
+			view.setText(text);
+		}
+	}
 
     private CharSequence formatDateTime(long time) {
         return DateUtils.getRelativeTimeSpanString(time);
