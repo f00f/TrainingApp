@@ -11,6 +11,8 @@ public class SettingsActivity extends ActionBarActivity {
     static final String KEY_PREF_USERNAME = "username";
     static final String KEY_PREF_CLUB = "club";
     static final String KEY_PREF_APP_CONFIG = "x-invalid";
+    static final String KEY_PREF_ABSAGER_VISIBLE = "ABSAGER_VISIBLE";
+    static final String KEY_PREF_NIXSAGER_VISIBLE = "NIXSAGER_VISIBLE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

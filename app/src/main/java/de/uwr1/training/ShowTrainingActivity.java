@@ -188,22 +188,27 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
 
         findViewById(R.id.view_show_overview).scrollTo(0, 0);
 
+        Color normalBtnTextColor = getResources().getColor(android.R.color.primary_text_light);
+        Color darkBtnBgColor = getResources().getColor(android.R.color.secondary_text_light);
+        Color darkBtnTextColor = getResources().getColor(android.R.color.primary_text_dark);
+
         boolean hatZugesagt = Training.hatZugesagt();
-        boolean hatAbgesagt = false;
+        boolean hatAbgesagt = Training.hatAbgesagt();
         Button btnYes = (Button) findViewById(R.id.buttonYes);
         Button btnNo = (Button) findViewById(R.id.buttonNo);
-        btnYes.setTextColor(getResources().getColor(android.R.color.primary_text_light));
-        btnNo.setTextColor(getResources().getColor(android.R.color.primary_text_light));
-        if (hatZugesagt) {
-            btnNo.setBackgroundColor(getResources().getColor(android.R.color.secondary_text_light));
-            btnNo.setTextColor(getResources().getColor(android.R.color.primary_text_dark));
-        } else {
-            hatAbgesagt = Training.hatAbgesagt();
-            if (hatAbgesagt) {
-                btnYes.setBackgroundColor(getResources().getColor(android.R.color.secondary_text_light));
-                btnYes.setTextColor(getResources().getColor(android.R.color.primary_text_dark));
-            }
-        }
+
+        btnYes.setBackgroundColor(hatAbgesagt
+                                    ? darkBtnBgColor
+                                    : getResources().getColor(android.R.color.uwr_green));
+        btnYes.setTextColor(hatAbgesagt
+                                    ? darkBtnTextColor
+                                    : normalBtnTextColor);
+        btnNo.setBackgroundColor(hatZugesagt
+                                    ? darkBtnBgColor
+                                    : getResources().getColor(android.R.color.uwr_red));
+        btnNo.setTextColor(hatZugesagt
+                                    ? darkBtnTextColor
+                                    : normalBtnTextColor);
 
         // Switch views
         findViewById(R.id.view_loading).setVisibility(View.GONE);
@@ -217,6 +222,17 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
         zu.setText(Training.getZusagen());
         TextView ab = (TextView)findViewById(R.id.training_ab);
         ab.setText(Training.getAbsagen());
+
+		// set visibility of Abgesagt and Nixgesagt
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+		setSectionVisibility((TextView)findViewById(R.id.title_absagen),
+							(TextView)findViewById(R.id.training_ab),
+							sharedPref.getBoolean(SettingsActivity.KEY_PREF_ABSAGER_VISIBLE, false));
+		setSectionVisibility((TextView)findViewById(R.id.title_nixsagen),
+							(TextView)findViewById(R.id.training_nix),
+							sharedPref.getBoolean(SettingsActivity.KEY_PREF_NIXSAGER_VISIBLE, false));
+
+        /*
         ListView nixListView = (ListView) findViewById(R.id.training_nix_list);
         if (0 == Training.getNumNixsager()) {
             ((TextView) findViewById(R.id.training_nix)).setVisibility(View.VISIBLE);
@@ -227,6 +243,7 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
             ArrayAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, Training.getNixsagerArray());
             nixListView.setAdapter(adapter);
         }
+        */
 
         // update stats
         StringBuilder stats = new StringBuilder();
@@ -239,10 +256,7 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
         ((TextView)findViewById(R.id.training_stats)).setText(stats);
     }
 
-    private CharSequence formatDateTime(long time) {
-        return DateUtils.getRelativeTimeSpanString(time);
-    }
-    //
+    // Click handler for the yes/no buttons
     public void onYesNoClick(View view) {
         boolean success = false;
         String msg = getString(R.string.msg_reply_failed);
@@ -270,6 +284,58 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
         //refresh();
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
+    // Click handler for anything else
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.title_absagen:
+                toggleSectionVisibility((TextView)view, (TextView)findViewById(R.id.training_ab));
+                break;
+            case R.id.title_nixsagen:
+                toggleSectionVisibility((TextView)view, (TextView)findViewById(R.id.training_nix));
+                break;
+        }
+    }
+	private void setSectionVisibility(TextView header, TextView content, boolean visible) {
+		int newVisibility;
+		if (visible) {
+			newVisibility = View.VISIBLE;
+			hideExpandIcon(header);
+		} else {
+			newVisibility = View.Gone;
+			showExpandIcon(header);
+		}
+		content.setVisibility(newVisibility);
+
+		// save to prefs
+		String key = "";
+		switch (header.getId()) {
+            case R.id.title_absagen:
+				key = SettingsActivity.KEY_PREF_ABSAGER_VISIBLE;
+				break;
+            case R.id.title_nixsagen:
+				key = SettingsActivity.KEY_PREF_NIXSAGER_VISIBLE;
+				break;
+		}
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPref.setBoolean(key, visible);
+	}
+	private void toggleSectionVisibility(TextView header, TextView content) {
+		setVisibility(header, content, View.GONE == content.getVisibility());
+	}
+	private void showExpandIcon(TextView view) {
+		String text = view.getText();
+		if (!text.endsWith("+")) {
+			text = text + "+";
+			view.setText(text);
+		}
+	}
+	private void hideExpandIcon(TextView view) {
+		String text = view.getText();
+		if (text.endsWith("+")) {
+			text = text.substring(0, text.length - 1).trim();
+			view.setText(text);
+		}
+	}
 
     public void onSettingsClick(View view) {
         Intent intent = new Intent(this, SettingsActivity.class);
@@ -317,5 +383,9 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
         // this method is only invoked after sending a reply.
         boolean forceReload = true;
         refresh(forceReload);
+    }
+
+    private CharSequence formatDateTime(long time) {
+        return DateUtils.getRelativeTimeSpanString(time);
     }
 }

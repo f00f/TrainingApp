@@ -177,37 +177,37 @@
                 android:layout_height="wrap_content" />
 
             <TextView
+                android:id="@+id/title_absagen"
                 android:text="@string/title_absagen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@android:style/TextAppearance.Medium"
                 android:layout_marginTop="15dp"
-                android:textColor="@color/uwr_red" />
+                android:textColor="@color/uwr_red"
+                android:onClick="onClick"
+                android:clickable="true" />
 
             <TextView
                 android:id="@+id/training_ab"
                 android:text="---"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/training_stats"
-                android:text="Stats: ---"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp" />
+                android:visibility="gone" />
 
             <TextView
+                android:id="@+id/title_nixsagen"
                 android:text="@string/title_nixsagen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@android:style/TextAppearance.Medium"
                 android:layout_marginTop="15dp"
-                android:textColor="@android:color/secondary_text_light" />
+                android:textColor="@android:color/secondary_text_light"
+                android:onClick="onClick"
+                android:clickable="true" />
 
             <TextView
                 android:id="@+id/training_nix"
-                android:text="Gibt's noch net :-("
+                android:text="Gibt's immernoch net :-("
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/secondary_text_light"
@@ -217,6 +217,13 @@
                 android:id="@+id/training_nix_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/training_stats"
+                android:text="Stats: ---"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp" />
 
         </LinearLayout>
 
