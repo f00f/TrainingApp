@@ -1,6 +1,5 @@
 package de.uwr1.training;
 
-import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 
 import org.apache.http.HttpEntity;

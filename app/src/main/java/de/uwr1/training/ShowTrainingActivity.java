@@ -1,6 +1,7 @@
 package de.uwr1.training;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -85,14 +86,12 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
                     {"-3,50m", "0,00m"},
             },
     };
-    private int buttonTextIndex = 0;
-    private boolean isConfigured;
 
     private void ChangeButtonTexts() {
         Random rand = new Random();
         int padding = 16;
         int maxButtonTextIndex = Math.min(10, buttonTexts.length);
-        buttonTextIndex = rand.nextInt(maxButtonTextIndex);
+        int buttonTextIndex = rand.nextInt(maxButtonTextIndex);
         Button btnYes = (Button)findViewById(R.id.buttonYes);
         Button btnNo = (Button)findViewById(R.id.buttonNo);
 
@@ -136,7 +135,7 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
     protected void onResume() {
         super.onResume();
 
-        isConfigured = true;
+        boolean isConfigured = true;
         // check if username is set
         String usernamePref = Config.getUsername(this);
         if (usernamePref.isEmpty())
@@ -188,9 +187,9 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
 
         findViewById(R.id.view_show_overview).scrollTo(0, 0);
 
-        Color normalBtnTextColor = getResources().getColor(android.R.color.primary_text_light);
-        Color darkBtnBgColor = getResources().getColor(android.R.color.secondary_text_light);
-        Color darkBtnTextColor = getResources().getColor(android.R.color.primary_text_dark);
+        int normalBtnTextColor = getResources().getColor(android.R.color.primary_text_light);
+        int darkBtnBgColor = getResources().getColor(android.R.color.secondary_text_light);
+        int darkBtnTextColor = getResources().getColor(android.R.color.primary_text_dark);
 
         boolean hatZugesagt = Training.hatZugesagt();
         boolean hatAbgesagt = Training.hatAbgesagt();
@@ -199,13 +198,13 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
 
         btnYes.setBackgroundColor(hatAbgesagt
                                     ? darkBtnBgColor
-                                    : getResources().getColor(android.R.color.uwr_green));
+                                    : getResources().getColor(R.color.uwr_green));
         btnYes.setTextColor(hatAbgesagt
                                     ? darkBtnTextColor
                                     : normalBtnTextColor);
         btnNo.setBackgroundColor(hatZugesagt
                                     ? darkBtnBgColor
-                                    : getResources().getColor(android.R.color.uwr_red));
+                                    : getResources().getColor(R.color.uwr_red));
         btnNo.setTextColor(hatZugesagt
                                     ? darkBtnTextColor
                                     : normalBtnTextColor);
@@ -258,7 +257,7 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
 
     // Click handler for the yes/no buttons
     public void onYesNoClick(View view) {
-        boolean success = false;
+        boolean success;
         String msg = getString(R.string.msg_reply_failed);
 
         String text = Config.getUsername(this);
@@ -325,7 +324,7 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
         }
         if (id == R.id.action_reset) {
             PreferenceManager.setDefaultValues(this, R.xml.preferences, true);
-            Toast.makeText(this, R.string.msg_reset, Toast.LENGTH_LONG);
+            Toast.makeText(this, R.string.msg_reset, Toast.LENGTH_LONG).show();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -349,7 +348,7 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
 			newVisibility = View.VISIBLE;
 			hideExpandIcon(header);
 		} else {
-			newVisibility = View.Gone;
+			newVisibility = View.GONE;
 			showExpandIcon(header);
 		}
 		content.setVisibility(newVisibility);
@@ -365,22 +364,24 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
 				break;
 		}
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        sharedPref.setBoolean(key, visible);
+        SharedPreferences.Editor prefEd = sharedPref.edit();
+        prefEd.putBoolean(key, visible);
+        prefEd.apply();
 	}
 	private void toggleSectionVisibility(TextView header, TextView content) {
-		setVisibility(header, content, View.GONE == content.getVisibility());
+		setSectionVisibility(header, content, View.GONE == content.getVisibility());
 	}
 	private void showExpandIcon(TextView view) {
-		String text = view.getText();
+		String text = view.getText().toString();
 		if (!text.endsWith("+")) {
 			text = text + "+";
 			view.setText(text);
 		}
 	}
 	private void hideExpandIcon(TextView view) {
-		String text = view.getText();
+        String text = view.getText().toString();
 		if (text.endsWith("+")) {
-			text = text.substring(0, text.length - 1).trim();
+			text = text.substring(0, text.length() - 1).trim();
 			view.setText(text);
 		}
 	}

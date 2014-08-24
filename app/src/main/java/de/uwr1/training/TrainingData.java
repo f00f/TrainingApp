@@ -155,8 +155,7 @@ public class TrainingData {
         if (null == _sagenNamesArr || null == username || username.isEmpty())
             return false;
 
-        for (int i = 0; i < _sagenNamesArr.length; i++) {
-            String text = _sagenNamesArr[i];
+        for (String text : _sagenNamesArr) {
             if (!text.startsWith(username)) {
                 continue;
             }
