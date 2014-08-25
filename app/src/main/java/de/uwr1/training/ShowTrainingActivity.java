@@ -2,6 +2,7 @@ package de.uwr1.training;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -90,7 +91,7 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
     private void ChangeButtonTexts() {
         Random rand = new Random();
         int padding = 16;
-        int maxButtonTextIndex = Math.min(10, buttonTexts.length);
+        int maxButtonTextIndex = Math.min(13, buttonTexts.length);
         int buttonTextIndex = rand.nextInt(maxButtonTextIndex);
         Button btnYes = (Button)findViewById(R.id.buttonYes);
         Button btnNo = (Button)findViewById(R.id.buttonNo);
@@ -343,15 +344,8 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
     }
 
 	private void setSectionVisibility(TextView header, TextView content, boolean visible) {
-		int newVisibility;
-		if (visible) {
-			newVisibility = View.VISIBLE;
-			hideExpandIcon(header);
-		} else {
-			newVisibility = View.GONE;
-			showExpandIcon(header);
-		}
-		content.setVisibility(newVisibility);
+		showExpandCollapseIcon(header, visible);
+		content.setVisibility(visible ? View.VISIBLE : View.GONE);
 
 		// save to prefs
 		String key = "";
@@ -371,18 +365,13 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
 	private void toggleSectionVisibility(TextView header, TextView content) {
 		setSectionVisibility(header, content, View.GONE == content.getVisibility());
 	}
-	private void showExpandIcon(TextView view) {
-		String text = view.getText().toString();
-		if (!text.endsWith("+")) {
-			text = text + "+";
-			view.setText(text);
-		}
-	}
-	private void hideExpandIcon(TextView view) {
-        String text = view.getText().toString();
-		if (text.endsWith("+")) {
-			text = text.substring(0, text.length() - 1).trim();
-			view.setText(text);
+	private void showExpandCollapseIcon(TextView view, boolean isExpanded) {
+		if (isExpanded) {
+			Drawable d = getResources().getDrawable(R.drawable.ic_action_collapse);
+			view.setCompoundDrawablesWithIntrinsicBounds(null, null, d, null);
+		} else {
+			Drawable d = getResources().getDrawable(R.drawable.ic_action_expand);
+			view.setCompoundDrawablesWithIntrinsicBounds(null, null, d, null);
 		}
 	}
 

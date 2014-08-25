@@ -179,11 +179,13 @@
             <TextView
                 android:id="@+id/title_absagen"
                 android:text="@string/title_absagen"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 style="@android:style/TextAppearance.Medium"
                 android:layout_marginTop="15dp"
                 android:textColor="@color/uwr_red"
+                android:gravity="center_vertical"
+                android:drawableRight="@drawable/ic_action_expand"
                 android:onClick="onClick"
                 android:clickable="true" />
 
@@ -197,11 +199,13 @@
             <TextView
                 android:id="@+id/title_nixsagen"
                 android:text="@string/title_nixsagen"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 style="@android:style/TextAppearance.Medium"
                 android:layout_marginTop="15dp"
                 android:textColor="@android:color/secondary_text_light"
+                android:gravity="center_vertical"
+                android:drawableRight="@drawable/ic_action_expand"
                 android:onClick="onClick"
                 android:clickable="true" />
 
