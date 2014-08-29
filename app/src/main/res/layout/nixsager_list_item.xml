@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+	<TextView
+		android:id="@+id/nixsager_list_item_name"
+		android:layout_alignParentLeft="true"
+		android:layout_alignBaseline="@+id/nixsager_list_item_btnYes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/secondary_text_light"
+		android:text="---" />
+
+	<Button
+		style="?android:attr/buttonStyleSmall"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/yes"
+		android:id="@+id/nixsager_list_item_btnYes"
+		android:background="@color/uwr_green"
+		android:layout_centerVertical="true"
+		android:layout_toLeftOf="@+id/nixsager_list_item_btnNo"
+		android:onClick="onYesNoClick2" />
+
+	<Button
+		style="?android:attr/buttonStyleSmall"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/no"
+		android:id="@+id/nixsager_list_item_btnNo"
+		android:background="@color/uwr_red"
+		android:layout_centerVertical="true"
+		android:layout_alignParentRight="true"
+		android:onClick="onYesNoClick2" />
+</RelativeLayout>

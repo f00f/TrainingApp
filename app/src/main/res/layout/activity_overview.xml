@@ -211,16 +211,18 @@
 
             <TextView
                 android:id="@+id/training_nix"
-                android:text="Gibt's immernoch net :-("
+                android:text="Keine Daten geladen..."
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/secondary_text_light"
-                android:visibility="gone" />
+                />
 
-            <ListView
+            <LinearLayout
                 android:id="@+id/training_nix_list"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/training_stats"

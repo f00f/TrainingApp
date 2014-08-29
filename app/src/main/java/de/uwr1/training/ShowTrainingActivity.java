@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -226,24 +227,24 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
 		// set visibility of Abgesagt and Nixgesagt
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 		setSectionVisibility((TextView)findViewById(R.id.title_absagen),
-							(TextView)findViewById(R.id.training_ab),
+							findViewById(R.id.training_ab),
 							sharedPref.getBoolean(SettingsActivity.KEY_PREF_ABSAGER_VISIBLE, false));
-		setSectionVisibility((TextView)findViewById(R.id.title_nixsagen),
-							(TextView)findViewById(R.id.training_nix),
-							sharedPref.getBoolean(SettingsActivity.KEY_PREF_NIXSAGER_VISIBLE, false));
+        setSectionVisibility((TextView)findViewById(R.id.title_nixsagen),
+                            findViewById(R.id.training_nix),
+                            sharedPref.getBoolean(SettingsActivity.KEY_PREF_NIXSAGER_VISIBLE, false));
+        setSectionVisibility((TextView)findViewById(R.id.title_nixsagen),
+                            findViewById(R.id.training_nix_list),
+                            sharedPref.getBoolean(SettingsActivity.KEY_PREF_NIXSAGER_VISIBLE, false));
 
-        /*
-        ListView nixListView = (ListView) findViewById(R.id.training_nix_list);
-        if (0 == Training.getNumNixsager()) {
-            ((TextView) findViewById(R.id.training_nix)).setVisibility(View.VISIBLE);
-            nixListView.setVisibility(View.GONE);
-        } else {
-            ((TextView) findViewById(R.id.training_nix)).setVisibility(View.GONE);
-            nixListView.setVisibility(View.VISIBLE);
-            ArrayAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, Training.getNixsagerArray());
-            nixListView.setAdapter(adapter);
+        LinearLayout nixListView = (LinearLayout) findViewById(R.id.training_nix_list);
+        if (0 < Training.getNumNixsager()) {
+            NixSagerAdapter adapter = new NixSagerAdapter(this, R.layout.nixsager_list_item, Training.getNixsagerArray());
+            final int adapterCount = adapter.getCount();
+            for (int i = 0; i < adapterCount; i++) {
+                View item = adapter.getView(i, null, null);
+                nixListView.addView(item);
+            }
         }
-        */
 
         // update stats
         StringBuilder stats = new StringBuilder();
@@ -288,10 +289,10 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.title_absagen:
-                toggleSectionVisibility((TextView)view, (TextView)findViewById(R.id.training_ab));
+                toggleSectionVisibility((TextView)view, findViewById(R.id.training_ab));
                 break;
             case R.id.title_nixsagen:
-                toggleSectionVisibility((TextView)view, (TextView)findViewById(R.id.training_nix));
+                toggleSectionVisibility((TextView) view, new View[]{findViewById(R.id.training_nix), findViewById(R.id.training_nix_list)});
                 break;
         }
     }
@@ -343,9 +344,14 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
         refresh(forceReload);
     }
 
-	private void setSectionVisibility(TextView header, TextView content, boolean visible) {
+    private void setSectionVisibility(TextView header, View content, boolean visible) {
+        setSectionVisibility(header, new View[]{content}, visible);
+    }
+	private void setSectionVisibility(TextView header, View[] content, boolean visible) {
 		showExpandCollapseIcon(header, visible);
-		content.setVisibility(visible ? View.VISIBLE : View.GONE);
+        for (View _item : content) {
+            _item.setVisibility(visible ? View.VISIBLE : View.GONE);
+        }
 
 		// save to prefs
 		String key = "";
@@ -362,9 +368,15 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
         prefEd.putBoolean(key, visible);
         prefEd.apply();
 	}
-	private void toggleSectionVisibility(TextView header, TextView content) {
-		setSectionVisibility(header, content, View.GONE == content.getVisibility());
-	}
+    private void toggleSectionVisibility(TextView header, View content) {
+        setSectionVisibility(header, content, View.GONE == content.getVisibility());
+    }
+    private void toggleSectionVisibility(TextView header, View[] content) {
+        if (0 == content.length)
+            return;
+
+        setSectionVisibility(header, content, View.GONE == content[0].getVisibility());
+    }
 	private void showExpandCollapseIcon(TextView view, boolean isExpanded) {
 		if (isExpanded) {
 			Drawable d = getResources().getDrawable(R.drawable.ic_action_collapse);
