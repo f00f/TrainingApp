@@ -14,4 +14,20 @@
         <item>stc</item>
         <item>wf</item>
     </string-array>
+    <!--
+    <string-array name="the_others_texts">
+        <item>Die Anderen:</item>
+        <item>Die Gang:</item>
+    </string-array>
+    private static final String[][][] buttonTextsExtra = new String[][][] {
+    {
+    {"Bambados", "Bullerbü"},
+    {"-4,00m", "0,00m"},
+    },
+    {
+    {"Zapfendorf", "Bullerbü"},
+    {"-3,50m", "0,00m"},
+    },
+    };
+    -->
 </resources>

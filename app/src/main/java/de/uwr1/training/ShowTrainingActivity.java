@@ -22,10 +22,6 @@ import android.widget.Toast;
 import java.util.Random;
 
 public class ShowTrainingActivity extends ActionBarActivity implements OnTrainingDataLoadedListener, OnApiCallCompletedListener, NixsagerDialogFragment.NixsagerDialogListener {
-    private static final String[] othersTexts = new String[] {
-            "Die Anderen:",
-            "Die Gang:",
-    };
     private static final String[][] buttonTexts = new String[][] {
             {"Zusage", "Absage"},
             {"Zu", "Ab"},
@@ -75,16 +71,6 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
             {"runter", "???"},
             {"???", "faul"},
             */
-    };
-    private static final String[][][] buttonTextsExtra = new String[][][] {
-            {
-                    {"Bambados", "Bullerbü"},
-                    {"-4,00m", "0,00m"},
-            },
-            {
-                    {"Zapfendorf", "Bullerbü"},
-                    {"-3,50m", "0,00m"},
-            },
     };
 
     private void ChangeButtonTexts() {
