@@ -13,17 +13,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Random;
 
-public class ShowTrainingActivity extends ActionBarActivity implements OnTrainingDataLoadedListener, OnApiCallCompletedListener {
+public class ShowTrainingActivity extends ActionBarActivity implements OnTrainingDataLoadedListener, OnApiCallCompletedListener, NixsagerDialogFragment.NixsagerDialogListener {
     private static final String[] othersTexts = new String[] {
             "Die Anderen:",
             "Die Gang:",
@@ -285,6 +283,36 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
         //refresh();
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
+    public void onNixSagerListClick(View view) {
+        // TODO: create dialog
+        CharSequence name = ((TextView)view).getText();
+        Log.d("", name.toString());
+        NixsagerDialogFragment d = new NixsagerDialogFragment();
+        // Supply index input as an argument.
+        Bundle args = new Bundle();
+        args.putCharSequence("name", name);
+        d.setArguments(args);
+        d.show(getSupportFragmentManager(), null);
+    }
+    // The dialog fragment receives a reference to this Activity through the
+    // Fragment.onAttach() callback, which it uses to call the following methods
+    // defined by the NoticeDialogFragment.NoticeDialogListener interface
+    @Override
+    public void onDialogPositiveClick(android.support.v4.app.DialogFragment dialog) {
+        // User touched the dialog's positive button
+        dialog.dismiss();
+    }
+    @Override
+    public void onDialogNegativeClick(android.support.v4.app.DialogFragment dialog) {
+        // User touched the dialog's negative button
+        dialog.dismiss();
+    }
+    @Override
+    public void onDialogNeutralClick(android.support.v4.app.DialogFragment dialog) {
+        // User touched the dialog's neutral button
+        dialog.dismiss();
+    }
+
     // Click handler for anything else
     public void onClick(View view) {
         switch (view.getId()) {

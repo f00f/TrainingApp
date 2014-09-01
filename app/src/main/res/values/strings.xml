@@ -30,5 +30,8 @@
     <string name="msg_reply_failed">Das hat leider nicht geklappt :-(</string>
     <string name="msg_reply_yes">Oh yeah!</string>
     <string name="msg_reply_no">Ach komm schon...</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="nixdialog_ab">Ab</string>
+    <string name="nixdialog_an">An</string>
 
 </resources>
