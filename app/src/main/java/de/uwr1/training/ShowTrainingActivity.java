@@ -308,6 +308,9 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
             case R.id.title_nixsagen:
                 toggleSectionVisibility((TextView) view, new View[]{findViewById(R.id.training_nix), findViewById(R.id.training_nix_list)});
                 break;
+            case R.id.buttonReloadNixsager:
+                // TODO: relaod nixgesagt data
+                break;
         }
     }
     public void onSettingsClick(View view) {
