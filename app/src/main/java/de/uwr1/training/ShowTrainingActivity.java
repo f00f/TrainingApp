@@ -239,6 +239,11 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
                 .append("Temperatur: ").append(Training.getExtraTemp()).append("\t").append(formatDateTime(Training.getExtraTempUpdated())).append("");
         }
         ((TextView)findViewById(R.id.training_stats)).setText(stats);
+
+        // clear focus of comment field
+        View focused = getCurrentFocus();
+        if (null != focused)
+            focused.clearFocus();
     }
 
     // Click handler for the yes/no buttons
