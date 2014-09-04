@@ -34,9 +34,9 @@ public class Config {
         aMap.put(KEY_JSON_BASE_URL, aMap.get(KEY_BASE_URL) + "json/");
         aMap.put(KEY_JSON_URL, aMap.get(KEY_JSON_BASE_URL) + "training.json");
         aMap.put(KEY_JSON_PLAYERS_URL, aMap.get(KEY_JSON_BASE_URL) + "all-players.json");
-        aMap.put(KEY_REFRESH_URL, aMap.get(KEY_BASE_URL) + "training.php");
-        aMap.put(KEY_REPLY_URL_YES, aMap.get(KEY_REFRESH_URL) + "?zusage=1&text=");
-        aMap.put(KEY_REPLY_URL_NO, aMap.get(KEY_REFRESH_URL) + "?absage=1&text=");
+        aMap.put(KEY_REFRESH_URL, aMap.get(KEY_BASE_URL) + "training.php?app=android");
+        aMap.put(KEY_REPLY_URL_YES, aMap.get(KEY_REFRESH_URL) + "&zusage=1&text=");
+        aMap.put(KEY_REPLY_URL_NO, aMap.get(KEY_REFRESH_URL) + "&absage=1&text=");
         aMap.put(KEY_PHOTO_URL, aMap.get(KEY_BASE_URL) + "badbilder/${location}/");
         aMap.put(KEY_PHOTO_THUMB_URL, aMap.get(KEY_BASE_URL) + "badbilder/thumbs/${location}/");
         APP_CONFIG = Collections.unmodifiableMap(aMap);
