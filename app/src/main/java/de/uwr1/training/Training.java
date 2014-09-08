@@ -104,7 +104,7 @@ public class Training implements OnApiCallCompletedListener {
         return data.Updated * 1000;
     }
     public static boolean hasExtraTemp() {
-        return true;
+        return null != data && null != data.Temp;
     }
     public static String getExtraTemp() {
         return data.Temp;
