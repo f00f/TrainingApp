@@ -221,7 +221,8 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
                             sharedPref.getBoolean(SettingsActivity.KEY_PREF_NIXSAGER_VISIBLE, false));
 
         LinearLayout nixListView = (LinearLayout) findViewById(R.id.training_nix_list);
-        if (0 < Training.getNumNixsager()) {
+        nixListView.removeAllViews();
+        if (Training.getNumNixsager() > 0) {
             NixSagerAdapter adapter = new NixSagerAdapter(this, R.layout.nixsager_list_item, Training.getNixsagerArray());
             final int adapterCount = adapter.getCount();
             for (int i = 0; i < adapterCount; i++) {

@@ -7,33 +7,10 @@
 	<TextView
 		android:id="@+id/nixsager_list_item_name"
 		android:layout_alignParentLeft="true"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textColor="@android:color/secondary_text_light"
 		android:text="---"
         android:onClick="onNixSagerListClick"
         android:clickable="true"/>
-    <!-- android:layout_alignBaseline="@+id/nixsager_list_item_btnYes" -->
-
-	<!-- Button
-		style="?android:attr/buttonStyleSmall"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="@string/yes"
-		android:id="@+id/nixsager_list_item_btnYes"
-		android:background="@color/uwr_green"
-		android:layout_centerVertical="true"
-		android:layout_toLeftOf="@+id/nixsager_list_item_btnNo"
-		android:onClick="onYesNoClick2" / -->
-
-	<!-- Button
-		style="?android:attr/buttonStyleSmall"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="@string/no"
-		android:id="@+id/nixsager_list_item_btnNo"
-		android:background="@color/uwr_red"
-		android:layout_centerVertical="true"
-		android:layout_alignParentRight="true"
-		android:onClick="onYesNoClick2" / -->
 </RelativeLayout>
