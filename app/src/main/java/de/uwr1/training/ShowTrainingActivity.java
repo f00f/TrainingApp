@@ -336,22 +336,26 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
-            return true;
+        switch (id)
+        {
+            case R.id.action_refresh:
+                boolean forceReload = true;
+                refresh(forceReload);
+                return true;
+            case R.id.action_settings:
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.action_server_reload:
+                Training.requestServerReload();
+                return true;
+            case R.id.action_reset_app:
+                PreferenceManager.setDefaultValues(this, R.xml.preferences, true);
+                Toast.makeText(this, R.string.msg_reset, Toast.LENGTH_LONG).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        if (id == R.id.action_refresh) {
-            boolean forceReload = true;
-            refresh(forceReload);
-            return true;
-        }
-        if (id == R.id.action_reset) {
-            PreferenceManager.setDefaultValues(this, R.xml.preferences, true);
-            Toast.makeText(this, R.string.msg_reset, Toast.LENGTH_LONG).show();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">UWR Training</string>
     <string name="action_refresh">Aktualisieren</string>
     <string name="action_settings">Einstellungen</string>
+    <string name="action_reset">Reset App</string>
+    <string name="action_server_reload">Server Reload</string>
+    <string name="action_submenu_advanced">Erweitert</string>
+    <string name="pref_username_title">Dein Name</string>
+    <string name="pref_username_summary_default">Kein Name angegeben</string>
+    <string name="pref_username_default"></string>
+    <string name="pref_club_title">Dein Verein</string>
+    <string name="pref_club_summary_default">Kein Verein ausgewählt</string>
+    <string name="pref_club_default"></string>
+    <string name="lbl_version">Version:</string>
+    <string name="version_default">Version: unknown</string>
+    <string name="msg_reset">Alle Einstellungen wurden zurückgesetzt.</string>
+    <string name="msg_welcome">Hallo!\n\nDu musst nur noch kurz deinen Verein und deinen Namen angeben, dann geht\'s los.\n\nViel Spaß,\nHannes</string>
     <string name="loading_data">Lade Daten...</string>
     <string name="title_general_info">Nächstes Training:</string>
     <string name="lbl_general_info_default">Mo, 01.01. um 11:30 - 12:30 in Zapfendorf</string>
@@ -16,22 +28,10 @@
     <string name="lbl_others">Die Anderen:</string>
     <string name="lbl_comment">Kommentar:</string>
     <string name="title_settings">Einstellungen</string>
-    <string name="pref_username_title">Dein Name</string>
-    <string name="pref_username_summary_default">Kein Name angegeben</string>
-    <string name="pref_username_default"></string>
-    <string name="pref_club_title">Dein Verein</string>
-    <string name="pref_club_summary_default">Kein Verein ausgewählt</string>
-    <string name="pref_club_default"></string>
-    <string name="action_reset">Reset</string>
-    <string name="msg_reset">Alle Einstellungen wurden zurückgesetzt.</string>
-    <string name="msg_welcome">Hallo!\n\nDu musst nur noch kurz deinen Verein und deinen Namen angeben, dann geht\'s los.\n\nViel Spaß,\nHannes</string>
-    <string name="lbl_version">Version:</string>
-    <string name="version_default">Version: unknown</string>
     <string name="msg_reply_failed">Das hat leider nicht geklappt :-(</string>
     <string name="msg_reply_yes">Oh yeah!</string>
     <string name="msg_reply_no">Ach komm schon...</string>
     <string name="cancel">Abbrechen</string>
     <string name="nixdialog_ab">Ab</string>
     <string name="nixdialog_an">An</string>
-
 </resources>

@@ -17,7 +17,7 @@ public class Training implements OnApiCallCompletedListener {
     private static HashMap<String, TrainingData> cache = new HashMap<String, TrainingData>();
     private static final int CACHE_MAX_AGE = 5 * 60; // cache lifetime in seconds
 
-    private boolean serverRefreshRequested = false;
+    private static boolean serverReloadRequested = false;
 
     // CONSTRUCTOR
 
@@ -38,7 +38,9 @@ public class Training implements OnApiCallCompletedListener {
 
     @Override
     public void onApiCallCompleted(String url, String result) {
-        // Some non-load request returned -> reload data
+        // A request other than loading the JSON data returned.
+        // This can be after a user reply or after a server reload request.
+        // Do reload JSON data now.
         if (!url.equals(Config.getURL(context, Config.KEY_JSON_URL))) {
             Training.data = null;
             boolean forceReload = true;
@@ -46,7 +48,7 @@ public class Training implements OnApiCallCompletedListener {
             return;
         }
 
-        // A load request returned -> parse data and notify listener
+        // A JSON-load request returned -> parse data and notify listener
         Training.data = new TrainingData();
         boolean res = Training.data.parseJSON(result);
         if (!res) {
@@ -55,11 +57,11 @@ public class Training implements OnApiCallCompletedListener {
 
         if (Training.data.isExpired()) {
             Training.data = null;
-            if (!serverRefreshRequested) {
+            if (!serverReloadRequested) {
                 // issue server refresh, data reload will happen in callbacks
-                RequestServerRefresh();
+                requestServerReload();
             } else {
-                serverRefreshRequested = false;
+                serverReloadRequested = false;
             }
             return;
         }
@@ -161,13 +163,15 @@ public class Training implements OnApiCallCompletedListener {
         loadTrainingDataCached(url, forceReload);
     }
 
-    // PRIVATE METHODS
-
-    private void RequestServerRefresh() {
+    // Issue a server reload to update the JSON files.
+    // This is only needed when the cached training session has expired, or when for some reason the server screwed up.
+    public static void requestServerReload() {
         String url = Config.getURL(context, Config.KEY_REFRESH_URL);
-        serverRefreshRequested = true;
-        new API_CALL(this).execute(url);
+        serverReloadRequested = true;
+        new API_CALL(new Training()).execute(url);
     }
+
+    // PRIVATE METHODS
 
     // Load data from web, cached
     private static void loadTrainingDataCached(String url, boolean forceReload) {
