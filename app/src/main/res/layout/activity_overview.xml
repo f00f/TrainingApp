@@ -209,18 +209,32 @@
                 android:onClick="onClick"
                 android:clickable="true" />
 
-            <TextView
+            <RelativeLayout
                 android:id="@+id/training_nix"
-                android:text="Gibt's immernoch net :-("
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/secondary_text_light"
-                android:visibility="gone" />
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="Keine Daten geladen..."
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/buttonReloadNixsager"
+                    android:textColor="@android:color/secondary_text_light"
+                    />
+                <Button
+                    android:id="@+id/buttonReloadNixsager"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="Laden"
+                    android:onClick="onClick"/>
+            </RelativeLayout>
 
-            <ListView
+            <LinearLayout
                 android:id="@+id/training_nix_list"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/training_stats"

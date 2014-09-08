@@ -19,9 +19,11 @@ public class Training implements OnApiCallCompletedListener {
 
     private boolean serverRefreshRequested = false;
 
-    // PUBLIC METHODS
+    // CONSTRUCTOR
 
     private Training() {}
+
+    // PUBLIC METHODS
 
     public static void Init(Context _context, OnApiCallCompletedListener _onReplySentListener, OnTrainingDataLoadedListener _onTrainingDataLoadedListener) {
         Training.data = null;

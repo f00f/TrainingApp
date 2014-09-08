@@ -6,6 +6,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -127,8 +129,6 @@ public class TrainingData {
             ZusagenArr = new String[0];
         if (null == AbsagenArr)
             AbsagenArr = new String[0];
-        if (null == NixsagenArr)
-            NixsagenArr = new String[0];
         if (ZusagenArr.length > 0) {
             Zusagen = android.text.TextUtils.join(", ", ZusagenArr);
             ZusagenNamesArr = new String[ZusagenArr.length];
@@ -143,6 +143,31 @@ public class TrainingData {
                 AbsagenNamesArr[i] = getName(AbsagenArr[i]);
             }
         }
+
+        // TODO: load json data
+        json = "{\"names\":[\"Lorem\",\"Ipsum\",\"Dolor\"]}";
+        String[] allPlayers = null;
+        try {
+            allPlayers = getStringArray(new JSONObject(json), "names");
+        } catch (JSONException e) { /* empty */ }
+        if (null == allPlayers || 0 == allPlayers.length) {
+            NixsagenArr = new String[] {};
+        } else {
+            ArrayList<String> NixsagerList = new ArrayList<String>();
+            for (String player : allPlayers) {
+                if (hatZugesagt(player))
+                    continue;
+                if (hatAbgesagt(player))
+                    continue;
+                NixsagerList.add(player);
+            }
+            NixsagenArr = NixsagerList.toArray(new String[]{});
+            Arrays.sort(NixsagenArr);
+        }
+
+        if (null == NixsagenArr)
+            NixsagenArr = new String[0];
+
         if (NixsagenArr.length > 0)
             Nixsagen = android.text.TextUtils.join(", ", NixsagenArr);
 
