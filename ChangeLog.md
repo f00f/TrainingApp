@@ -1,6 +1,13 @@
 TrainingApp -- ChangeLog
 ========================
 
+Version 1.2.1 2014-09-08
+------------------------
+- Bug #3 gefixt: Temperatur nicht anzeigen, falls nicht verfügbar
+- app-Parameter für alle URLs eingeführt.
+- Soft-Keyboard sollte nach Neuladen der Daten verschwinden.
+- 1 neuer Button-Text.
+
 Version 1.2 2014-08-26
 ----------------------
 - Die Abschnitte Absagen und Nichtssagend sind jetzt klappbar.
