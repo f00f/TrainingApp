@@ -21,13 +21,14 @@ Todo
 ++ add comment field to dialog
 + Add link to Einteilung (or implement it)
 + x Std vorm Training nachfragen: hey, was is los?
++ Bei kurzfristiger Meldung: Option Luk/Geza/Hannes anzurufen/SMS zu schreiben.
 + Improve caching logic.
 ++ Make cache persistent.
 ++ Show old data, if no network connection is available.
-++ Show note, if data is older than some threshold.
++++ Show note if data is older than some threshold.
 + Add notice if no valid data is available (e.g. data expired and no network connection)
 + Add Badbild (PHOTO_[THUMB_]URL, replace ${location}, temp replace path in JSON pic.thumb/full)
-+ Groﬂe Datenmengen (z.B. Badbilder) nur bei aktivem WiFi runterladen (uses-permission android.permission.ACCESS_WIFI_STATE)
++ Gro√üe Datenmengen (z.B. Badbilder) nur bei aktivem WiFi runterladen (uses-permission android.permission.ACCESS_WIFI_STATE)
 + Push-Notifications (mit ja/nein)
 + Toasts abwechslungsreich machen
 + Toasts erst zeigen, nachdem der Async call fertig ist.
