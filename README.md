@@ -3,7 +3,7 @@ TrainingApp
 
 Play Store Link
 ===============
-The app is also available in Google's [Play Store](https://play.google.com/store/apps/details?id=de.uwr1.training).
+The app is also available for free in Google's [Play Store](https://play.google.com/store/apps/details?id=de.uwr1.training).
 
 Contact
 =======
@@ -11,14 +11,12 @@ http://uwr1.de/kontakt
 
 Developer Prerequesites
 =======================
-The project files are created with Android Studio 0.8.6
+The project files are created with Android Studio 0.8.6 and tested with 0.8.9
 
 Todo
 ====
-+ Add Nichtsgesagt list
-++ load all-players JSON
-++ an-/abmelden von anderen
-++ add comment field to dialog
++ Nichtssagend-list
+++ (add comment field to dialog)
 + Add link to Einteilung (or implement it)
 + x Std vorm Training nachfragen: hey, was is los?
 + Bei kurzfristiger Meldung: Option Luk/Geza/Hannes anzurufen/SMS zu schreiben.

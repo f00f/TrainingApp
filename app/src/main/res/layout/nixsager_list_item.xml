@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-	<TextView
-		android:id="@+id/nixsager_list_item_name"
-		android:layout_alignParentLeft="true"
+    <TextView
+        android:id="@+id/nixsager_list_item_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/secondary_text_light"
-		android:text="---"
+        android:clickable="true"
         android:onClick="onNixSagerListClick"
-        android:clickable="true"/>
-</RelativeLayout>
+        android:text="This is a dummy Text"
+        android:textColor="@android:color/secondary_text_light" />
+
+    <View
+        android:id="@+id/nixsager_list_item_separator"
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="2dp"
+        android:background="#c0c0c0" />
+</LinearLayout>

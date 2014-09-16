@@ -21,7 +21,7 @@ import android.widget.Toast;
 
 import java.util.Random;
 
-public class ShowTrainingActivity extends ActionBarActivity implements OnTrainingDataLoadedListener, OnApiCallCompletedListener, NixsagerDialogFragment.NixsagerDialogListener {
+public class ShowTrainingActivity extends ActionBarActivity implements OnAsyncDataLoadedListener, OnApiCallCompletedListener {
     private static final String[][] buttonTexts = new String[][] {
             {"Zusage", "Absage"},
             {"Zu", "Ab"},
@@ -72,33 +72,6 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
             {"???", "faul"},
             */
     };
-
-    private void ChangeButtonTexts() {
-        Random rand = new Random();
-        int padding = 16;
-        int maxButtonTextIndex = Math.min(14, buttonTexts.length);
-        int buttonTextIndex = rand.nextInt(maxButtonTextIndex);
-        Button btnYes = (Button)findViewById(R.id.buttonYes);
-        Button btnNo = (Button)findViewById(R.id.buttonNo);
-
-        btnYes.setText(buttonTexts[buttonTextIndex][0]);
-        btnNo.setText(buttonTexts[buttonTextIndex][1]);
-
-        ViewGroup.LayoutParams lp;
-
-        lp = btnYes.getLayoutParams();
-        lp.width = ViewGroup.LayoutParams.WRAP_CONTENT;
-        btnYes.setLayoutParams(lp);
-        btnYes.setPadding(2 * padding, padding, 2 * padding, padding);
-
-        lp = btnNo.getLayoutParams();
-        lp.width = ViewGroup.LayoutParams.WRAP_CONTENT;
-        btnNo.setLayoutParams(lp);
-        btnNo.setPadding(padding, padding, padding, padding);
-
-        btnYes.invalidate();
-        btnNo.invalidate();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,15 +126,21 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
 
         // load JSON data, rendering will happen async after the data was loaded
         Training.loadTrainingData(forceReload);
+        Training.loadPlayersList(forceReload);
     }
 
-    // render Training data
+    // Render Training data
+    // - No TrainingData: Render nothing
+    // - No PlayersList: Render TrainingData
+    // - Both: render everything
     private void render() {
-        if (!Training.isLoaded()) {
+        if (!Training.isTrainingDataLoaded()) {
             // Switch views
             findViewById(R.id.view_loading).setVisibility(View.VISIBLE);
             findViewById(R.id.view_show_overview).setVisibility(View.GONE);
 
+            // TODO: Maybe the PlayersList load request finishes first (e.g. from Cache), then this would be the wrong message.
+            // TODO: But it would be replaced soon, when the TrainingData load request finishes
             TextView loading = (TextView) findViewById(R.id.t_loading);
             loading.setText("Error: Loading training data failed.");
 
@@ -173,6 +152,23 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
 
         findViewById(R.id.view_show_overview).scrollTo(0, 0);
 
+        setSectionVisibilities();
+        renderTrainingData();
+        renderNixsagerList();
+    }
+
+    private void setSectionVisibilities() {
+        // set visibility of Abgesagt and Nixgesagt
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        setSectionVisibility((TextView)findViewById(R.id.title_absagen),
+                findViewById(R.id.training_ab),
+                sharedPref.getBoolean(SettingsActivity.KEY_PREF_ABSAGER_VISIBLE, false));
+        setSectionVisibility((TextView)findViewById(R.id.title_nixsagen),
+                findViewById(R.id.training_nix_container),
+                sharedPref.getBoolean(SettingsActivity.KEY_PREF_NIXSAGER_VISIBLE, false));
+    }
+
+    private void renderTrainingData() {
         int normalBtnTextColor = getResources().getColor(android.R.color.primary_text_light);
         int darkBtnBgColor = getResources().getColor(android.R.color.secondary_text_light);
         int darkBtnTextColor = getResources().getColor(android.R.color.primary_text_dark);
@@ -183,17 +179,17 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
         Button btnNo = (Button) findViewById(R.id.buttonNo);
 
         btnYes.setBackgroundColor(hatAbgesagt
-                                    ? darkBtnBgColor
-                                    : getResources().getColor(R.color.uwr_green));
+                ? darkBtnBgColor
+                : getResources().getColor(R.color.uwr_green));
         btnYes.setTextColor(hatAbgesagt
-                                    ? darkBtnTextColor
-                                    : normalBtnTextColor);
+                ? darkBtnTextColor
+                : normalBtnTextColor);
         btnNo.setBackgroundColor(hatZugesagt
-                                    ? darkBtnBgColor
-                                    : getResources().getColor(R.color.uwr_red));
+                ? darkBtnBgColor
+                : getResources().getColor(R.color.uwr_red));
         btnNo.setTextColor(hatZugesagt
-                                    ? darkBtnTextColor
-                                    : normalBtnTextColor);
+                ? darkBtnTextColor
+                : normalBtnTextColor);
 
         // Switch views
         findViewById(R.id.view_loading).setVisibility(View.GONE);
@@ -208,43 +204,58 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
         TextView ab = (TextView)findViewById(R.id.training_ab);
         ab.setText(Training.getAbsagen());
 
-		// set visibility of Abgesagt and Nixgesagt
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-		setSectionVisibility((TextView)findViewById(R.id.title_absagen),
-							findViewById(R.id.training_ab),
-							sharedPref.getBoolean(SettingsActivity.KEY_PREF_ABSAGER_VISIBLE, false));
-        setSectionVisibility((TextView)findViewById(R.id.title_nixsagen),
-                            findViewById(R.id.training_nix),
-                            sharedPref.getBoolean(SettingsActivity.KEY_PREF_NIXSAGER_VISIBLE, false));
-        setSectionVisibility((TextView)findViewById(R.id.title_nixsagen),
-                            findViewById(R.id.training_nix_list),
-                            sharedPref.getBoolean(SettingsActivity.KEY_PREF_NIXSAGER_VISIBLE, false));
-
-        LinearLayout nixListView = (LinearLayout) findViewById(R.id.training_nix_list);
-        nixListView.removeAllViews();
-        if (Training.getNumNixsager() > 0) {
-            NixSagerAdapter adapter = new NixSagerAdapter(this, R.layout.nixsager_list_item, Training.getNixsagerArray());
-            final int adapterCount = adapter.getCount();
-            for (int i = 0; i < adapterCount; i++) {
-                View item = adapter.getView(i, null, null);
-                nixListView.addView(item);
-            }
-        }
-
         // update stats
         StringBuilder stats = new StringBuilder();
         stats.append("Daten geladen:  \t").append(formatDateTime(Training.getTimestampOfDownload())).append("\n");
         stats.append("Letzte Meldung:\t").append(formatDateTime(Training.getTimestampOfLastEntry()));
         if (Training.hasExtraTemp()) {
             stats.append("\n")
-                .append("Temperatur: ").append(Training.getExtraTemp()).append("\t").append(formatDateTime(Training.getExtraTempUpdated())).append("");
+                    .append("Temperatur: ").append(Training.getExtraTemp()).append("\t").append(formatDateTime(Training.getExtraTempUpdated())).append("");
         }
         ((TextView)findViewById(R.id.training_stats)).setText(stats);
 
-        // clear focus of comment field
+        // hide soft keyboard
+        /*getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);*/
+        /*
+        // clear focus of comment field to hide soft keyboard
         View focused = getCurrentFocus();
-        if (null != focused)
-            focused.clearFocus();
+        EditText commentField = (EditText)findViewById(R.id.edit_comment);
+        if (null != focused && focused == commentField) {
+            commentField.clearFocus();
+            InputMethodManager imm = (InputMethodManager)getSystemService(
+                    Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(commentField.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
+            btnYes.requestFocus();
+        }
+        */
+    }
+
+    private void renderNixsagerList() {
+        View nixListNoData = findViewById(R.id.training_nix_no_data);
+        LinearLayout nixListView = (LinearLayout) findViewById(R.id.training_nix_list);
+
+        nixListView.removeAllViews();
+        Training.populateNixsager(); // TODO: would be nice if that happened in a callback
+
+        if (!Training.isPlayersListLoaded() || 0 == Training.getNumNixsager()) {
+            nixListView.setVisibility(View.GONE);
+            nixListNoData.setVisibility(View.VISIBLE);
+            return;
+        }
+
+        NixSagerAdapter adapter = new NixSagerAdapter(this, R.layout.nixsager_list_item, Training.getNixsager());
+        final int adapterCount = adapter.getCount();
+        for (int i = 0; i < adapterCount; i++) {
+            View item = adapter.getView(i, null, null);
+            if (i == adapterCount - 1) {
+                item.findViewById(R.id.nixsager_list_item_separator).setVisibility(View.GONE);
+            }
+            nixListView.addView(item);
+        }
+
+        nixListNoData.setVisibility(View.GONE);
+        nixListView.setVisibility(View.VISIBLE);
     }
 
     // Click handler for the yes/no buttons
@@ -275,6 +286,8 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
         //refresh();
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
+
+    // Click handler for the NixsagerList dialogs
     public void onNixSagerListClick(View view) {
         // TODO: create dialog
         CharSequence name = ((TextView)view).getText();
@@ -286,52 +299,9 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
         d.setArguments(args);
         d.show(getSupportFragmentManager(), null);
     }
-    // The dialog fragment receives a reference to this Activity through the
-    // Fragment.onAttach() callback, which it uses to call the following methods
-    // defined by the NoticeDialogFragment.NoticeDialogListener interface
-    @Override
-    public void onDialogPositiveClick(android.support.v4.app.DialogFragment dialog) {
-        // User touched the dialog's positive button
-        dialog.dismiss();
-    }
-    @Override
-    public void onDialogNegativeClick(android.support.v4.app.DialogFragment dialog) {
-        // User touched the dialog's negative button
-        dialog.dismiss();
-    }
-    @Override
-    public void onDialogNeutralClick(android.support.v4.app.DialogFragment dialog) {
-        // User touched the dialog's neutral button
-        dialog.dismiss();
-    }
-
-    // Click handler for anything else
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.title_absagen:
-                toggleSectionVisibility((TextView)view, findViewById(R.id.training_ab));
-                break;
-            case R.id.title_nixsagen:
-                toggleSectionVisibility((TextView) view, new View[]{findViewById(R.id.training_nix), findViewById(R.id.training_nix_list)});
-                break;
-            case R.id.buttonReloadNixsager:
-                // TODO: relaod nixgesagt data
-                break;
-        }
-    }
-    public void onSettingsClick(View view) {
-        Intent intent = new Intent(this, SettingsActivity.class);
-        startActivity(intent);
-    }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.overview, menu);
-        return true;
-    }
-
-    @Override
+    // Click handler for the menu
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -359,16 +329,78 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
         }
     }
 
+    // Click handler for the settings menu item
+    // TODO: [Obsolete]?
+    public void onSettingsClick_(View view) {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
+    }
+
+    // Click handler for anything else
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.title_absagen:
+                toggleSectionVisibility((TextView)view, findViewById(R.id.training_ab));
+                break;
+            case R.id.title_nixsagen:
+                toggleSectionVisibility((TextView) view, findViewById(R.id.training_nix_container));
+                break;
+            case R.id.buttonReloadNixsager:
+                boolean forceReload = true;
+                Training.loadPlayersList(forceReload);
+                break;
+        }
+    }
+
     @Override
-    public void onTrainingDataLoaded() {
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.overview, menu);
+        return true;
+    }
+
+    @Override
+    // The callback after loading data async
+    public void onAsyncDataLoaded() {
         render();
     }
 
     @Override
+    // This callback is only invoked after sending a reply.
+    // TODO: Is it?
     public void onApiCallCompleted(String url, String result) {
-        // this method is only invoked after sending a reply.
+        Log.e("", "Is this callback really required? Can this be handled inside the Training class?");
         boolean forceReload = true;
         refresh(forceReload);
+    }
+
+    // PRIVATE METHODS
+
+    private void ChangeButtonTexts() {
+        Random rand = new Random();
+        int padding = 16;
+        int maxButtonTextIndex = Math.min(14, buttonTexts.length);
+        int buttonTextIndex = rand.nextInt(maxButtonTextIndex);
+        Button btnYes = (Button)findViewById(R.id.buttonYes);
+        Button btnNo = (Button)findViewById(R.id.buttonNo);
+
+        btnYes.setText(buttonTexts[buttonTextIndex][0]);
+        btnNo.setText(buttonTexts[buttonTextIndex][1]);
+
+        ViewGroup.LayoutParams lp;
+
+        lp = btnYes.getLayoutParams();
+        lp.width = ViewGroup.LayoutParams.WRAP_CONTENT;
+        btnYes.setLayoutParams(lp);
+        btnYes.setPadding(2 * padding, padding, 2 * padding, padding);
+
+        lp = btnNo.getLayoutParams();
+        lp.width = ViewGroup.LayoutParams.WRAP_CONTENT;
+        btnNo.setLayoutParams(lp);
+        btnNo.setPadding(padding, padding, padding, padding);
+
+        btnYes.invalidate();
+        btnNo.invalidate();
     }
 
     private void setSectionVisibility(TextView header, View content, boolean visible) {
@@ -404,6 +436,7 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnTrainin
 
         setSectionVisibility(header, content, View.GONE == content[0].getVisibility());
     }
+
 	private void showExpandCollapseIcon(TextView view, boolean isExpanded) {
 		if (isExpanded) {
 			Drawable d = getResources().getDrawable(R.drawable.ic_action_collapse);

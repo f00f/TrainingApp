@@ -20,7 +20,6 @@ public class TrainingData {
     public String Location;
     public String Zusagen = "---";
     public String Absagen = "---";
-    public String Nixsagen = "---";
     public long Expires; // wann ist das Training (zu Ende)?
     public long Updated; // von wann ist der letzte Eintrag?
     public long Timestamp; // wann wurde das JSON runtergeladen?
@@ -31,7 +30,6 @@ public class TrainingData {
     // private
     private String[] ZusagenArr;
     private String[] AbsagenArr;
-    public String[] NixsagenArr;
     private String[] ZusagenNamesArr;
     private String[] AbsagenNamesArr;
 
@@ -51,9 +49,9 @@ public class TrainingData {
     public int getNumAbsagen() {
         return AbsagenArr.length;
     }
-    public int getNumNixsager() {
-        return NixsagenArr.length;
-    }
+    /*public int getNumNixsager() {
+        return NixsagerArr.length;
+    }*/
 
     // check whether a user will not participate
     public boolean hatAbgesagt(String username) {
@@ -74,7 +72,6 @@ public class TrainingData {
     public boolean parseJSON(String json) {
         Zusagen = "---";
         Absagen = "---";
-        Nixsagen = "---";
 
         JSONObject jo;
         try {
@@ -97,13 +94,10 @@ public class TrainingData {
         }
         // get optional information
         try {
-            ZusagenArr = getStringArray(jo, "zu");
+            ZusagenArr = JsonHelper.getStringArray(jo, "zu");
         } catch(JSONException e) { /* empty */ }
         try {
-            AbsagenArr = getStringArray(jo, "ab");
-        } catch(JSONException e) { /* empty */ }
-        try {
-            NixsagenArr = getStringArray(jo, "nix");
+            AbsagenArr = JsonHelper.getStringArray(jo, "ab");
         } catch(JSONException e) { /* empty */ }
         // get optional information
         JSONObject joX = null;
@@ -144,33 +138,6 @@ public class TrainingData {
             }
         }
 
-        // TODO: load json data
-        json = "{\"names\":[\"Lorem\",\"Ipsum\",\"Dolor\"]}";
-        String[] allPlayers = null;
-        try {
-            allPlayers = getStringArray(new JSONObject(json), "names");
-        } catch (JSONException e) { /* empty */ }
-        if (null == allPlayers || 0 == allPlayers.length) {
-            NixsagenArr = new String[] {};
-        } else {
-            ArrayList<String> NixsagerList = new ArrayList<String>();
-            for (String player : allPlayers) {
-                if (hatZugesagt(player))
-                    continue;
-                if (hatAbgesagt(player))
-                    continue;
-                NixsagerList.add(player);
-            }
-            NixsagenArr = NixsagerList.toArray(new String[]{});
-            Arrays.sort(NixsagenArr);
-        }
-
-        if (null == NixsagenArr)
-            NixsagenArr = new String[0];
-
-        if (NixsagenArr.length > 0)
-            Nixsagen = android.text.TextUtils.join(", ", NixsagenArr);
-
         return true;
     }
 
@@ -205,24 +172,4 @@ public class TrainingData {
     private static String getName(String s) {
         return s;
     }
-
-    // Extract String array of 'name' out of the JSON object 'jo'.
-    private static String[] getStringArray(JSONObject jo, String name) throws JSONException {
-        JSONArray ja = jo.getJSONArray(name);
-        if (0 == ja.length()) {
-            return null;
-        }
-
-        String[] res = new String[ja.length()];
-        for (int i = 0; i < ja.length(); i++) {
-            res[i] = ja.getString(i);
-        }
-
-        if (1 == res.length && res[0].isEmpty()) {
-            return null;
-        }
-
-        return res;
-    }
-
 }

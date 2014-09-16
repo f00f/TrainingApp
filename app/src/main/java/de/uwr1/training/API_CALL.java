@@ -86,7 +86,7 @@ public class API_CALL extends AsyncTask<String, Integer, String> {
     }
 
     protected void onPostExecute(String json) {
-        // TODO: check this.exception
+        // TODO: check this.exception, or pass it on
         if (null != onCompleteListener) {
             onCompleteListener.onApiCallCompleted(url, json);
         }

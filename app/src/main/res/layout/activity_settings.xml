@@ -3,22 +3,23 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="de.uwr1.training.SettingsActivity"
     android:orientation="vertical"
+    tools:context="de.uwr1.training.SettingsActivity"
     tools:ignore="MergeRootFrame">
 
     <fragment
-        android:name="de.uwr1.training.SettingsFragment"
         android:id="@+id/fragment_settings"
+        android:name="de.uwr1.training.SettingsFragment"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
+
     <fragment
-        android:name="de.uwr1.training.VersionFragment"
         android:id="@+id/fragment_version"
+        android:name="de.uwr1.training.VersionFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="7dp"
+        android:layout_marginTop="10dp"
         tools:layout="@layout/fragment_version" />
 
 </LinearLayout>
