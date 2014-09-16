@@ -379,7 +379,7 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnAsyncDa
     private void ChangeButtonTexts() {
         Random rand = new Random();
         int padding = 16;
-        int maxButtonTextIndex = Math.min(14, buttonTexts.length);
+        int maxButtonTextIndex = Math.min(16, buttonTexts.length);
         int buttonTextIndex = rand.nextInt(maxButtonTextIndex);
         Button btnYes = (Button)findViewById(R.id.buttonYes);
         Button btnNo = (Button)findViewById(R.id.buttonNo);

@@ -1,6 +1,14 @@
 TrainingApp -- ChangeLog
 ========================
 
+Version 1.3.1 2014-09-16
+------------------------
+- 2 neue Button-Texte.
+
+Version 1.3 2014-09-16
+----------------------
+- Nixsager Liste funktioniert.
+
 Version 1.2.1 2014-09-08
 ------------------------
 - Bug #3 gefixt: Temperatur nicht anzeigen, falls nicht verfügbar
