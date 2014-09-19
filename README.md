@@ -17,9 +17,9 @@ Todo
 ====
 + Memorize own comment. Allows for easier editing of it.
 + Improve caching logic.
-++ Make cache persistent.
-++ Show old data, if no network connection is available.
-+++ Show note if data is older than some threshold.
+  + Make cache persistent.
+  + Show old data, if no network connection is available.
+    + Show note if data is older than some threshold.
 + Add link to Einteilung (or implement it)
 + Push-Notifications (mit ja/nein)
 + Toasts erst zeigen, nachdem der Async call fertig ist.
@@ -32,7 +32,7 @@ Todo
 + Tilman: Fahrplanung, Statistik-Tool
 + Add version auto-increment
 + Nichtssagend-list
-++ (add comment field to dialog)
+  + (add comment field to dialog)
 
 Acknowledgements
 ================
