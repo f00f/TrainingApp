@@ -1,6 +1,15 @@
 TrainingApp -- ChangeLog
 ========================
 
+Version 1.4 2014-09-16
+----------------------
+- Umlaute in Namen und Kommentar funktionieren.
+- Menü aufgeteilt: Eines in der normalen Ansicht, und eines für den Einstellungen-Screen.
+- "Zur Webseite" zum Einstellungen-Menü hinzugefügt.
+- detailiertere Versionsinfos zur Einstellungen-Ansicht hinzugefügt.
+- Feedback-Text zur Einstellungen-Ansicht hinzugefügt.
+- 2 neue Button-Texte.
+
 Version 1.3.1 2014-09-16
 ------------------------
 - 2 neue Button-Texte.
