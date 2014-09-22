@@ -65,7 +65,7 @@ public class Config {
         String url = null;
         String url_key = isZusage ? KEY_REPLY_URL_YES : KEY_REPLY_URL_NO;
         try {
-            url = Config.getURL(ctx, url_key) + URLEncoder.encode(text, "UTF-8");
+            url = Config.getURL(ctx, url_key) + URLEncoder.encode(text, "ISO-8859-1"/*"UTF-8"*/);
         } catch (UnsupportedEncodingException e) { /* empty */ }
         return url;
     }

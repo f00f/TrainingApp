@@ -25,6 +25,8 @@ Todo
 + Toasts erst zeigen, nachdem der Async call fertig ist.
 + x Std vorm Training nachfragen: hey, was is los?
 + Bei kurzfristiger Meldung: Option Luk/Geza/Hannes anzurufen/SMS/App Notification zu schreiben.
++ Add Updated/ChangeLog message
++ Bei kurzfristiger Meldung: Option Luk/Geza/Hannes anzurufen/SMS zu schreiben.
 + Add notice if no valid data is available (e.g. data expired and no network connection)
 + Add Badbild (PHOTO_[THUMB_]URL, replace ${location}, temp replace path in JSON pic.thumb/full)
 + Große Datenmengen (z.B. Badbilder) nur bei aktivem WiFi runterladen (uses-permission android.permission.ACCESS_WIFI_STATE)
