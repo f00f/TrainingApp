@@ -33,6 +33,8 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         if (key.equals(SettingsActivity.KEY_PREF_CLUB)) {
             if (summary.isEmpty()) {
                 summary = getString(R.string.pref_club_summary_default);
+            } else {
+                summary = FindClubName(summary);
             }
             findPreference(key)
                     .setSummary(summary);
@@ -62,9 +64,22 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         //getArray(R.array.pref_club_entryValues)
         if (summary.isEmpty()) {
             summary = getString(R.string.pref_club_summary_default);
+        } else {
+            summary = FindClubName(summary);
         }
         findPreference(key)
                 .setSummary(summary);
+    }
+
+    private String FindClubName(String summary) {
+        String[] long_ = getResources().getStringArray(R.array.pref_club_entries);
+        String[] short_ = getResources().getStringArray(R.array.pref_club_entryValues);
+        for (int i = 0; i < short_.length; i++){
+            if (summary.equals(short_[i]))
+                return long_[i];
+        }
+
+        return summary;
     }
 
     @Override
