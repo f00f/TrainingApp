@@ -22,7 +22,7 @@ import android.widget.Toast;
 import java.util.Random;
 
 public class ShowTrainingActivity extends ActionBarActivity implements OnAsyncDataLoadedListener, OnApiCallCompletedListener {
-    private static final String[][] buttonTexts = new String[][] {
+    public static final String[][] buttonTexts = new String[][] {
             {"Zusage", "Absage"},
             {"Zu", "Ab"},
             {"Yo", "No"},
@@ -365,7 +365,7 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnAsyncDa
     private void ChangeButtonTexts() {
         Random rand = new Random();
         int padding = 16;
-        int maxButtonTextIndex = Math.min(16, buttonTexts.length);
+        int maxButtonTextIndex = Math.min(Config.getNumButtonTexts(), Config.getNumAvailableButtonTexts());
         int buttonTextIndex = rand.nextInt(maxButtonTextIndex);
         Button btnYes = (Button)findViewById(R.id.buttonYes);
         Button btnNo = (Button)findViewById(R.id.buttonNo);

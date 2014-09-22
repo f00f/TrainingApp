@@ -2,4 +2,5 @@
 <resources>
     <color name="uwr_green">#ff669900</color>
     <color name="uwr_red">#ffcc0000</color>
+    <color name="separator">#c0c0c0</color>
 </resources>

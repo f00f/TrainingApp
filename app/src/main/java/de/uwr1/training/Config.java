@@ -17,6 +17,9 @@ import java.util.Map;
  * Created by f00f on 03.07.2014.
  */
 public class Config {
+    public static final int NUM_BUTTON_TEXTS = 18;
+
+    public static final String KEY_NUM_BUTTON_TEXTS = "NUM_BUTTON_TEXTS";
     public static final String KEY_BASE_URL = "BASE_URL";
     public static final String KEY_JSON_BASE_URL = "JSON_BASE_URL";
     public static final String KEY_JSON_URL = "JSON_URL";
@@ -30,6 +33,7 @@ public class Config {
     private static final Map<String, String> APP_CONFIG;
     static {
         Map<String, String> aMap = new HashMap<String, String>();
+        aMap.put(KEY_NUM_BUTTON_TEXTS, String.valueOf(NUM_BUTTON_TEXTS));
         aMap.put(KEY_BASE_URL, "http://%club_id%.uwr1.de/training/");
         aMap.put(KEY_JSON_BASE_URL, aMap.get(KEY_BASE_URL) + "json/");
         aMap.put(KEY_JSON_URL, aMap.get(KEY_JSON_BASE_URL) + "training.json");
@@ -90,5 +94,14 @@ public class Config {
             e.printStackTrace();
         }
         return myVersionName;
+    }
+
+    public static int getNumButtonTexts() {
+        String num = Config.getAppConfigValue(KEY_NUM_BUTTON_TEXTS);
+        return Integer.parseInt(num);
+    }
+
+    public static int getNumAvailableButtonTexts() {
+        return ShowTrainingActivity.buttonTexts.length;
     }
 }

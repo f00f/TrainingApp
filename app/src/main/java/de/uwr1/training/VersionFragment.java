@@ -25,7 +25,10 @@ public class VersionFragment extends Fragment {
         View my_view = inflater.inflate(R.layout.fragment_version, container, false);
 
         ((TextView)my_view.findViewById(R.id.version))
-            .setText(getString(R.string.app_name) + " " + getString(R.string.lbl_version) + " " + Config.getVersion(this));
+            .setText("App: " + getString(R.string.app_name) + "\n"
+                    + getString(R.string.lbl_version) + " " + Config.getVersion(this) + "\n"
+                    + getString(R.string.lbl_num_btn_texts) + " " + Config.getNumButtonTexts() + "/" + Config.getNumAvailableButtonTexts()
+            );
 
         return my_view;
     }
