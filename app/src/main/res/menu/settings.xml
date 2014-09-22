@@ -1,0 +1,23 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Settings">
+
+    <item android:id="@+id/action_goto_website"
+        android:menuCategory="secondary"
+        android:title="@string/action_goto_website"
+        android:orderInCategory="205"
+        app:showAsAction="never" />
+    <item android:id="@+id/action_server_reload"
+        android:menuCategory="secondary"
+        android:title="@string/action_server_reload"
+        android:icon="@drawable/ic_action_cloud"
+        android:orderInCategory="210"
+        app:showAsAction="never" />
+    <item android:id="@+id/action_reset_app"
+        android:menuCategory="secondary"
+        android:title="@string/action_reset"
+        android:icon="@drawable/ic_action_undo"
+        android:orderInCategory="220"
+        app:showAsAction="never" />
+</menu>

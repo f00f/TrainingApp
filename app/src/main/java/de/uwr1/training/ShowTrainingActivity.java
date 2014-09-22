@@ -266,7 +266,7 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnAsyncDa
         String text = Config.getUsername(this);
         String comment = ((EditText)findViewById(R.id.edit_comment)).getText().toString();
         if (!comment.isEmpty()) {
-            text += " (" + comment + ")";
+            text += " (" + comment.trim() + ")";
         }
         switch (view.getId()) {
             case R.id.buttonYes:
@@ -317,23 +317,9 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnAsyncDa
                 Intent intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 return true;
-            case R.id.action_server_reload:
-                Training.requestServerReload();
-                return true;
-            case R.id.action_reset_app:
-                PreferenceManager.setDefaultValues(this, R.xml.preferences, true);
-                Toast.makeText(this, R.string.msg_reset, Toast.LENGTH_LONG).show();
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    // Click handler for the settings menu item
-    // TODO: [Obsolete]?
-    public void onSettingsClick_(View view) {
-        Intent intent = new Intent(this, SettingsActivity.class);
-        startActivity(intent);
     }
 
     // Click handler for anything else
