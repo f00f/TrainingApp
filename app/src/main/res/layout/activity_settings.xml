@@ -28,4 +28,19 @@
         android:layout_marginLeft="7dp"
         tools:layout="@layout/fragment_version" />
 
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/separator" />
+
+    <fragment
+        android:id="@+id/fragment_feedback"
+        android:name="de.uwr1.training.FeedbackFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="7dp"
+        tools:layout="@layout/fragment_feedback" />
+
 </LinearLayout>
