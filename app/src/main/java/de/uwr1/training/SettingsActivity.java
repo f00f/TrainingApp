@@ -73,9 +73,9 @@ public class SettingsActivity extends ActionBarActivity {
 
                 /* Fill it with Data */
                 emailIntent.setType("plain/text");
-                emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{getString(R.string.link_github)});
+                emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{getString(R.string.link_mail)});
                 emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Feedback zur UWR Training App");
-                emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Text");
+                //emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Text");
 
                 /* Send it off to the Activity-Chooser */
                 startActivity(Intent.createChooser(emailIntent, "E-Mail schicken..."));
