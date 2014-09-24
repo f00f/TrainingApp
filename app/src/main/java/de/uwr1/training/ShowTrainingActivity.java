@@ -169,15 +169,15 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnAsyncDa
     }
 
     private void renderTrainingData() {
+        boolean hatZugesagt = Training.hatZugesagt();
+        boolean hatAbgesagt = Training.hatAbgesagt();
+
+        // Button colors
         int normalBtnTextColor = getResources().getColor(android.R.color.primary_text_light);
         int darkBtnBgColor = getResources().getColor(android.R.color.secondary_text_light);
         int darkBtnTextColor = getResources().getColor(android.R.color.primary_text_dark);
-
-        boolean hatZugesagt = Training.hatZugesagt();
-        boolean hatAbgesagt = Training.hatAbgesagt();
         Button btnYes = (Button) findViewById(R.id.buttonYes);
         Button btnNo = (Button) findViewById(R.id.buttonNo);
-
         btnYes.setBackgroundColor(hatAbgesagt
                 ? darkBtnBgColor
                 : getResources().getColor(R.color.uwr_green));
@@ -190,6 +190,14 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnAsyncDa
         btnNo.setTextColor(hatZugesagt
                 ? darkBtnTextColor
                 : normalBtnTextColor);
+
+        // Comment field
+        if (hatZugesagt || hatAbgesagt) {
+            String comment = Training.getComment();
+            if (null != comment && !comment.isEmpty()) {
+                ((TextView) findViewById(R.id.edit_comment)).setText(comment);
+            }
+        }
 
         // Switch views
         findViewById(R.id.view_loading).setVisibility(View.GONE);

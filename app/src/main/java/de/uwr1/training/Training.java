@@ -169,6 +169,17 @@ public class Training implements OnApiCallCompletedListener {
         return trainingData.hatZugesagt(username);
     }
 
+    public static String getComment() {
+        String username = Config.getUsername(context);
+        String replyText = trainingData.getReplyText(username);
+        String comment = replyText.replaceFirst(username, "").trim();
+        // remove parentheses
+        if (comment.charAt(0) == '(' && comment.charAt(comment.length() - 1) == ')') {
+            comment = comment.substring(1, comment.length() - 1);
+        }
+        return comment;
+    }
+
     public static String[] getNixsager() {
         if (null == NixsagerArr) {
             populateNixsager();

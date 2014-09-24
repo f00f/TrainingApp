@@ -147,12 +147,34 @@ public class TrainingData {
         if (null == _sagenNamesArr || null == username || username.isEmpty())
             return false;
 
+        return getReplyText(_sagenNamesArr, username) != null;
+    }
+
+    public String getReplyText(String username) {
+        String replyText;
+
+        if (null == username || username.isEmpty())
+            return null;
+
+        replyText = getReplyText(ZusagenArr, username);
+        if (null != replyText) {
+            return replyText;
+        }
+
+        replyText = getReplyText(AbsagenArr, username);
+        return replyText;
+    }
+    // Returns: null on not found, full text on found.
+    private static String getReplyText(String[] _sagenNamesArr, String username) {
+        if (null == _sagenNamesArr)
+            return null;
+
         for (String text : _sagenNamesArr) {
             if (!text.startsWith(username)) {
                 continue;
             }
             if (text.equalsIgnoreCase(username)) {
-                return true;
+                return text;
             }
             if (text.length() <= username.length()) {
                 continue;
@@ -162,10 +184,10 @@ public class TrainingData {
             boolean isUppercaseLetter = (c >= 'A' && c <= 'Z');
             boolean isUmlaut = false; // BUG HERE: yes, we ignore Umlaute
             if (!isLowercaseLetter && !isUppercaseLetter && !isUmlaut) {
-                return true;
+                return text;
             }
         }
-        return false;
+        return null;
     }
 
     // TODO: implement FirstWord
