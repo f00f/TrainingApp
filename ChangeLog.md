@@ -1,7 +1,13 @@
 TrainingApp -- ChangeLog
 ========================
 
-Version 1.4 2014-09-16
+Version 1.5 2014-09-24
+----------------------
+- Zeigt eigenen Kommentar wieder an.
+- Bug fixes.
+- 1 neuer Button Text.
+
+Version 1.4 2014-09-23
 ----------------------
 - Umlaute in Namen und Kommentar funktionieren.
 - Menü aufgeteilt: Eines in der normalen Ansicht, und eines für den Einstellungen-Screen.

@@ -15,7 +15,6 @@ The project files are created with Android Studio 0.8.6 and tested with 0.8.9
 
 Todo
 ====
-+ Memorize own comment. Allows for easier editing of it.
 + Improve caching logic.
   + Make cache persistent.
   + Show old data, if no network connection is available.
