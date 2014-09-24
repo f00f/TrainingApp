@@ -12,8 +12,8 @@
     <string name="pref_club_title">Dein Verein</string>
     <string name="pref_club_summary_default">Kein Verein ausgewählt</string>
     <string name="pref_club_default"></string>
-    <string name="lbl_version">Version:</string>
-    <string name="version_default">Version: unknown</string>
+    <string name="lbl_version">Version</string>
+    <string name="version_default">Version: unbekannt</string>
     <string name="msg_reset">Alle Einstellungen wurden zurückgesetzt.</string>
     <string name="msg_welcome">Hallo!\n\nDu musst nur noch kurz deinen Verein und deinen Namen angeben, dann geht\'s los.\n\nViel Spaß,\nHannes</string>
     <string name="loading_data">Lade Daten...</string>
@@ -34,10 +34,10 @@
     <string name="cancel">Abbrechen</string>
     <string name="nixdialog_ab">Ab</string>
     <string name="nixdialog_an">An</string>
-    <string name="lbl_num_btn_texts"># Button Texte:</string>
+    <string name="lbl_num_btn_texts">Button Texte</string>
     <string name="feedback_rate">Dir gefällt die UWR Training App? Dann erzähl anderen davon, oder bewerte Sie im Play Store.</string>
     <string name="feedback_mail">Du hast eine Anregung für neue Button Texte? Du hast einen anderen Verbesserungsvorschlag für die App? Dann Mail an</string>
-    <string name="feedback_github">Oder einfach auf github mitentwickeln.</string>
+    <string name="feedback_github">Oder einfach auf github mitentwickeln:</string>
     <string name="title_version">Versionsinfos</string>
     <string name="title_feedback">Feedback</string>
     <string name="link_github">https://github.com/f00f/TrainingApp</string>
