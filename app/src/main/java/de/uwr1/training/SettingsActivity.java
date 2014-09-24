@@ -72,13 +72,17 @@ public class SettingsActivity extends ActionBarActivity {
                 final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
 
                 /* Fill it with Data */
-                emailIntent.setType("plain/text");
-                emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{getString(R.string.link_github)});
+                emailIntent.setType("message/rfc822");
+                emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{getString(R.string.link_mail)});
                 emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Feedback zur UWR Training App");
-                emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Text");
+                //emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Text");
 
                 /* Send it off to the Activity-Chooser */
-                startActivity(Intent.createChooser(emailIntent, "E-Mail schicken..."));
+                try {
+                    startActivity(Intent.createChooser(emailIntent, "E-Mail schicken..."));
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(SettingsActivity.this, "Du hast keine E-Mail App installiert.", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.link_github:
                 final Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.link_github)));
