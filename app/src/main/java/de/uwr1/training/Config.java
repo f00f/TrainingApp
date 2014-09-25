@@ -17,19 +17,19 @@ import java.util.Map;
  * Created by f00f on 03.07.2014.
  */
 public class Config {
-    public static final int NUM_BUTTON_TEXTS = 20;
+    private static final int NUM_BUTTON_TEXTS = 20;
 
-    public static final String KEY_NUM_BUTTON_TEXTS = "NUM_BUTTON_TEXTS";
-    public static final String KEY_PLAY_STORE_URL = "KEY_PLAY_STORE_URL";
+    private static final String KEY_NUM_BUTTON_TEXTS = "NUM_BUTTON_TEXTS";
+    private static final String KEY_PLAY_STORE_URL = "PLAY_STORE_URL";
     public static final String KEY_BASE_URL = "BASE_URL";
-    public static final String KEY_JSON_BASE_URL = "JSON_BASE_URL";
+    private static final String KEY_JSON_BASE_URL = "JSON_BASE_URL";
     public static final String KEY_JSON_URL = "JSON_URL";
     public static final String KEY_JSON_PLAYERS_URL = "JSON_PLAYERS_URL";
     public static final String KEY_REFRESH_URL = "REFRESH_URL";
-    public static final String KEY_REPLY_URL_YES = "REPLY_URL_YES";
-    public static final String KEY_REPLY_URL_NO = "REPLY_URL_NO";
-    public static final String KEY_PHOTO_URL = "PHOTO_URL";
-    public static final String KEY_PHOTO_THUMB_URL = "PHOTO_THUMB_URL";
+    private static final String KEY_REPLY_URL_YES = "REPLY_URL_YES";
+    private static final String KEY_REPLY_URL_NO = "REPLY_URL_NO";
+    private static final String KEY_PHOTO_URL = "PHOTO_URL";
+    private static final String KEY_PHOTO_THUMB_URL = "PHOTO_THUMB_URL";
 
     private static final Map<String, String> APP_CONFIG;
     static {
@@ -37,12 +37,15 @@ public class Config {
         aMap.put(KEY_NUM_BUTTON_TEXTS, String.valueOf(NUM_BUTTON_TEXTS));
         aMap.put(KEY_PLAY_STORE_URL, "https://play.google.com/store/apps/details?id=de.uwr1.training");
         aMap.put(KEY_BASE_URL, "http://%club_id%.uwr1.de/training/");
+        // JSON URLs
         aMap.put(KEY_JSON_BASE_URL, aMap.get(KEY_BASE_URL) + "json/");
         aMap.put(KEY_JSON_URL, aMap.get(KEY_JSON_BASE_URL) + "training.json");
         aMap.put(KEY_JSON_PLAYERS_URL, aMap.get(KEY_JSON_BASE_URL) + "all-players.json");
-        aMap.put(KEY_REFRESH_URL, aMap.get(KEY_BASE_URL) + "training.php?app=android");
+        // Refresh and reply URLs
+        aMap.put(KEY_REFRESH_URL, aMap.get(KEY_BASE_URL) + "training.php?app=android&app_ver=%app_ver%&club_id=%club_id%");
         aMap.put(KEY_REPLY_URL_YES, aMap.get(KEY_REFRESH_URL) + "&zusage=1&text=");
         aMap.put(KEY_REPLY_URL_NO, aMap.get(KEY_REFRESH_URL) + "&absage=1&text=");
+        // Photo URLs
         aMap.put(KEY_PHOTO_URL, aMap.get(KEY_BASE_URL) + "badbilder/${location}/");
         aMap.put(KEY_PHOTO_THUMB_URL, aMap.get(KEY_BASE_URL) + "badbilder/thumbs/${location}/");
         APP_CONFIG = Collections.unmodifiableMap(aMap);
