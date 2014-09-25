@@ -77,8 +77,10 @@ public class Config {
     }
     public static String getURL(Context ctx, String key) {
         String club_id = Config.getClubId(ctx);
+        String app_ver = Config.getVersion(ctx);
         String url = Config.getAppConfigValue(key);
         url = url.replace("%club_id%", club_id);
+        url = url.replace("%app_ver%", app_ver);
         return url;
     }
     public static String getUsername(Context ctx) {
