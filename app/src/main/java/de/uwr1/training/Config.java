@@ -17,7 +17,7 @@ import java.util.Map;
  * Created by f00f on 03.07.2014.
  */
 public class Config {
-    public static final int NUM_BUTTON_TEXTS = 19;
+    public static final int NUM_BUTTON_TEXTS = 20;
 
     public static final String KEY_NUM_BUTTON_TEXTS = "NUM_BUTTON_TEXTS";
     public static final String KEY_PLAY_STORE_URL = "KEY_PLAY_STORE_URL";

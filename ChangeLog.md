@@ -1,6 +1,11 @@
 TrainingApp -- ChangeLog
 ========================
 
+Version 1.5.1 2014-09-25
+------------------------
+- Bug fix: Crash wenn man keinen Kommentar eingegeben hatte.
+- 1 neuer Button Text.
+
 Version 1.5 2014-09-24
 ----------------------
 - Zeigt eigenen Kommentar wieder an.

@@ -172,10 +172,14 @@ public class Training implements OnApiCallCompletedListener {
     public static String getComment() {
         String username = Config.getUsername(context);
         String replyText = trainingData.getReplyText(username);
-        String comment = replyText.replaceFirst(username, "").trim();
-        // remove parentheses
-        if (comment.charAt(0) == '(' && comment.charAt(comment.length() - 1) == ')') {
-            comment = comment.substring(1, comment.length() - 1);
+        String comment = null;
+        if (null != replyText && !replyText.isEmpty()) {
+            comment = replyText.substring(username.length()).trim();
+            // remove parentheses
+            int commLen = comment.length();
+            if (commLen >= 2 && comment.charAt(0) == '(' && comment.charAt(commLen - 1) == ')') {
+                comment = comment.substring(1, commLen - 1);
+            }
         }
         return comment;
     }
