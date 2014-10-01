@@ -30,6 +30,8 @@ public class Config {
     private static final String KEY_REPLY_URL_NO = "REPLY_URL_NO";
     private static final String KEY_PHOTO_URL = "PHOTO_URL";
     private static final String KEY_PHOTO_THUMB_URL = "PHOTO_THUMB_URL";
+    private static final String KEY_PREF_INSTALLED_VERSION_ID = "INSTALLED_VERSION_ID";
+    private static final String KEY_PREF_INSTALLED_VERSION_NAME = "INSTALLED_VERSION_NAME";
 
     private static final Map<String, String> APP_CONFIG;
     static {
@@ -66,6 +68,18 @@ public class Config {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ctx);
         return sharedPref.getString(key, defaultValue);
     }
+    private static void setUserConfigValue(Context ctx, String key, String value) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ctx);
+        SharedPreferences.Editor ed = sharedPref.edit();
+        ed.putString(key, value);
+        ed.apply();
+    }
+    private static void setUserConfigValue(Context ctx, String key, int value) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ctx);
+        SharedPreferences.Editor ed = sharedPref.edit();
+        ed.putInt(key, value);
+        ed.apply();
+    }
 
     public static String getClubId(Context ctx) {
         return Config.getUserConfigValue(ctx, SettingsActivity.KEY_PREF_CLUB);
@@ -80,19 +94,19 @@ public class Config {
     }
     public static String getURL(Context ctx, String key) {
         String club_id = Config.getClubId(ctx);
-        String app_ver = Config.getVersion(ctx);
+        int app_ver = Config.getVersionId(ctx);
         String url = Config.getAppConfigValue(key);
         url = url.replace("%club_id%", club_id);
-        url = url.replace("%app_ver%", app_ver);
+        url = url.replace("%app_ver%", Integer.toString(app_ver));
         return url;
     }
     public static String getUsername(Context ctx) {
         return Config.getUserConfigValue(ctx, SettingsActivity.KEY_PREF_USERNAME).trim();
     }
-    public static String getVersion(Fragment f) {
-        return getVersion(f.getActivity());
+    public static String getVersionName(Fragment f) {
+        return getVersionName(f.getActivity());
     }
-    public static String getVersion(Context ctx) {
+    public static String getVersionName(Context ctx) {
         String myVersionName = "not available"; // initialize String
 
         try {
@@ -101,6 +115,28 @@ public class Config {
             e.printStackTrace();
         }
         return myVersionName;
+    }
+
+    public static int getInstalledVersionId(Context ctx) {
+        return Integer.parseInt(getUserConfigValue(ctx, KEY_PREF_INSTALLED_VERSION_ID));
+    }
+    public static String getInstalledVersionName(Context ctx) {
+        return getUserConfigValue(ctx, KEY_PREF_INSTALLED_VERSION_NAME);
+    }
+    public static void setInstalledVersion(Context ctx) {
+        setUserConfigValue(ctx, KEY_PREF_INSTALLED_VERSION_ID, getVersionId(ctx));
+        setUserConfigValue(ctx, KEY_PREF_INSTALLED_VERSION_NAME, getVersionName(ctx));
+    }
+
+    public static int getVersionId(Context ctx) {
+        int myVersionId = -1; // initialize version id
+
+        try {
+            myVersionId = ctx.getPackageManager().getPackageInfo(ctx.getPackageName(), 0).versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return myVersionId;
     }
 
     public static int getNumButtonTexts() {

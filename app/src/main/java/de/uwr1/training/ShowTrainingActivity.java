@@ -79,6 +79,10 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnAsyncDa
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
+        if (wasUpdated()) {
+            // TODO: show changelog or something.
+        }
+
         Training.Init(this, this, this);
 
         setContentView(R.layout.activity_overview);
@@ -87,6 +91,12 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnAsyncDa
 
         // Reset view visibility
         showView(R.id.view_loading);
+    }
+
+    private boolean wasUpdated() {
+        boolean wasUpdated = Config.getInstalledVersionId(this) != Config.getVersionId(this);
+        Config.setInstalledVersion(this);
+        return wasUpdated;
     }
 
     @Override
