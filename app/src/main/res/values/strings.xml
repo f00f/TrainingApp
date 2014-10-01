@@ -17,6 +17,7 @@
     <string name="msg_reset">Alle Einstellungen wurden zurückgesetzt.</string>
     <string name="msg_welcome">Hallo!\n\nDu musst nur noch kurz deinen Verein und deinen Namen angeben, dann geht\'s los.\n\nViel Spaß,\nHannes</string>
     <string name="loading_data">Lade Daten...</string>
+    <string name="loading_data_failed">Fehler: Die Trainingsdaten konnten nicht geladen werden. Möglicherweise funktioniert deine Internetverbindung gerade nicht?</string>
     <string name="title_general_info">Nächstes Training:</string>
     <string name="lbl_general_info_default">Mo, 01.01. um 11:30 - 12:30 in Zapfendorf</string>
     <string name="title_zusagen">Zusagen</string>

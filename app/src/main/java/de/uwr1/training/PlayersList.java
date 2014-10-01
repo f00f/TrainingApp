@@ -101,6 +101,10 @@ public class PlayersList implements OnApiCallCompletedListener {
         PlayersList.data = new PlayersListData();
         boolean res = PlayersList.data.parseJSON(result);
         if (!res) {
+            PlayersList.data = null;
+            if (null != onAsyncDataLoadedListener) {
+                onAsyncDataLoadedListener.onAsyncDataLoaded(OnAsyncDataLoadedListener.STATUS_ERROR);
+            }
             return;
         }
 
@@ -115,7 +119,7 @@ public class PlayersList implements OnApiCallCompletedListener {
         cache.put(url, PlayersList.data);
 
         if (null != onAsyncDataLoadedListener) {
-            onAsyncDataLoadedListener.onAsyncDataLoaded();
+            onAsyncDataLoadedListener.onAsyncDataLoaded(OnAsyncDataLoadedListener.STATUS_SUCCESS);
         }
     }
 
@@ -131,7 +135,7 @@ public class PlayersList implements OnApiCallCompletedListener {
                 if (age < CACHE_MAX_AGE * 1000) {
                     if (!PlayersList.data.isExpired()){
                         Log.w("UWR_Training::PlayersList::loadPlayersListCached", "Found valid cache entry.");
-                        onAsyncDataLoadedListener.onAsyncDataLoaded();
+                        onAsyncDataLoadedListener.onAsyncDataLoaded(OnAsyncDataLoadedListener.STATUS_CACHED);
                         return;
                     }
                 }

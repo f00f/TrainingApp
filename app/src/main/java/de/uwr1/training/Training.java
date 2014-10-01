@@ -3,9 +3,6 @@ package de.uwr1.training;
 import android.content.Context;
 import android.util.Log;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -73,6 +70,10 @@ public class Training implements OnApiCallCompletedListener {
         Training.trainingData = new TrainingData();
         boolean res = Training.trainingData.parseJSON(result);
         if (!res) {
+            Training.trainingData = null;
+            if (null != onAsyncDataLoadedListener) {
+                onAsyncDataLoadedListener.onAsyncDataLoaded(OnAsyncDataLoadedListener.STATUS_ERROR);
+            }
             return;
         }
 
@@ -90,7 +91,7 @@ public class Training implements OnApiCallCompletedListener {
         cache.put(url, Training.trainingData);
 
         if (null != onAsyncDataLoadedListener) {
-            onAsyncDataLoadedListener.onAsyncDataLoaded();
+            onAsyncDataLoadedListener.onAsyncDataLoaded(OnAsyncDataLoadedListener.STATUS_SUCCESS);
         }
     }
 
@@ -263,7 +264,7 @@ public class Training implements OnApiCallCompletedListener {
                 if (age < CACHE_MAX_AGE * 1000) {
                     if (!Training.trainingData.isExpired()){
                         Log.w("UWR_Training::Training::loadTrainingDataCached", "Found valid cache entry.");
-                        onAsyncDataLoadedListener.onAsyncDataLoaded();
+                        onAsyncDataLoadedListener.onAsyncDataLoaded(OnAsyncDataLoadedListener.STATUS_CACHED);
                         return;
                     }
                 }

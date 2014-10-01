@@ -10,7 +10,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
-        android:onClick="onNixSagerListClick"
+        android:onClick="onNixSagerListItemClick"
         android:text="This is a dummy Text"
         android:textColor="@android:color/secondary_text_light" />
 

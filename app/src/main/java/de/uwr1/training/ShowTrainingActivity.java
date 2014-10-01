@@ -86,8 +86,7 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnAsyncDa
         ChangeButtonTexts();
 
         // Reset view visibility
-        findViewById(R.id.view_show_overview).setVisibility(View.GONE);
-        findViewById(R.id.view_loading).setVisibility(View.VISIBLE);
+        showView(R.id.view_loading);
     }
 
     @Override
@@ -135,16 +134,8 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnAsyncDa
     // - Both: render everything
     private void render() {
         if (!Training.isTrainingDataLoaded()) {
-            // Switch views
-            findViewById(R.id.view_loading).setVisibility(View.VISIBLE);
-            findViewById(R.id.view_show_overview).setVisibility(View.GONE);
-
-            // TODO: Maybe the PlayersList load request finishes first (e.g. from Cache), then this would be the wrong message.
-            // TODO: But it would be replaced soon, when the TrainingData load request finishes
-            TextView loading = (TextView) findViewById(R.id.t_loading);
-            loading.setText("Error: Loading training data failed.");
-
             Log.e("UWR_Training::ShowTraining::render", "Loading training data failed.");
+            renderLoadingTrainingDataFailed();
             return;
         }
 
@@ -157,8 +148,39 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnAsyncDa
         renderNixsagerList();
     }
 
+    private void showView(int viewId) {
+        switch (viewId) {
+            case R.id.view_loading:
+                findViewById(R.id.view_loading).setVisibility(View.VISIBLE);
+                findViewById(R.id.view_show_overview).setVisibility(View.GONE);
+                break;
+            case R.id.view_show_overview:
+                findViewById(R.id.view_loading).setVisibility(View.GONE);
+                findViewById(R.id.view_show_overview).setVisibility(View.VISIBLE);
+                break;
+        }
+    }
+
+    private void renderLoadingTrainingData() {
+        showView(R.id.view_loading);
+
+        TextView loading = (TextView) findViewById(R.id.t_loading);
+        loading.setText(getString(R.string.loading_data));
+        findViewById(R.id.buttonReloadTrainingData).setVisibility(View.GONE);
+    }
+
+    private void renderLoadingTrainingDataFailed() {
+        showView(R.id.view_loading);
+
+        // TODO: Maybe the PlayersList load request finishes first (e.g. from Cache), then this would be the wrong message.
+        // TODO: But it would be replaced soon, when the TrainingData load request finishes
+        TextView loading = (TextView) findViewById(R.id.t_loading);
+        loading.setText(getString(R.string.loading_data_failed));
+        findViewById(R.id.buttonReloadTrainingData).setVisibility(View.VISIBLE);
+    }
+
+    // Set correct visibility of Abgesagt and Nixgesagt sections
     private void setSectionVisibilities() {
-        // set visibility of Abgesagt and Nixgesagt
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         setSectionVisibility((TextView)findViewById(R.id.title_absagen),
                 findViewById(R.id.training_ab),
@@ -199,9 +221,7 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnAsyncDa
             }
         }
 
-        // Switch views
-        findViewById(R.id.view_loading).setVisibility(View.GONE);
-        findViewById(R.id.view_show_overview).setVisibility(View.VISIBLE);
+        showView(R.id.view_show_overview);
 
         ((TextView) findViewById(R.id.training_general_info)).setText(Training.getGeneralInfo());
         ((TextView) findViewById(R.id.sum_zu)).setText(Integer.toString(Training.getNumZusagen()));
@@ -295,8 +315,8 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnAsyncDa
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
 
-    // Click handler for the NixsagerList dialogs
-    public void onNixSagerListClick(View view) {
+    // Click handler for the NixsagerList items: shows a dialog
+    public void onNixSagerListItemClick(View view) {
         // TODO: create dialog
         CharSequence name = ((TextView)view).getText();
         Log.d("", name.toString());
@@ -340,8 +360,17 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnAsyncDa
                 toggleSectionVisibility((TextView) view, findViewById(R.id.training_nix_container));
                 break;
             case R.id.buttonReloadNixsager:
-                boolean forceReload = true;
-                Training.loadPlayersList(forceReload);
+                {
+                    boolean forceReload = true;
+                    Training.loadPlayersList(forceReload);
+                }
+                break;
+            case R.id.buttonReloadTrainingData:
+                renderLoadingTrainingData();
+                {
+                    boolean forceReload = true;
+                    Training.loadTrainingData(forceReload);
+                }
                 break;
         }
     }
@@ -355,7 +384,11 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnAsyncDa
 
     @Override
     // The callback after loading data async
-    public void onAsyncDataLoaded() {
+    public void onAsyncDataLoaded(int statusCode) {
+        if (OnAsyncDataLoadedListener.STATUS_ERROR == statusCode) {
+            Log.e("", "ShowTrainingActivity: Error loading data.");
+        }
+
         render();
     }
 

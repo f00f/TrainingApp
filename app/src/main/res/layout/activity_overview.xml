@@ -27,6 +27,18 @@
             android:text="@string/loading_data" />
 
         <Button
+            android:id="@+id/buttonReloadTrainingData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            android:text="Nochmal versuchen"
+            android:background="#0099CC"
+            android:textColor="#FFFFFF"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:visibility="gone" />
+
+        <Button
             android:id="@+id/btn_settings"
             style="@android:style/TextAppearance.Large"
             android:layout_width="wrap_content"
@@ -236,6 +248,8 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:onClick="onClick"
+                        android:background="#0099CC"
+                        android:textColor="#FFFFFF"
                         android:text="Laden" />
                 </RelativeLayout>
 

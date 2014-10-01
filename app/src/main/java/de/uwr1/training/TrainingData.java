@@ -28,10 +28,10 @@ public class TrainingData {
     public String PhotoURL;
     public String PhotoThumbURL;
     // private
-    private String[] ZusagenArr;
-    private String[] AbsagenArr;
-    private String[] ZusagenNamesArr;
-    private String[] AbsagenNamesArr;
+    private String[] ZusagenArr = {};
+    private String[] AbsagenArr = {};
+    private String[] ZusagenNamesArr = {};
+    private String[] AbsagenNamesArr = {};
 
     // PUBLIC METHODS
 
