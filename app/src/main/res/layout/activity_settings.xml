@@ -16,8 +16,15 @@
     <View
         android:layout_width="fill_parent"
         android:layout_height="1dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="1dp"
         android:layout_marginTop="12dp"
+        android:background="@color/separator" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="1dp"
         android:background="@color/separator" />
 
     <fragment
