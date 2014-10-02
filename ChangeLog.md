@@ -1,8 +1,8 @@
 TrainingApp -- ChangeLog
 ========================
 
-Version 1.6 (unreleased)
------------------
+Version 1.6 2014-10-02
+----------------------
 - Kann besser damit umgehen, wenn keine Internetverbindung besteht.
 - Zeigt beim ersten Start nach einem App-Update die Neuerungen an.
 - Die Trainingsdaten können jetzt mit einem Swipe nach unten neu geladen werden.
