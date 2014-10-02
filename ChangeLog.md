@@ -57,6 +57,6 @@ Version 1.1 2014-08-21
 - Inhalt ist jetzt scrollbar.
 - 3 neue Button-Texte.
 
-Version 1.0
------------
+Version 1.0 2014-08-21
+----------------------
 Erste Veröffentlichung.

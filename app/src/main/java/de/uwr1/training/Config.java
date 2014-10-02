@@ -194,7 +194,7 @@ public class Config {
     }
 
     private static void populateChangeLog() {
-        addVersionToChangeLog(1, "2014-08-??", "1.0",
+        addVersionToChangeLog(1, "2014-08-21", "1.0",
                 "- Erste Veröffentlichung.\n");
         addVersionToChangeLog(2, "2014-08-21", "1.1",
                 "- Infos wie Temperatur und Zeit seit Aktualisierungen werden angezeigt.\n" +
@@ -229,7 +229,7 @@ public class Config {
         addVersionToChangeLog(9, "2014-09-25", "1.5.1",
                 "- Bug fix: Crash wenn man keinen Kommentar eingegeben hatte.\n" +
                 "- 1 neuer Button Text.\n");
-        addVersionToChangeLog(10, "2014-10-?? (unreleased)", "1.6",
+        addVersionToChangeLog(10, "2014-10-02", "1.6",
                 "- Kann besser damit umgehen, wenn keine Internetverbindung besteht.\n" +
                 "- Zeigt beim ersten Start nach einem App-Update die Neuerungen an.\n" +
                 "- Die Trainingsdaten können jetzt mit einem Swipe nach unten neu geladen werden.\n" +
