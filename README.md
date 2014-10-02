@@ -19,12 +19,12 @@ Todo
   + Make cache persistent.
   + Show old data, if no network connection is available.
     + Show note if data is older than some threshold.
+  + Do not use forceReload all the time
 + Add link to Einteilung (or implement it)
 + Push-Notifications (mit ja/nein)
 + Toasts erst zeigen, nachdem der Async call fertig ist.
 + x Std vorm Training nachfragen: hey, was is los?
 + Bei kurzfristiger Meldung: Option Luk/Geza/Hannes anzurufen/SMS/App Notification zu schreiben.
-+ Add Updated/ChangeLog message
 + Bei kurzfristiger Meldung: Option Luk/Geza/Hannes anzurufen/SMS zu schreiben.
 + Add notice if no valid data is available (e.g. data expired and no network connection)
 + Add Badbild (PHOTO_[THUMB_]URL, replace ${location}, temp replace path in JSON pic.thumb/full)
@@ -32,7 +32,7 @@ Todo
 + Toasts abwechslungsreich machen
 + Tilman: Fahrplanung, Statistik-Tool
 + Add version auto-increment
-+ Nichtssagend-list
++ Nichtssagend-Liste
   + (add comment field to dialog)
 
 Acknowledgements

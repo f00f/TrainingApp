@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 
@@ -21,7 +22,9 @@ import android.widget.Toast;
 
 import java.util.Random;
 
-public class ShowTrainingActivity extends ActionBarActivity implements OnAsyncDataLoadedListener, OnApiCallCompletedListener {
+public class ShowTrainingActivity
+        extends ActionBarActivity
+        implements OnAsyncDataLoadedListener, OnApiCallCompletedListener, SwipeRefreshLayout.OnRefreshListener {
     public static final String[][] buttonTexts = new String[][] {
             {"Zusage", "Absage"},
             {"Zu", "Ab"},
@@ -72,31 +75,51 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnAsyncDa
             {"???", "faul"},
             */
     };
+    private SwipeRefreshLayout swipeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-
-        if (wasUpdated()) {
-            // TODO: show changelog or something.
-        }
-
-        Training.Init(this, this, this);
-
         setContentView(R.layout.activity_overview);
 
-        ChangeButtonTexts();
+        // Initialization stuff
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+        Training.Init(this, this, this);
 
+        int oldVersionId = Config.getInstalledVersionId(this);
+        int currentVersionId = Config.getVersionId(this);
+        if (oldVersionId != currentVersionId) {
+            // Show change log.
+            AppUpdatedDialogFragment dlg = new AppUpdatedDialogFragment();
+            // Supply old version ID as an argument.
+            Bundle args = new Bundle();
+            args.putInt(AppUpdatedDialogFragment.KEY_OLD_VERSION_ID, oldVersionId);
+            dlg.setArguments(args);
+            dlg.show(getSupportFragmentManager(), null);
+        }
+
+        // Init GUI
+        ChangeButtonTexts();
         // Reset view visibility
         showView(R.id.view_loading);
+
+        swipeLayout = (SwipeRefreshLayout)findViewById(R.id.view_show_overview);
+        swipeLayout.setOnRefreshListener(this);
+        swipeLayout.setColorSchemeResources(
+                android.R.color.holo_blue_bright,
+                android.R.color.holo_blue_dark,
+                android.R.color.holo_green_dark,
+                android.R.color.holo_green_light
+        );
     }
 
-    private boolean wasUpdated() {
-        boolean wasUpdated = Config.getInstalledVersionId(this) != Config.getVersionId(this);
-        Config.setInstalledVersion(this);
-        return wasUpdated;
+    @Override
+    public void onRefresh() {
+        if (null != swipeLayout) {
+            swipeLayout.setRefreshing(true);
+        }
+        boolean forceReload = true;
+        Training.loadTrainingData(forceReload);
     }
 
     @Override
@@ -143,6 +166,10 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnAsyncDa
     // - No PlayersList: Render TrainingData
     // - Both: render everything
     private void render() {
+        if (null != swipeLayout) {
+            swipeLayout.setRefreshing(false);
+        }
+
         if (!Training.isTrainingDataLoaded()) {
             Log.e("UWR_Training::ShowTraining::render", "Loading training data failed.");
             renderLoadingTrainingDataFailed();
@@ -333,7 +360,7 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnAsyncDa
         NixsagerDialogFragment d = new NixsagerDialogFragment();
         // Supply index input as an argument.
         Bundle args = new Bundle();
-        args.putCharSequence("name", name);
+        args.putCharSequence(NixsagerDialogFragment.KEY_NAME, name);
         d.setArguments(args);
         d.show(getSupportFragmentManager(), null);
     }
@@ -368,6 +395,10 @@ public class ShowTrainingActivity extends ActionBarActivity implements OnAsyncDa
                 break;
             case R.id.title_nixsagen:
                 toggleSectionVisibility((TextView) view, findViewById(R.id.training_nix_container));
+                break;
+            case R.id.btn_settings:
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
                 break;
             case R.id.buttonReloadNixsager:
                 {

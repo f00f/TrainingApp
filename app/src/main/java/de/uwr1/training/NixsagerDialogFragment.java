@@ -10,6 +10,7 @@ import android.support.v4.app.DialogFragment;
  * Created by f00f on 01.09.2014.
  */
 public class NixsagerDialogFragment extends DialogFragment {
+    public static final String KEY_NAME = "name";
     final int IDX_ZUSAGE = 0;
     final int IDX_ABSAGE = 1;
     CharSequence mName;
@@ -42,7 +43,7 @@ public class NixsagerDialogFragment extends DialogFragment {
     // PRIVATE METHODS
 
     private CharSequence getName() {
-        CharSequence name = getArguments().getCharSequence("name");
+        CharSequence name = getArguments().getCharSequence(KEY_NAME);
         return null != name ? name : "";
     }
 }

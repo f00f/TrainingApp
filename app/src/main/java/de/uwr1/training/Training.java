@@ -263,7 +263,7 @@ public class Training implements OnApiCallCompletedListener {
                 long age = now - Training.trainingData.Timestamp;
                 if (age < CACHE_MAX_AGE * 1000) {
                     if (!Training.trainingData.isExpired()){
-                        Log.w("UWR_Training::Training::loadTrainingDataCached", "Found valid cache entry.");
+                        Log.i("Training::loadTrainingDataCached", "Found valid cache entry.");
                         onAsyncDataLoadedListener.onAsyncDataLoaded(OnAsyncDataLoadedListener.STATUS_CACHED);
                         return;
                     }

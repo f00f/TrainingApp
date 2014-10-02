@@ -2,12 +2,9 @@ package de.uwr1.training;
 
 import android.util.Log;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -20,9 +17,9 @@ public class TrainingData {
     public String Location;
     public String Zusagen = "---";
     public String Absagen = "---";
-    public long Expires; // wann ist das Training (zu Ende)?
-    public long Updated; // von wann ist der letzte Eintrag?
-    public long Timestamp; // wann wurde das JSON runtergeladen?
+    public long Expires; // [s] wann ist das Training (zu Ende)?
+    public long Updated; // [s] von wann ist der letzte Eintrag?
+    public long Timestamp; // [ms] wann wurde das JSON runtergeladen?
     public String Temp;
     public long TempUpdated;
     public String PhotoURL;
@@ -77,7 +74,7 @@ public class TrainingData {
         try {
             jo = new JSONObject(json).getJSONObject("train");
         } catch(JSONException e) {
-            Log.w("UWR_Training::Training::parseJSON", "Unable to parse JSON data.");
+            Log.e("Training::parseJSON", "Unable to parse JSON data.");
             return false;
         }
         // get basic information
@@ -89,7 +86,7 @@ public class TrainingData {
             Location = jo.getString("ort");
             Updated = jo.getLong("updated");
         } catch(JSONException e) {
-            Log.w("UWR_Training::Training::parseJSON", "Unable to parse JSON data.");
+            Log.e("Training::parseJSON", "Unable to parse JSON data.");
             return false;
         }
         // get optional information

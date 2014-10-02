@@ -12,12 +12,13 @@ import java.net.URLEncoder;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Vector;
 
 /**
  * Created by f00f on 03.07.2014.
  */
 public class Config {
-    private static final int NUM_BUTTON_TEXTS = 20;
+    private static final int NUM_BUTTON_TEXTS = 22;
 
     private static final String KEY_NUM_BUTTON_TEXTS = "NUM_BUTTON_TEXTS";
     private static final String KEY_PLAY_STORE_URL = "PLAY_STORE_URL";
@@ -53,6 +54,105 @@ public class Config {
         APP_CONFIG = Collections.unmodifiableMap(aMap);
     }
 
+    private static Vector<String> versionNames = new Vector<String>();
+    private static Vector<String> versionReleaseDates = new Vector<String>();
+    private static Vector<String> newFeaturesByVersion = new Vector<String>();
+
+    // PUBLIC METHODS
+
+    public static String getClubId(Context ctx) {
+        return Config.getUserConfigValue(ctx, SettingsActivity.KEY_PREF_CLUB);
+    }
+
+    public static String getReplyUrl(Context ctx, String text, boolean isZusage) {
+        String url = null;
+        String url_key = isZusage ? KEY_REPLY_URL_YES : KEY_REPLY_URL_NO;
+        try {
+            url = Config.getURL(ctx, url_key) + URLEncoder.encode(text, "ISO-8859-1"/*"UTF-8"*/);
+        } catch (UnsupportedEncodingException e) { /* empty */ }
+        return url;
+    }
+
+    public static String getURL(Context ctx, String key) {
+        String club_id = Config.getClubId(ctx);
+        int app_ver = Config.getVersionId(ctx);
+        String url = Config.getAppConfigValue(key);
+        url = url.replace("%club_id%", club_id);
+        url = url.replace("%app_ver%", Integer.toString(app_ver));
+        return url;
+    }
+
+    public static String getUsername(Context ctx) {
+        return Config.getUserConfigValue(ctx, SettingsActivity.KEY_PREF_USERNAME).trim();
+    }
+
+    // Get the version ID stored in the APK
+    public static int getVersionId(Context ctx) {
+        int myVersionId = -1; // initialize version id
+
+        try {
+            myVersionId = ctx.getPackageManager().getPackageInfo(ctx.getPackageName(), 0).versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return myVersionId;
+    }
+    // Get the version name stored in the APK
+    public static String getVersionName(Fragment f) {
+        return getVersionName(f.getActivity());
+    }
+
+    // Get the version ID which is stored in the user preferences.
+    // After an app update this will be out-dated
+    public static int getInstalledVersionId(Context ctx) {
+        String versionId = "";
+        try {
+            versionId = getUserConfigValue(ctx, KEY_PREF_INSTALLED_VERSION_ID);
+        } catch (Exception e) { /* empty */ }
+        if (versionId.isEmpty())
+            return -1;
+        return Integer.parseInt(versionId);
+    }
+    public static void setInstalledVersion(Context ctx) {
+        setUserConfigValue(ctx, KEY_PREF_INSTALLED_VERSION_ID, Integer.toString(getVersionId(ctx)));
+        setUserConfigValue(ctx, KEY_PREF_INSTALLED_VERSION_NAME, getVersionName(ctx));
+    }
+
+    public static String getAppName(Context ctx) {
+        int stringId = ctx.getApplicationInfo().labelRes;
+        return ctx.getString(stringId);
+    }
+
+    public static int getNumButtonTexts() {
+        String num = Config.getAppConfigValue(KEY_NUM_BUTTON_TEXTS);
+        return Integer.parseInt(num);
+    }
+
+    public static int getNumAvailableButtonTexts() {
+        return ShowTrainingActivity.buttonTexts.length;
+    }
+
+    public static String getChangeLogSinceVersion(Context ctx, int oldVersionId) {
+        populateChangeLog();
+
+        if (oldVersionId < 0)
+            oldVersionId = 0;
+        //oldVersionId++;
+
+        int currentVersionId = getVersionId(ctx);
+
+        StringBuilder changeLog = new StringBuilder();
+        for (int i = currentVersionId - 1; i >= oldVersionId; i--) {
+            changeLog.append("Version " + versionNames.elementAt(i) + " (" + versionReleaseDates.elementAt(i) + "):\n");
+            changeLog.append(newFeaturesByVersion.elementAt(i));
+            changeLog.append("\n");
+        }
+
+        return changeLog.toString();
+    }
+
+    // PRIVATE METHODS
+
     private static String getAppConfigValue(String key) {
         if (APP_CONFIG.containsKey(key)) {
             return APP_CONFIG.get(key);
@@ -74,39 +174,9 @@ public class Config {
         ed.putString(key, value);
         ed.apply();
     }
-    private static void setUserConfigValue(Context ctx, String key, int value) {
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ctx);
-        SharedPreferences.Editor ed = sharedPref.edit();
-        ed.putInt(key, value);
-        ed.apply();
-    }
 
-    public static String getClubId(Context ctx) {
-        return Config.getUserConfigValue(ctx, SettingsActivity.KEY_PREF_CLUB);
-    }
-    public static String getReplyUrl(Context ctx, String text, boolean isZusage) {
-        String url = null;
-        String url_key = isZusage ? KEY_REPLY_URL_YES : KEY_REPLY_URL_NO;
-        try {
-            url = Config.getURL(ctx, url_key) + URLEncoder.encode(text, "ISO-8859-1"/*"UTF-8"*/);
-        } catch (UnsupportedEncodingException e) { /* empty */ }
-        return url;
-    }
-    public static String getURL(Context ctx, String key) {
-        String club_id = Config.getClubId(ctx);
-        int app_ver = Config.getVersionId(ctx);
-        String url = Config.getAppConfigValue(key);
-        url = url.replace("%club_id%", club_id);
-        url = url.replace("%app_ver%", Integer.toString(app_ver));
-        return url;
-    }
-    public static String getUsername(Context ctx) {
-        return Config.getUserConfigValue(ctx, SettingsActivity.KEY_PREF_USERNAME).trim();
-    }
-    public static String getVersionName(Fragment f) {
-        return getVersionName(f.getActivity());
-    }
-    public static String getVersionName(Context ctx) {
+    // Get the version name that is stored in the APK
+    private static String getVersionName(Context ctx) {
         String myVersionName = "not available"; // initialize String
 
         try {
@@ -117,34 +187,58 @@ public class Config {
         return myVersionName;
     }
 
-    public static int getInstalledVersionId(Context ctx) {
-        return Integer.parseInt(getUserConfigValue(ctx, KEY_PREF_INSTALLED_VERSION_ID));
-    }
-    public static String getInstalledVersionName(Context ctx) {
+    // Get the version name which is stored in the user preferences.
+    // After an app update this will be out-dated
+    private static String getInstalledVersionName(Context ctx) {
         return getUserConfigValue(ctx, KEY_PREF_INSTALLED_VERSION_NAME);
     }
-    public static void setInstalledVersion(Context ctx) {
-        setUserConfigValue(ctx, KEY_PREF_INSTALLED_VERSION_ID, getVersionId(ctx));
-        setUserConfigValue(ctx, KEY_PREF_INSTALLED_VERSION_NAME, getVersionName(ctx));
+
+    private static void populateChangeLog() {
+        addVersionToChangeLog(1, "2014-08-??", "1.0",
+                "- Erste Veröffentlichung.\n");
+        addVersionToChangeLog(2, "2014-08-21", "1.1",
+                "- Infos wie Temperatur und Zeit seit Aktualisierungen werden angezeigt.\n" +
+                "- Inhalt ist jetzt scrollbar.\n" +
+                "- 3 neue Button-Texte.\n");
+        addVersionToChangeLog(3, "2014-08-26", "1.2",
+                "- Die Abschnitte Absagen und Nichtssagend sind jetzt klappbar.\n" +
+                "- Kleinere Bugs gefixt (Buttons manchmal beide schwarz).\n" +
+                "- Icons aktualisiert.\n" +
+                "- @-Zeichen nach Namen entfernt.\n" +
+                "- 3 neue Button-Texte.\n");
+        addVersionToChangeLog(4, "2014-09-08", "1.2.1",
+                "- Bug #3 gefixt: Temperatur nicht anzeigen, falls nicht verfügbar\n" +
+                "- app-Parameter für alle URLs eingeführt.\n" +
+                "- Soft-Keyboard sollte nach Neuladen der Daten verschwinden.\n" +
+                "- 1 neuer Button-Text.\n");
+        addVersionToChangeLog(5, "2014-09-16", "1.3",
+                "- Nixsager Liste funktioniert.\n");
+        addVersionToChangeLog(6, "2014-09-16", "1.3.1",
+                "- 2 neue Button-Texte.\n");
+        addVersionToChangeLog(7, "2014-09-23", "1.4",
+                "- Umlaute in Namen und Kommentar funktionieren.\n" +
+                "- Menü aufgeteilt: Eines in der normalen Ansicht, und eines für den Einstellungen-Screen.\n" +
+                "- \"Zur Webseite\" zum Einstellungen-Menü hinzugefügt.\n" +
+                "- Detailiertere Versionsinfos zur Einstellungen-Ansicht hinzugefügt.\n" +
+                "- Feedback-Text zur Einstellungen-Ansicht hinzugefügt.\n" +
+                "- 2 neue Button-Texte.\n");
+        addVersionToChangeLog(8, "2014-09-24", "1.5",
+                "- Zeigt eigenen Kommentar wieder an.\n" +
+                "- Bug fixes.\n" +
+                "- 1 neuer Button Text.\n");
+        addVersionToChangeLog(9, "2014-09-25", "1.5.1",
+                "- Bug fix: Crash wenn man keinen Kommentar eingegeben hatte.\n" +
+                "- 1 neuer Button Text.\n");
+        addVersionToChangeLog(10, "2014-10-?? (unreleased)", "1.6",
+                "- Kann besser damit umgehen, wenn keine Internetverbindung besteht.\n" +
+                "- Zeigt beim ersten Start nach einem App-Update die Neuerungen an.\n" +
+                "- Die Trainingsdaten können jetzt mit einem Swipe nach unten neu geladen werden.\n" +
+                "- 2 neue Button-Texte.\n");
     }
 
-    public static int getVersionId(Context ctx) {
-        int myVersionId = -1; // initialize version id
-
-        try {
-            myVersionId = ctx.getPackageManager().getPackageInfo(ctx.getPackageName(), 0).versionCode;
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        return myVersionId;
-    }
-
-    public static int getNumButtonTexts() {
-        String num = Config.getAppConfigValue(KEY_NUM_BUTTON_TEXTS);
-        return Integer.parseInt(num);
-    }
-
-    public static int getNumAvailableButtonTexts() {
-        return ShowTrainingActivity.buttonTexts.length;
+    private static void addVersionToChangeLog(int versionId, String versionReleaseDate, String versionName, String newFeatures) {
+        versionNames.add(versionName);
+        versionReleaseDates.add(versionReleaseDate);
+        newFeaturesByVersion.add(newFeatures);
     }
 }

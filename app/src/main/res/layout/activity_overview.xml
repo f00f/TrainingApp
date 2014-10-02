@@ -3,10 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ShowTraining">
 
     <LinearLayout
@@ -16,6 +12,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
         android:visibility="gone"
         tools:context=".OverviewLoading">
 
@@ -32,8 +32,8 @@
             android:layout_height="wrap_content"
             android:onClick="onClick"
             android:text="Nochmal versuchen"
-            android:background="#0099CC"
-            android:textColor="#FFFFFF"
+            android:background="@color/holo_blue_dark"
+            android:textColor="@android:color/white"
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
             android:visibility="gone" />
@@ -44,17 +44,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:onClick="onSettingsClick"
+            android:onClick="onClick"
             android:text="@string/action_settings"
             android:visibility="gone" />
-
     </LinearLayout>
 
-    <ScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/view_show_overview"
+    <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="fill_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:id="@+id/view_show_overview">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
@@ -248,8 +253,8 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:onClick="onClick"
-                        android:background="#0099CC"
-                        android:textColor="#FFFFFF"
+                        android:background="@color/holo_blue_dark"
+                        android:textColor="@android:color/white"
                         android:text="Laden" />
                 </RelativeLayout>
 
@@ -290,4 +295,5 @@
         </LinearLayout>
 
     </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

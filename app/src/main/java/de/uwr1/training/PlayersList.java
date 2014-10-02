@@ -15,20 +15,18 @@ import java.util.HashMap;
 public class PlayersList implements OnApiCallCompletedListener {
     public class PlayersListData {
         String[] Names;
-        long Expires; // wann sollen die Daten auf jeden Fall neu geladen werden?
-        long Timestamp; // wann wurde das JSON runtergeladen?
+        long Expires; // [s] wann sollen die Daten auf jeden Fall neu geladen werden?
+        long Timestamp; // [ms] wann wurde das JSON runtergeladen?
 
         boolean isExpired() {
-            // TODO: implement
-            //long now = new Date().getTime();
-            //return now > (this.Expires * 1000);
-            return true;
+            long now = new Date().getTime();
+            boolean isExpired = now > (this.Expires * 1000);
+            Log.d("PlayerList::isExpired", isExpired + "; now = " + Long.toString(now) + "; Exp = " + Long.toString(this.Expires));
+            return isExpired;
         }
 
         boolean setExpiration(long millis) {
             // TODO: implement
-            //long now = new Date().getTime();
-            //return now > (this.Expires * 1000);
             return true;
         }
 
@@ -38,7 +36,7 @@ public class PlayersList implements OnApiCallCompletedListener {
             try {
                 jo = new JSONObject(json);
             } catch(JSONException e) {
-                Log.w("UWR_Training::PlayersListData::parseJSON", "Unable to parse JSON data.");
+                Log.e("PlayersListData::parseJSON", "Unable to parse JSON data.");
                 return false;
             }
 
@@ -47,6 +45,7 @@ public class PlayersList implements OnApiCallCompletedListener {
             } catch(JSONException e) { /* empty */ }
 
             Timestamp = new java.util.Date().getTime();
+            Expires = Timestamp + CACHE_MAX_AGE;
 
             return true;
         }
@@ -134,7 +133,7 @@ public class PlayersList implements OnApiCallCompletedListener {
                 long age = now - PlayersList.data.Timestamp;
                 if (age < CACHE_MAX_AGE * 1000) {
                     if (!PlayersList.data.isExpired()){
-                        Log.w("UWR_Training::PlayersList::loadPlayersListCached", "Found valid cache entry.");
+                        Log.i("PlayersList::loadPlayersListCached", "Found valid cache entry.");
                         onAsyncDataLoadedListener.onAsyncDataLoaded(OnAsyncDataLoadedListener.STATUS_CACHED);
                         return;
                     }

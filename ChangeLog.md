@@ -1,6 +1,13 @@
 TrainingApp -- ChangeLog
 ========================
 
+Version 1.6 (unreleased)
+-----------------
+- Kann besser damit umgehen, wenn keine Internetverbindung besteht.
+- Zeigt beim ersten Start nach einem App-Update die Neuerungen an.
+- Die Trainingsdaten können jetzt mit einem Swipe nach unten neu geladen werden.
+- 2 neue Button-Texte.
+
 Version 1.5.1 2014-09-25
 ------------------------
 - Bug fix: Crash wenn man keinen Kommentar eingegeben hatte.
@@ -17,7 +24,7 @@ Version 1.4 2014-09-23
 - Umlaute in Namen und Kommentar funktionieren.
 - Menü aufgeteilt: Eines in der normalen Ansicht, und eines für den Einstellungen-Screen.
 - "Zur Webseite" zum Einstellungen-Menü hinzugefügt.
-- detailiertere Versionsinfos zur Einstellungen-Ansicht hinzugefügt.
+- Detailiertere Versionsinfos zur Einstellungen-Ansicht hinzugefügt.
 - Feedback-Text zur Einstellungen-Ansicht hinzugefügt.
 - 2 neue Button-Texte.
 
