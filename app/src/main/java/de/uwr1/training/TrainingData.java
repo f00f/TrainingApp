@@ -67,6 +67,30 @@ public class TrainingData {
 
     // Load data from several JSON strings
     public boolean parseJSON(String json) {
+        //DBG
+        if (BuildConfig.DEBUG && Config.EMULATE_NETWORK_CONNECTION) {
+            JSONObject joTest;
+            try {
+                // Test if the train object exists
+                joTest = new JSONObject(json).getJSONObject("train");
+            } catch(JSONException e) {
+                // train object is not present -> generate a stub data set
+                long dbgEnd = (new java.util.Date().getTime() / 1000) + 3600;
+                long dbgUpdated = (new java.util.Date().getTime() / 1000) - 1337;
+                int errCode = -42;
+                String errMsg = "Unbekannter Fehler";
+                try {
+                    // Test if the train object exists
+                    joTest = new JSONObject(json);
+                    errCode = joTest.getInt("err");
+                    errMsg = joTest.getString("msg");
+                } catch(JSONException e2) {
+                }
+                json = "{\"train\":{\"end\":" + Long.toString(dbgEnd) + ",\"wtag\":\"(Debug)\nMo\",\"datum\":\"01.04.\",\"zeit\":\"13:37\",\"ort\":\"Entenhausen\nEs ist ein Fehler aufgetreten ("+errCode+"):\n"+errMsg+"\",\"updated\":" + Long.toString(dbgUpdated) + "}}";
+            }
+        }
+        // /DBG
+
         Zusagen = "---";
         Absagen = "---";
 

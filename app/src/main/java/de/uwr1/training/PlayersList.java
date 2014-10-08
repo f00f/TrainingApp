@@ -3,6 +3,7 @@ package de.uwr1.training;
 import android.content.Context;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,6 +33,19 @@ public class PlayersList implements OnApiCallCompletedListener {
 
         // Load data from several JSON strings
         boolean parseJSON(String json) {
+            //DBG
+            if (BuildConfig.DEBUG && Config.EMULATE_NETWORK_CONNECTION) {
+                JSONArray joTest;
+                try {
+                    // Test if the names array exists
+                    joTest = new JSONObject(json).getJSONArray("names");
+                } catch(JSONException e) {
+                    // names array is not present -> generate a stub data set
+                    json = "{\"names\":[\"Lorem\", \"Ipsum\", \"Dolor\", \"Lorem2\", \"Ipsum2\", \"Dolor2\", \"Lorem3\", \"Ipsum3\", \"Dolor3\", \"Lorem4\", \"Ipsum4\", \"Dolor4\", \"Lorem5\", \"Ipsum5\", \"Dolor5\"]}";
+                }
+            }
+            // /DBG
+
             JSONObject jo;
             try {
                 jo = new JSONObject(json);

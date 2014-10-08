@@ -18,6 +18,8 @@ import java.util.Vector;
  * Created by f00f on 03.07.2014.
  */
 public class Config {
+    public static final boolean EMULATE_NETWORK_CONNECTION = false;
+
     private static final int NUM_BUTTON_TEXTS = 22;
 
     private static final String KEY_NUM_BUTTON_TEXTS = "NUM_BUTTON_TEXTS";

@@ -106,10 +106,10 @@ public class ShowTrainingActivity
         swipeLayout = (SwipeRefreshLayout)findViewById(R.id.view_show_overview);
         swipeLayout.setOnRefreshListener(this);
         swipeLayout.setColorSchemeResources(
-                android.R.color.holo_blue_bright,
                 android.R.color.holo_blue_dark,
-                android.R.color.holo_green_dark,
-                android.R.color.holo_green_light
+                android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_green_dark
         );
     }
 
