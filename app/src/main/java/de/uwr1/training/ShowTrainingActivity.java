@@ -65,6 +65,10 @@ public class ShowTrainingActivity
             {"UW", "ÜW"},
             {"Chlorig", "Miefig"},
             {"all-in", "passe"},
+            {"Pirat", "privat"},// L & J
+            {"Aye Käpt'n", "Meuterei"},// L & J
+            {"Yo Ho!", "Oh no"},// L & J
+            {"Flut", "Ebbe"},// L & J
             /*
             {"Untenrum", "???"},
             {"Go Deeper", "???"},
