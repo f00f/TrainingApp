@@ -25,12 +25,12 @@ android {
         applicationId 'de.uwr1.training'
         minSdkVersion 10
         targetSdkVersion 17
-        versionCode 10
-        versionName '1.6'
+        versionCode 11
+        versionName '1.6.1'
     }
     buildTypes {
         release {
-            runProguard true
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }

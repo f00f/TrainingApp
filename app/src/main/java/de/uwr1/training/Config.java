@@ -20,7 +20,7 @@ import java.util.Vector;
 public class Config {
     public static final boolean EMULATE_NETWORK_CONNECTION = false;
 
-    private static final int NUM_BUTTON_TEXTS = 22;
+    private static final int NUM_BUTTON_TEXTS = 23;
 
     private static final String KEY_NUM_BUTTON_TEXTS = "NUM_BUTTON_TEXTS";
     private static final String KEY_PLAY_STORE_URL = "PLAY_STORE_URL";
@@ -236,6 +236,9 @@ public class Config {
                 "- Zeigt beim ersten Start nach einem App-Update die Neuerungen an.\n" +
                 "- Die Trainingsdaten können jetzt mit einem Swipe nach unten neu geladen werden.\n" +
                 "- 2 neue Button-Texte.\n");
+        addVersionToChangeLog(11, "2015-02-20", "1.6.1",
+                "- Kaiserslautern aufgenommen.\n" +
+                "- 1 neuer Button-Text.\n");
     }
 
     private static void addVersionToChangeLog(int versionId, String versionReleaseDate, String versionName, String newFeatures) {

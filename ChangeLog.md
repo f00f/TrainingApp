@@ -1,6 +1,11 @@
 TrainingApp -- ChangeLog
 ========================
 
+Version 1.6.1 2015-02-20
+------------------------
+- Kaiserslautern aufgenommen.
+- 1 neuer Button-Text.
+
 Version 1.6 2014-10-02
 ----------------------
 - Kann besser damit umgehen, wenn keine Internetverbindung besteht.
