@@ -1,6 +1,11 @@
 TrainingApp -- ChangeLog
 ========================
 
+Version 1.6.2 2015-03-19
+------------------------
+- Bug fix: 'Sometimes, the comments field is not cleared' (issue #5)
+- 1 neuer Button-Text.
+
 Version 1.6.1 2015-02-20
 ------------------------
 - Kaiserslautern aufgenommen.

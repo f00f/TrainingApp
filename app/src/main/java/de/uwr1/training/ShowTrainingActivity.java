@@ -255,12 +255,14 @@ public class ShowTrainingActivity
                 : normalBtnTextColor);
 
         // Comment field
+        String comment = "";
         if (hatZugesagt || hatAbgesagt) {
-            String comment = Training.getComment();
-            if (null != comment && !comment.isEmpty()) {
-                ((TextView) findViewById(R.id.edit_comment)).setText(comment);
+            comment = Training.getComment();
+            if (null == comment) {
+                comment = "";
             }
         }
+        ((TextView) findViewById(R.id.edit_comment)).setText(comment);
 
         showView(R.id.view_show_overview);
 

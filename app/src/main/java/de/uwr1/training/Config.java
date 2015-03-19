@@ -18,9 +18,10 @@ import java.util.Vector;
  * Created by f00f on 03.07.2014.
  */
 public class Config {
+
     public static final boolean EMULATE_NETWORK_CONNECTION = false;
 
-    private static final int NUM_BUTTON_TEXTS = 23;
+    private static final int NUM_BUTTON_TEXTS = 24;
 
     private static final String KEY_NUM_BUTTON_TEXTS = "NUM_BUTTON_TEXTS";
     private static final String KEY_PLAY_STORE_URL = "PLAY_STORE_URL";
@@ -238,6 +239,9 @@ public class Config {
                 "- 2 neue Button-Texte.\n");
         addVersionToChangeLog(11, "2015-02-20", "1.6.1",
                 "- Kaiserslautern aufgenommen.\n" +
+                "- 1 neuer Button-Text.\n");
+        addVersionToChangeLog(12, "2015-03-19", "1.6.2",
+                "- Bug fix: 'Sometimes, the comments field is not cleared' (issue #5)\n" +
                 "- 1 neuer Button-Text.\n");
     }
 
