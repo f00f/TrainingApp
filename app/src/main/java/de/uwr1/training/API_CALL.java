@@ -1,6 +1,7 @@
 package de.uwr1.training;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -47,6 +48,7 @@ public class API_CALL extends AsyncTask<String, Integer, String> {
             StringBuilder builder = new StringBuilder();
             HttpClient client = new DefaultHttpClient();
             HttpRequestBase httpReq = null;
+            Log.i("API_CALL", "Requesting '" + url + "'");
             if (method.equals("GET")) {
                 httpReq = new HttpGet(url);
             } else if (method.equals("POST")) {

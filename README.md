@@ -20,6 +20,7 @@ Todo
   + Show old data, if no network connection is available.
     + Show note if data is older than some threshold.
   + Do not use forceReload all the time
++ Fix Text and icon colors in Holo and Holo.Light themes 
 + Add link to Einteilung (or implement it)
 + Push-Notifications (mit ja/nein)
 + Toasts erst zeigen, nachdem der Async call fertig ist.
@@ -31,7 +32,6 @@ Todo
 + Große Datenmengen (z.B. Badbilder) nur bei aktivem WiFi runterladen (uses-permission android.permission.ACCESS_WIFI_STATE)
 + Toasts abwechslungsreich machen
 + Tilman: Fahrplanung, Statistik-Tool
-+ Add version auto-increment
 + Nichtssagend-Liste
   + (add comment field to dialog)
 
