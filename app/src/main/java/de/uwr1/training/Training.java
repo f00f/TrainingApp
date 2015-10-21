@@ -129,6 +129,9 @@ public class Training implements OnApiCallCompletedListener {
     public static long getTimestampOfLastEntry() {
         return trainingData.Updated * 1000;
     }
+    public static long getTimestampOfExpiration() {
+        return trainingData.Expires * 1000;
+    }
     public static boolean hasExtraTemp() {
         return null != trainingData && null != trainingData.Temp;
     }
@@ -179,7 +182,7 @@ public class Training implements OnApiCallCompletedListener {
             // remove parentheses
             int commLen = comment.length();
             if (commLen >= 2 && comment.charAt(0) == '(' && comment.charAt(commLen - 1) == ')') {
-                comment = comment.substring(1, commLen - 1);
+                comment = comment.substring(1, commLen - 1).trim();
             }
         }
         return comment;

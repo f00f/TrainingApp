@@ -103,7 +103,6 @@ public class ShowTrainingActivity
         }
 
         // Init GUI
-        ChangeButtonTexts();
         // Reset view visibility
         showView(R.id.view_loading);
 
@@ -184,6 +183,7 @@ public class ShowTrainingActivity
 
         findViewById(R.id.view_show_overview).scrollTo(0, 0);
 
+        ChangeButtonTexts(Training.getTimestampOfExpiration());
         setSectionVisibilities();
         renderTrainingData();
         renderNixsagerList();
@@ -450,8 +450,8 @@ public class ShowTrainingActivity
 
     // PRIVATE METHODS
 
-    private void ChangeButtonTexts() {
-        Random rand = new Random();
+    private void ChangeButtonTexts(long seed) {
+        Random rand = new Random(seed);
         int padding = 16;
         int maxButtonTextIndex = Math.min(Config.getNumButtonTexts(), Config.getNumAvailableButtonTexts());
         int buttonTextIndex = rand.nextInt(maxButtonTextIndex);
