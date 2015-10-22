@@ -4,13 +4,21 @@
     tools:context=".ShowTraining">
 
     <item android:id="@+id/action_refresh"
+        android:menuCategory="secondary"
         android:title="@string/action_refresh"
         android:icon="@drawable/ic_action_refresh"
         android:orderInCategory="10"
         app:showAsAction="ifRoom" />
+    <item android:id="@+id/action_goto_website"
+        android:menuCategory="secondary"
+        android:title="@string/action_goto_website"
+        android:icon="@drawable/ic_action_cloud"
+        android:orderInCategory="50"
+        app:showAsAction="never" />
     <item android:id="@+id/action_settings"
+        android:menuCategory="secondary"
         android:title="@string/action_settings"
         android:icon="@drawable/ic_action_settings"
         android:orderInCategory="100"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
 </menu>

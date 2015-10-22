@@ -217,7 +217,7 @@ public class Config {
         addVersionToChangeLog(5, "2014-09-16", "1.3",
                 "- Nixsager Liste funktioniert.\n");
         addVersionToChangeLog(6, "2014-09-16", "1.3.1",
-                "- 2 neue Button-Texte.\n");
+                "- 2 neue Button-Texte (bei v1.3 vergessen).\n");
         addVersionToChangeLog(7, "2014-09-23", "1.4",
                 "- Umlaute in Namen und Kommentar funktionieren.\n" +
                 "- Menü aufgeteilt: Eines in der normalen Ansicht, und eines für den Einstellungen-Screen.\n" +

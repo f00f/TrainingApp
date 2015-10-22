@@ -21,6 +21,56 @@
         <item>abmelden</item>
         <item>umm, doch nix sagen</item>
     </string-array>
+    <string-array name="missions">
+        <!-- Übersicht -->
+        <item>Schauen!</item>
+        <item>Vor dem abtauchen kucken wo Gegner sind.</item>
+        <item>Vor dem abtauchen kucken wo Mitspieler sind.</item>
+        <item>Vor dem abtauchen kucken was deine Mitspieler machen.</item>
+        <item>Mitspieler unten suchen.</item>
+        <item>Mitspieler vorne suchen.</item>
+        <item>Irgendwo ist immer ein Mitspieler, man muss ihn nur finden.</item>
+        <item>Was macht der Mitspieler mit der gleichen Rolle wie Du gerade?</item>
+        <item>Wissen, was man machen will, bevor man abtaucht.</item>
+        <!-- Stellungsspiel -->
+        <item>Ganz unten am Boden spielen und anbieten.</item>
+        <item>Schräg nach hinten auftauchen.</item>
+        <item>Immer “im Spiel” bleiben (zw. Ball und Korb).</item>
+        <item>Nicht hinter dem Rücken des Mitspielers Seite wechseln.</item>
+        <item>Im Sichtfeld des Mitspielers anbieten.</item>
+        <item>Wenn man an der Oberfläche ist, ist man automatisch in einer Notsituation.</item>
+        <!-- Pässe -->
+        <item>Nach Abpassen als Anspielstation unten bleiben.</item>
+        <item>Wenn man angepasst wurde: merken, dass da ein Mitspieler ist.</item>
+        <item>Forechecking: Als 1.: Ball stoppen. Als 2.: Passwege zu machen.</item>
+        <item>Wo sind die Anspielstationen des Gegners? -> decken (oder auf Ballführer)</item>
+        <item>Wenn man angepasst wurde: Blick zum Tor.</item>
+        <item>Wenn man angepasst wurde: Sprint nach vorn.</item>
+        <item>Keine unnötigen Pässe.</item>
+        <item>Mit Druck passen.</item>
+        <item>Zweikampf suchen statt auspassen.</item>
+        <!-- Ballgewinn -->
+        <item>Bei Gegnerballgewinn Ballführer festhalten.</item>
+        <item>Bei Gegnerballgewinn Konter stoppen.</item>
+        <item>Bei Ballgewinn durch Mitspieler: unten anbieten.</item>
+        <item>Bei Ballgewinn: unten Konter einleiten.</item>
+        <item>Bei Ballgewinn: Gas geben.</item>
+        <!-- Gerangel -->
+        <item>Nicht klammern lassen.</item>
+        <item>In Bewegung bleiben.</item>
+        <item>Bei Gerangeln drunterlegen.</item>
+        <item>Bei Gerangeln Gegnerarm packen und wegziehen.</item>
+        <item>Der Passgeber ist verantwortlich.</item>
+        <!-- Sonstiges -->
+        <item>Konzentration. Im Kopf wach bleiben.</item>
+        <item>Keine Situation ist hoffnungslos! Selbst bei eindeutigem „gleich-isser-drin“ abtauchen und verhindern wollen.</item>
+        <item>Gegner nerven.</item>
+        <item>Eine Zeckig sein.</item>
+        <item>Wenn man am Arm festgehalten wird: Drehen, Gegner schubsen.</item>
+        <item>Ball vom Gegner weghalten.</item>
+        <item>Ball nach der Annahme sichern.</item>
+        <item>Wand und Boden zum Abstoßen nutzen.</item>
+    </string-array>
     <!--
     <string-array name="the_others_texts">
         <item>Die Anderen:</item>

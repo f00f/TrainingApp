@@ -180,11 +180,18 @@
             </RelativeLayout>
 
             <TextView
+                android:id="@+id/view_mission"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:layout_alignParentLeft="true"
+                android:text="@string/lbl_mission" />
+
+            <TextView
                 style="@android:style/TextAppearance.Large"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:autoText="false"
                 android:text="@string/title_zusagen"
                 android:textColor="@color/uwr_green" />
 

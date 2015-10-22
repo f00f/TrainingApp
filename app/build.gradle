@@ -47,5 +47,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:20.0.0'
     compile 'com.github.machinarius:preferencefragment:0.1.1'
     compile 'com.android.support:support-v4:20.0.0'
-    compile 'com.google.android.gms:play-services-base:6.5.+'
+    compile 'com.google.android.gms:play-services-base:8.1.+'
 }

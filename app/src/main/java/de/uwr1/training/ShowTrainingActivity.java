@@ -3,6 +3,7 @@ package de.uwr1.training;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -183,7 +184,15 @@ public class ShowTrainingActivity
 
         findViewById(R.id.view_show_overview).scrollTo(0, 0);
 
-        ChangeButtonTexts(Training.getTimestampOfExpiration());
+        // Seed for random button texts and mission
+        long seed = Training.getTimestampOfExpiration() + Config.getUsername(this).hashCode();
+
+        ChangeButtonTexts(seed);
+        if (Training.hatZugesagt()) {
+            ShowMission(seed);
+        } else {
+            HideMission();
+        }
         setSectionVisibilities();
         renderTrainingData();
         renderNixsagerList();
@@ -384,6 +393,10 @@ public class ShowTrainingActivity
                 boolean forceReload = true;
                 refresh(forceReload);
                 return true;
+            case R.id.action_goto_website:
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Config.getURL(this, Config.KEY_BASE_URL)));
+                startActivity(browserIntent);
+                return true;
             case R.id.action_settings:
                 Intent intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
@@ -449,6 +462,20 @@ public class ShowTrainingActivity
     }
 
     // PRIVATE METHODS
+
+    private void HideMission() {
+        TextView missionView = (TextView)findViewById(R.id.view_mission);
+        missionView.setVisibility(View.GONE);
+    }
+    private void ShowMission(long seed) {
+        Random rand = new Random(seed);
+        String[] missions = getResources().getStringArray(R.array.missions);
+        String missionStr = getResources().getString(R.string.lbl_mission) + " "
+                + missions[rand.nextInt(missions.length)];
+        TextView missionView = (TextView)findViewById(R.id.view_mission);
+        missionView.setText(missionStr);
+        missionView.setVisibility(View.VISIBLE);
+    }
 
     private void ChangeButtonTexts(long seed) {
         Random rand = new Random(seed);
