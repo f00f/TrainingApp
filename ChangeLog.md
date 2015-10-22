@@ -1,6 +1,14 @@
 TrainingApp -- ChangeLog
 ========================
 
+Version 1.7.0 2015-10-22
+------------------------
+- Neu: Deine Mission für jedes Training.
+- Buttontexte ändern sich erst, wenn ein neues Training ist.
+- Kraken und Damen Süd aufgenommen.
+- 3 neue Button Texte.
+
+
 Version 1.6.2 2015-03-19
 ------------------------
 - Bug fix: 'Sometimes, the comments field is not cleared' (issue #5)
@@ -40,7 +48,7 @@ Version 1.4 2014-09-23
 
 Version 1.3.1 2014-09-16
 ------------------------
-- 2 neue Button-Texte.
+- 2 neue Button-Texte (bei v1.3 vergessen).
 
 Version 1.3 2014-09-16
 ----------------------

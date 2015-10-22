@@ -2,19 +2,23 @@
 <resources>
     <string-array name="pref_club_entries">
         <item>Bad Brückenau</item>
+        <item>Kraken Bamberg</item>
         <item>TC Bamberg</item>
         <item>UWR Kaiserslautern</item>
         <item>STC München</item>
         <item>Wasserfreunde München</item>
         <item>VfL Nürnberg</item>
+        <item>Damen Süd</item>
     </string-array>
     <string-array name="pref_club_entryValues">
         <item>brk</item>
+        <item>kraken</item>
         <item>ba</item>
         <item>kl</item>
         <item>stc</item>
         <item>wf</item>
         <item>nbg</item>
+        <item>damensued</item>
     </string-array>
     <string-array name="dialog_items_nixsager">
         <item>anmelden</item>

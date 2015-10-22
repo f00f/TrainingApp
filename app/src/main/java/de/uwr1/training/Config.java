@@ -21,7 +21,7 @@ public class Config {
 
     public static final boolean EMULATE_NETWORK_CONNECTION = false;
 
-    private static final int NUM_BUTTON_TEXTS = 24;
+    private static final int NUM_BUTTON_TEXTS = 27;
 
     private static final String KEY_NUM_BUTTON_TEXTS = "NUM_BUTTON_TEXTS";
     private static final String KEY_PLAY_STORE_URL = "PLAY_STORE_URL";
@@ -243,6 +243,11 @@ public class Config {
         addVersionToChangeLog(12, "2015-03-19", "1.6.2",
                 "- Bug fix: 'Sometimes, the comments field is not cleared' (issue #5)\n" +
                 "- 1 neuer Button-Text.\n");
+        addVersionToChangeLog(13, "2015-10-22", "1.7.0",
+                "- Neu: Deine Mission für jedes Training.\n" +
+                "- Buttontexte ändern sich erst, wenn ein neues Training ist.\n" +
+                "- Kraken und Damen Süd aufgenommen.\n" +
+                "- 3 neue Button Texte.\n");
     }
 
     private static void addVersionToChangeLog(int versionId, String versionReleaseDate, String versionName, String newFeatures) {
