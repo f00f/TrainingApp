@@ -34,6 +34,9 @@ public class Config {
     private static final String KEY_REPLY_URL_NO = "REPLY_URL_NO";
     private static final String KEY_PHOTO_URL = "PHOTO_URL";
     private static final String KEY_PHOTO_THUMB_URL = "PHOTO_THUMB_URL";
+    public static final String KEY_PREF_DETAILS_VISIBLE = "DETAILS_VISIBLE";
+    public static final String KEY_PREF_ABSAGER_VISIBLE = "ABSAGER_VISIBLE";
+    public static final String KEY_PREF_NIXSAGER_VISIBLE = "NIXSAGER_VISIBLE";
     private static final String KEY_PREF_INSTALLED_VERSION_ID = "INSTALLED_VERSION_ID";
     private static final String KEY_PREF_INSTALLED_VERSION_NAME = "INSTALLED_VERSION_NAME";
 

@@ -23,5 +23,6 @@
 
     <color name="uwr_green">@color/holo_green_dark</color>
     <color name="uwr_red">@color/holo_red_dark</color>
-    <color name="separator">#e2e2e2</color>
+    <color name="separator">#d8d8d8</color>
+    <color name="separator_dark">#c0c0c0</color>
 </resources>

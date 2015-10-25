@@ -118,11 +118,12 @@ public class Training implements OnApiCallCompletedListener {
         return true;
     }
 
-    // compose string with meta information about the training
-    public static String getGeneralInfo() {
-        return trainingData.getGeneralInfo();
+    public static String getDateWithWeekday() {
+        return trainingData.getDateWithWeekday();
     }
-
+    public static String getTimeAndLocation() {
+        return trainingData.getTimeAndLocation();
+    }
     public static long getTimestampOfDownload() {
         return trainingData.Timestamp;
     }

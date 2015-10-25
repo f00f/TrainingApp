@@ -33,11 +33,15 @@ public class TrainingData {
     // PUBLIC METHODS
 
     // compose string with meta information about the training
-    public String getGeneralInfo() {
-        String info = Date + " um " + Time + " in " + Location;
-        if (null != Wochentag)
-            info = Wochentag + ", " + info;
-        return info;
+    public String getDateWithWeekday() {
+        return null == Wochentag
+                ? Date
+                : Wochentag + ", " + Date;
+    }
+
+    // compose string with meta information about the training
+    public String getTimeAndLocation() {
+        return Time + " Uhr in " + Location;
     }
 
     public int getNumZusagen() {

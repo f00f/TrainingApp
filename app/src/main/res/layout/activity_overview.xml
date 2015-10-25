@@ -68,236 +68,220 @@
             android:orientation="vertical"
             tools:context=".OverviewShowData">
 
-            <TextView
+            <TextView android:id="@+id/training_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/title_general_info" />
-
-            <TextView
-                android:id="@+id/training_general_info"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/lbl_general_info_default"
+                android:text="@string/prefix_next_training"
+                style="@android:style/TextAppearance.Medium"
                 android:textStyle="bold" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp">
-
-                <TextView
-                    android:id="@+id/others"
-                    style="@android:style/TextAppearance.Medium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/sum_zu"
-                    android:text="@string/lbl_others" />
-
-                <TextView
-                    android:id="@+id/sum_zu"
-                    style="@android:style/TextAppearance.Medium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@+id/sep_sum"
-                    android:text="--"
-                    android:textColor="@color/uwr_green" />
-
-                <TextView
-                    android:id="@+id/sep_sum"
-                    style="@android:style/TextAppearance.Medium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/sum_zu"
-                    android:layout_toLeftOf="@+id/sum_ab"
-                    android:text=" / " />
-
-                <TextView
-                    android:id="@+id/sum_ab"
-                    style="@android:style/TextAppearance.Medium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/sum_zu"
-                    android:layout_alignParentRight="true"
-                    android:text="--"
-                    android:textColor="@color/uwr_red" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
-
-                <TextView
-                    android:id="@+id/you"
-                    style="@android:style/TextAppearance.Large"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/buttonYes"
-                    android:layout_alignParentLeft="true"
-                    android:text="@string/lbl_you" />
-
-                <Button
-                    android:id="@+id/buttonYes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/buttonNo"
-                    android:background="@color/uwr_green"
-                    android:onClick="onYesNoClick"
-                    android:text="@string/yes" />
-
-                <Button
-                    android:id="@+id/buttonNo"
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:background="@color/uwr_red"
-                    android:onClick="onYesNoClick"
-                    android:text="@string/no" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/view_reason"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp">
-
-                <TextView
-                    android:id="@+id/title_reason"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/edit_comment"
-                    android:layout_alignParentLeft="true"
-                    android:text="@string/lbl_comment" />
-
-                <EditText
-                    android:id="@+id/edit_comment"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/title_reason" />
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/view_mission"
+            <TextView android:id="@+id/training_time_and_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/time_and_location_dummy" />
+
+            <TextView android:id="@+id/num_zusagen"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                style="@android:style/TextAppearance.Large"
+                android:textSize="50sp"
+                android:textColor="@color/uwr_green"
+                android:text="@string/num_zusagen_dummy" />
+
+            <TextView android:id="@+id/view_mission"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                style="@android:style/TextAppearance.Medium"
                 android:layout_marginTop="6dp"
-                android:layout_alignParentLeft="true"
                 android:text="@string/lbl_mission" />
 
-            <TextView
-                style="@android:style/TextAppearance.Large"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="@string/title_zusagen"
-                android:textColor="@color/uwr_green" />
+            <View android:id="@+id/sep_summary_details"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="12dp"
+                android:layout_marginTop="12dp"
+                android:background="@color/separator_dark" />
 
-            <TextView
-                android:id="@+id/training_zu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="---" />
-
-            <TextView
-                android:id="@+id/title_absagen"
+            <TextView android:id="@+id/details_button"
                 style="@android:style/TextAppearance.Medium"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
                 android:clickable="true"
-                android:drawableRight="@drawable/ic_action_expand"
-                android:gravity="center_vertical"
+                android:drawableBottom="@drawable/ic_action_expand"
                 android:onClick="onClick"
-                android:text="@string/title_absagen"
-                android:textColor="@color/uwr_red" />
+                android:text="@string/title_details" />
 
-            <TextView
-                android:id="@+id/training_ab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="---"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/title_nixsagen"
-                style="@android:style/TextAppearance.Medium"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:clickable="true"
-                android:drawableRight="@drawable/ic_action_expand"
-                android:gravity="center_vertical"
-                android:onClick="onClick"
-                android:text="@string/title_nixsagen"
-                android:textColor="@android:color/secondary_text_light" />
-
-            <LinearLayout
-                android:id="@+id/training_nix_container"
+            <LinearLayout android:id="@+id/details"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="0dp"
                 android:orientation="vertical">
 
-                <RelativeLayout
-                    android:id="@+id/training_nix_no_data"
-                    android:layout_width="fill_parent"
+                <RelativeLayout android:id="@+id/you_yes_no"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="visible">
+                    android:layout_marginTop="10dp">
 
-                    <TextView
+                    <TextView android:id="@+id/you"
+                        style="@android:style/TextAppearance.Large"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@+id/buttonReloadNixsager"
-                        android:text="Keine Daten geladen..."
-                        android:textColor="@android:color/secondary_text_light" />
+                        android:layout_alignBaseline="@+id/buttonYes"
+                        android:layout_alignParentLeft="true"
+                        android:text="@string/lbl_you" />
 
-                    <Button
-                        android:id="@+id/buttonReloadNixsager"
+                    <Button android:id="@+id/buttonYes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/buttonNo"
+                        android:background="@color/uwr_green"
+                        android:onClick="onYesNoClick"
+                        android:text="@string/yes" />
+
+                    <Button android:id="@+id/buttonNo"
+                        style="?android:attr/buttonStyleSmall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:onClick="onClick"
-                        android:background="@color/holo_blue_dark"
-                        android:textColor="@android:color/white"
-                        android:text="Laden" />
+                        android:layout_centerVertical="true"
+                        android:background="@color/uwr_red"
+                        android:onClick="onYesNoClick"
+                        android:text="@string/no" />
                 </RelativeLayout>
 
-                <LinearLayout
-                    android:id="@+id/training_nix_list"
+                <RelativeLayout android:id="@+id/view_reason"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp">
+
+                    <TextView
+                        android:id="@+id/title_reason"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/edit_comment"
+                        android:layout_alignParentLeft="true"
+                        android:text="@string/lbl_comment" />
+
+                    <EditText
+                        android:id="@+id/edit_comment"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/title_reason" />
+                </RelativeLayout>
+
+                <TextView android:id="@+id/title_zusagen"
+                    style="@android:style/TextAppearance.Large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/zusagen_plural"
+                    android:textColor="@color/uwr_green" />
+
+                <TextView android:id="@+id/training_zu_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="---" />
+
+                <TextView android:id="@+id/title_absagen"
+                    style="@android:style/TextAppearance.Medium"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-                    <!--
-                    <TextView
-                        android:text="Dummy 1"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        />
-                    <View
-                        android:layout_width="fill_parent"
-                        android:layout_height="2dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginBottom="2dp"
-                        android:background="#c0c0c0"/>
-                    <TextView
-                        android:text="Dummy 2"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        />
-                    -->
-                </LinearLayout>
-            </LinearLayout>
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="15dp"
+                    android:clickable="true"
+                    android:drawableRight="@drawable/ic_action_expand"
+                    android:onClick="onClick"
+                    android:text="@string/absagen_plural"
+                    android:textColor="@color/uwr_red" />
 
-            <TextView
-                android:id="@+id/training_stats"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="Stats: ---" />
+                <TextView android:id="@+id/training_ab_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="---"
+                    android:visibility="gone" />
+
+                <TextView android:id="@+id/title_nixsagen"
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:clickable="true"
+                    android:drawableRight="@drawable/ic_action_expand"
+                    android:gravity="center_vertical"
+                    android:onClick="onClick"
+                    android:text="@string/title_nixsager"
+                    android:textColor="@android:color/secondary_text_light" />
+
+                <LinearLayout android:id="@+id/training_nix_container"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:orientation="vertical">
+
+                    <RelativeLayout android:id="@+id/training_nix_no_data"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBaseline="@+id/buttonReloadNixsager"
+                            android:text="Keine Daten geladen..."
+                            android:textColor="@android:color/secondary_text_light" />
+
+                        <Button
+                            android:id="@+id/buttonReloadNixsager"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:onClick="onClick"
+                            android:background="@color/holo_blue_dark"
+                            android:textColor="@android:color/white"
+                            android:text="Laden" />
+                    </RelativeLayout>
+
+                    <LinearLayout android:id="@+id/training_nix_list"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+                        <!--
+                        <TextView
+                            android:text="Dummy 1"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            />
+                        <View
+                            android:layout_width="fill_parent"
+                            android:layout_height="2dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginBottom="2dp"
+                            android:background="#c0c0c0"/>
+                        <TextView
+                            android:text="Dummy 2"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            />
+                        -->
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView android:id="@+id/training_stats"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="Stats: ---" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

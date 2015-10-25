@@ -232,12 +232,15 @@ public class ShowTrainingActivity
     // Set correct visibility of Abgesagt and Nixgesagt sections
     private void setSectionVisibilities() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        setSectionVisibility((TextView)findViewById(R.id.details_button),
+                findViewById(R.id.details),
+                sharedPref.getBoolean(Config.KEY_PREF_DETAILS_VISIBLE, false));
         setSectionVisibility((TextView)findViewById(R.id.title_absagen),
-                findViewById(R.id.training_ab),
-                sharedPref.getBoolean(SettingsActivity.KEY_PREF_ABSAGER_VISIBLE, false));
+                findViewById(R.id.training_ab_list),
+                sharedPref.getBoolean(Config.KEY_PREF_ABSAGER_VISIBLE, false));
         setSectionVisibility((TextView)findViewById(R.id.title_nixsagen),
                 findViewById(R.id.training_nix_container),
-                sharedPref.getBoolean(SettingsActivity.KEY_PREF_NIXSAGER_VISIBLE, false));
+                sharedPref.getBoolean(Config.KEY_PREF_NIXSAGER_VISIBLE, false));
     }
 
     private void renderTrainingData() {
@@ -263,7 +266,7 @@ public class ShowTrainingActivity
                 ? darkBtnTextColor
                 : normalBtnTextColor);
 
-        // Comment field
+        // Fill comment field, if appropriate
         String comment = "";
         if (hatZugesagt || hatAbgesagt) {
             comment = Training.getComment();
@@ -275,16 +278,23 @@ public class ShowTrainingActivity
 
         showView(R.id.view_show_overview);
 
-        ((TextView) findViewById(R.id.training_general_info)).setText(Training.getGeneralInfo());
-        ((TextView) findViewById(R.id.sum_zu)).setText(Integer.toString(Training.getNumZusagen()));
-        ((TextView) findViewById(R.id.sum_ab)).setText(Integer.toString(Training.getNumAbsagen()));
+        // Display date
+        ((TextView) findViewById(R.id.training_date)).setText(getResources().getString(R.string.prefix_next_training) + " " + Training.getDateWithWeekday());
+        // Display time and location
+        ((TextView) findViewById(R.id.training_time_and_location)).setText(Training.getTimeAndLocation());
+        // Display number of Zusagen
+        int numZusagen = Training.getNumZusagen();
+        if (1 == numZusagen) {
+            ((TextView) findViewById(R.id.num_zusagen)).setText("1 " + getResources().getString(R.string.zusagen_singular));
+        } else {
+            ((TextView) findViewById(R.id.num_zusagen)).setText(Integer.toString(numZusagen) + " " + getResources().getString(R.string.zusagen_plural));
+        }
 
-        TextView zu = (TextView)findViewById(R.id.training_zu);
-        zu.setText(Training.getZusagen());
-        TextView ab = (TextView)findViewById(R.id.training_ab);
-        ab.setText(Training.getAbsagen());
+        // Display Zusagen and Absagen (lists of names)
+        ((TextView) findViewById(R.id.training_zu_list)).setText(Training.getZusagen());
+        ((TextView) findViewById(R.id.training_ab_list)).setText(Training.getAbsagen());
 
-        // update stats
+        // Display meta-info
         StringBuilder stats = new StringBuilder();
         stats.append("Daten geladen:  \t").append(formatDateTime(Training.getTimestampOfDownload())).append("\n");
         stats.append("Letzte Meldung:\t").append(formatDateTime(Training.getTimestampOfLastEntry()));
@@ -292,7 +302,7 @@ public class ShowTrainingActivity
             stats.append("\n")
                     .append("Temperatur: ").append(Training.getExtraTemp()).append("\t").append(formatDateTime(Training.getExtraTempUpdated())).append("");
         }
-        ((TextView)findViewById(R.id.training_stats)).setText(stats);
+        ((TextView) findViewById(R.id.training_stats)).setText(stats);
 
         // hide soft keyboard
         /*getWindow().setSoftInputMode(
@@ -409,8 +419,11 @@ public class ShowTrainingActivity
     // Click handler for anything else
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.details_button:
+                toggleSectionVisibility((TextView)view, findViewById(R.id.details));
+                break;
             case R.id.title_absagen:
-                toggleSectionVisibility((TextView)view, findViewById(R.id.training_ab));
+                toggleSectionVisibility((TextView)view, findViewById(R.id.training_ab_list));
                 break;
             case R.id.title_nixsagen:
                 toggleSectionVisibility((TextView) view, findViewById(R.id.training_nix_container));
@@ -516,11 +529,14 @@ public class ShowTrainingActivity
 		// save to prefs
 		String key = "";
 		switch (header.getId()) {
+            case R.id.details_button:
+                key = Config.KEY_PREF_DETAILS_VISIBLE;
+                break;
             case R.id.title_absagen:
-				key = SettingsActivity.KEY_PREF_ABSAGER_VISIBLE;
-				break;
+                key = Config.KEY_PREF_ABSAGER_VISIBLE;
+                break;
             case R.id.title_nixsagen:
-				key = SettingsActivity.KEY_PREF_NIXSAGER_VISIBLE;
+				key = Config.KEY_PREF_NIXSAGER_VISIBLE;
 				break;
 		}
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
@@ -539,13 +555,19 @@ public class ShowTrainingActivity
     }
 
 	private void showExpandCollapseIcon(TextView view, boolean isExpanded) {
-		if (isExpanded) {
-			Drawable d = getResources().getDrawable(R.drawable.ic_action_collapse);
-			view.setCompoundDrawablesWithIntrinsicBounds(null, null, d, null);
+        Drawable d;
+        if (isExpanded) {
+			d = getResources().getDrawable(R.drawable.ic_action_collapse);
 		} else {
-			Drawable d = getResources().getDrawable(R.drawable.ic_action_expand);
-			view.setCompoundDrawablesWithIntrinsicBounds(null, null, d, null);
+			d = getResources().getDrawable(R.drawable.ic_action_expand);
 		}
+        if (R.id.details_button == view.getId()) {
+            // draw at bottom
+            view.setCompoundDrawablesWithIntrinsicBounds(null, null, null, d);
+        } else {
+            // draw at right
+            view.setCompoundDrawablesWithIntrinsicBounds(null, null, d, null);
+        }
 	}
 
     private CharSequence formatDateTime(long time) {

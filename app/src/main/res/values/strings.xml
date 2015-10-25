@@ -19,16 +19,17 @@
     <string name="msg_welcome">Hallo!\n\nDu musst nur noch kurz deinen Verein und deinen Namen angeben, dann geht\'s los.\n\nViel Spaß,\nHannes</string>
     <string name="loading_data">Lade Daten...</string>
     <string name="loading_data_failed">Fehler: Die Trainingsdaten konnten nicht geladen werden. Möglicherweise funktioniert deine Internetverbindung gerade nicht?</string>
-    <string name="title_general_info">Nächstes Training:</string>
-    <string name="lbl_general_info_default">Mo, 01.01. um 11:30 - 12:30 in Zapfendorf</string>
-    <string name="title_zusagen">Zusagen</string>
-    <string name="title_absagen">Absagen</string>
-    <string name="title_nixsagen">Nichtssagend</string>
+    <string name="prefix_next_training">Nächstes Training:</string>
+    <string name="time_and_location_dummy">11:30 - 12:30 Uhr in Zapfendorf</string>
+    <string name="title_details">Details</string>
+    <string name="lbl_you">Du:</string>
     <string name="yes">Ja</string>
     <string name="no">Nein</string>
-    <string name="lbl_you">Du:</string>
-    <string name="lbl_others">Die Anderen:</string>
     <string name="lbl_comment">Kommentar:</string>
+    <string name="zusagen_plural">Zusagen</string>
+    <string name="zusagen_singular">Zusage</string>
+    <string name="absagen_plural">Absagen</string>
+    <string name="title_nixsager">Nichtssagend</string>
     <string name="title_settings">Einstellungen</string>
     <string name="msg_reply_failed">Das hat leider nicht geklappt :-(</string>
     <string name="msg_reply_yes">Oh yeah!</string>
@@ -47,5 +48,5 @@
     <string name="action_goto_website">Zur Webseite</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="lbl_mission">Deine Mission:</string>
-
+    <string name="num_zusagen_dummy">5 Zusagen</string>
 </resources>
