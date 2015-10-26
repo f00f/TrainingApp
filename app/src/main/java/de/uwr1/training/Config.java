@@ -21,7 +21,7 @@ public class Config {
 
     public static final boolean EMULATE_NETWORK_CONNECTION = false;
 
-    private static final int NUM_BUTTON_TEXTS = 27;
+    private static final int NUM_BUTTON_TEXTS = 30;
 
     private static final String KEY_NUM_BUTTON_TEXTS = "NUM_BUTTON_TEXTS";
     private static final String KEY_PLAY_STORE_URL = "PLAY_STORE_URL";
@@ -115,8 +115,9 @@ public class Config {
         try {
             versionId = getUserConfigValue(ctx, KEY_PREF_INSTALLED_VERSION_ID);
         } catch (Exception e) { /* empty */ }
-        if (versionId.isEmpty())
+        if (versionId.isEmpty()) {
             return -1;
+        }
         return Integer.parseInt(versionId);
     }
     public static void setInstalledVersion(Context ctx) {
@@ -250,6 +251,9 @@ public class Config {
                 "- Neu: Deine Mission für jedes Training.\n" +
                 "- Buttontexte ändern sich erst, wenn ein neues Training ist.\n" +
                 "- Kraken und Damen Süd aufgenommen.\n" +
+                "- 3 neue Button Texte.\n");
+        addVersionToChangeLog(14, "2015-10-26", "1.8.0",
+                "- Übersichtlicheres Layout.\n" +
                 "- 3 neue Button Texte.\n");
     }
 

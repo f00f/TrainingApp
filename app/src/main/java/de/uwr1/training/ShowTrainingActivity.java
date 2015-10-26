@@ -21,6 +21,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
+
 import java.util.Random;
 
 public class ShowTrainingActivity
@@ -85,28 +87,35 @@ public class ShowTrainingActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Firebase.setAndroidContext(this);
+        // Create a dummy connection to measure peak concurrency
+        Firebase myFirebaseRef = new Firebase("https://uwr-training.firebaseio.com/peak-concurrency-test");
         setContentView(R.layout.activity_overview);
 
         // Initialization stuff
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         Training.Init(this, this, this);
 
+        // Version check: see if the user upgraded the app
         int oldVersionId = Config.getInstalledVersionId(this);
-        int currentVersionId = Config.getVersionId(this);
-        if (oldVersionId != currentVersionId) {
-            // Show change log.
-            AppUpdatedDialogFragment dlg = new AppUpdatedDialogFragment();
-            // Supply old version ID as an argument.
-            Bundle args = new Bundle();
-            args.putInt(AppUpdatedDialogFragment.KEY_OLD_VERSION_ID, oldVersionId);
-            dlg.setArguments(args);
-            dlg.show(getSupportFragmentManager(), null);
+        if (-1 != oldVersionId) {
+            // This is an update, show ChangeLog
+            int currentVersionId = Config.getVersionId(this);
+            if (oldVersionId != currentVersionId) {
+                // Show change log.
+                AppUpdatedDialogFragment dlg = new AppUpdatedDialogFragment();
+                // Supply old version ID as an argument.
+                Bundle args = new Bundle();
+                args.putInt(AppUpdatedDialogFragment.KEY_OLD_VERSION_ID, oldVersionId);
+                dlg.setArguments(args);
+                dlg.show(getSupportFragmentManager(), null);
+            }
         }
 
         // Init GUI
         // Reset view visibility
         showView(R.id.view_loading);
-
+        // Initialize SwipeRefreshLayout
         swipeLayout = (SwipeRefreshLayout)findViewById(R.id.view_show_overview);
         swipeLayout.setOnRefreshListener(this);
         swipeLayout.setColorSchemeResources(
@@ -118,6 +127,8 @@ public class ShowTrainingActivity
     }
 
     @Override
+    // Handler for SwipeRefreshLayout.
+    // Force a data refresh
     public void onRefresh() {
         if (null != swipeLayout) {
             swipeLayout.setRefreshing(true);
@@ -187,12 +198,9 @@ public class ShowTrainingActivity
         // Seed for random button texts and mission
         long seed = Training.getTimestampOfExpiration() + Config.getUsername(this).hashCode();
 
-        ChangeButtonTexts(seed);
-        if (Training.hatZugesagt()) {
-            ShowMission(seed);
-        } else {
-            HideMission();
-        }
+        changeButtonTexts(seed);
+        showMission(seed);
+
         setSectionVisibilities();
         renderTrainingData();
         renderNixsagerList();
@@ -476,21 +484,26 @@ public class ShowTrainingActivity
 
     // PRIVATE METHODS
 
-    private void HideMission() {
-        TextView missionView = (TextView)findViewById(R.id.view_mission);
-        missionView.setVisibility(View.GONE);
-    }
-    private void ShowMission(long seed) {
-        Random rand = new Random(seed);
-        String[] missions = getResources().getStringArray(R.array.missions);
-        String missionStr = getResources().getString(R.string.lbl_mission) + " "
-                + missions[rand.nextInt(missions.length)];
+    private void showMission(long seed) {
+        String missionStr;
+        if (Training.hatZugesagt()) {
+            Random rand = new Random(seed);
+            String[] missions = getResources().getStringArray(R.array.missions);
+            missionStr = getResources().getString(R.string.lbl_mission) + " "
+                    + missions[rand.nextInt(missions.length)];
+        } else {
+            if (Training.hatAbgesagt()) {
+                missionStr = getString(R.string.mission_abgesagt);
+            } else {
+                missionStr = getString(R.string.mission_nixgesagt);
+            }
+        }
+
         TextView missionView = (TextView)findViewById(R.id.view_mission);
         missionView.setText(missionStr);
-        missionView.setVisibility(View.VISIBLE);
     }
 
-    private void ChangeButtonTexts(long seed) {
+    private void changeButtonTexts(long seed) {
         Random rand = new Random(seed);
         int padding = 16;
         int maxButtonTextIndex = Math.min(Config.getNumButtonTexts(), Config.getNumAvailableButtonTexts());

@@ -1,6 +1,12 @@
 TrainingApp -- ChangeLog
 ========================
 
+Version 1.8.0 2015-10-26
+------------------------
+- Übersichtlichers Layout.
+- 3 neue Button Texte.
+
+
 Version 1.7.0 2015-10-22
 ------------------------
 - Neu: Deine Mission für jedes Training.
