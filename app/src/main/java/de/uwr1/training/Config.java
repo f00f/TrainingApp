@@ -21,7 +21,7 @@ public class Config {
 
     public static final boolean EMULATE_NETWORK_CONNECTION = false;
 
-    private static final int NUM_BUTTON_TEXTS = 30;
+    private static final int NUM_BUTTON_TEXTS = 32;
 
     private static final String KEY_NUM_BUTTON_TEXTS = "NUM_BUTTON_TEXTS";
     private static final String KEY_PLAY_STORE_URL = "PLAY_STORE_URL";
@@ -255,6 +255,9 @@ public class Config {
         addVersionToChangeLog(14, "2015-10-26", "1.8.0",
                 "- Übersichtlicheres Layout.\n" +
                 "- 3 neue Button Texte.\n");
+        addVersionToChangeLog(15, "2015-10-27", "1.8.1",
+                "- Bug fix: Crash der PlayStore-Version behoben. Sorry.\n" +
+                "- 2 neue Button Texte.\n");
     }
 
     private static void addVersionToChangeLog(int versionId, String versionReleaseDate, String versionName, String newFeatures) {

@@ -243,9 +243,7 @@ public class ShowTrainingActivity
         TextView detailsBtn = (TextView)findViewById(R.id.details_button);
         if (!Training.hatZugesagt() && !Training.hatAbgesagt()) {
             // Force details to be open and hide button
-            setSectionVisibility(detailsBtn,
-                    findViewById(R.id.details),
-                    true);
+            overrideSectionVisibility(detailsBtn, findViewById(R.id.details), true);
             detailsBtn.setVisibility(View.GONE);
         } else {
             // Show or hide details according to preferences, and show button
@@ -541,14 +539,19 @@ public class ShowTrainingActivity
         btnNo.invalidate();
     }
 
-	private void setSectionVisibility(TextView header, View content, boolean visible) {
+    // This changes the UI look, but does not store the preference
+	private void overrideSectionVisibility(TextView header, View content, boolean visible) {
         // display correct icon and content
 		showExpandCollapseIcon(header, visible);
         content.setVisibility(visible ? View.VISIBLE : View.GONE);
+	}
+    // This method changes the UI look and stores the setting in the preferences
+    private void setSectionVisibility(TextView header, View content, boolean visible) {
+        overrideSectionVisibility(header, content, visible);
 
-		// save to prefs
-		String key = "";
-		switch (header.getId()) {
+        // save to prefs
+        String key = "";
+        switch (header.getId()) {
             case R.id.details_button:
                 key = Config.KEY_PREF_DETAILS_VISIBLE;
                 break;
@@ -556,14 +559,14 @@ public class ShowTrainingActivity
                 key = Config.KEY_PREF_ABSAGER_VISIBLE;
                 break;
             case R.id.title_nixsagen:
-				key = Config.KEY_PREF_NIXSAGER_VISIBLE;
-				break;
-		}
+                key = Config.KEY_PREF_NIXSAGER_VISIBLE;
+                break;
+        }
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor prefEd = sharedPref.edit();
         prefEd.putBoolean(key, visible);
         prefEd.apply();
-	}
+    }
     private void toggleSectionVisibility(TextView header, View content) {
         setSectionVisibility(header, content, View.GONE == content.getVisibility());
     }

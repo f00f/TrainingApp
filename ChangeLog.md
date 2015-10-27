@@ -1,11 +1,15 @@
 TrainingApp -- ChangeLog
 ========================
 
+Version 1.8.1 2015-10-27
+------------------------
+- Bug fix: Crash der PlayStore-Version behoben. Sorry.
+- 2 neue Button Texte.
+
 Version 1.8.0 2015-10-26
 ------------------------
 - Übersichtlichers Layout.
 - 3 neue Button Texte.
-
 
 Version 1.7.0 2015-10-22
 ------------------------
@@ -13,7 +17,6 @@ Version 1.7.0 2015-10-22
 - Buttontexte ändern sich erst, wenn ein neues Training ist.
 - Kraken und Damen Süd aufgenommen.
 - 3 neue Button Texte.
-
 
 Version 1.6.2 2015-03-19
 ------------------------
