@@ -169,7 +169,7 @@ public class ShowTrainingActivity
         refresh(forceReload);
     }
     private void refresh(boolean forceReload) {
-        Log.d("UWR_Training::ShowTraining::refresh", "Refreshing data.");
+        Log.d("UWR_Training", "Refreshing data.");
 
         // load JSON data, rendering will happen async after the data was loaded
         Training.loadTrainingData(forceReload);
@@ -186,12 +186,12 @@ public class ShowTrainingActivity
         }
 
         if (!Training.isTrainingDataLoaded()) {
-            Log.e("UWR_Training::ShowTraining::render", "Loading training data failed.");
+            Log.e("UWR_Training", "render: Loading training data failed.");
             renderLoadingTrainingDataFailed();
             return;
         }
 
-        Log.d("UWR_Training::ShowTraining::render", "Rendering new data.");
+        Log.d("UWR_Training", "Rendering new data.");
 
         findViewById(R.id.view_show_overview).scrollTo(0, 0);
 
@@ -240,12 +240,23 @@ public class ShowTrainingActivity
     // Set correct visibility of Abgesagt and Nixgesagt sections
     private void setSectionVisibilities() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        setSectionVisibility((TextView)findViewById(R.id.details_button),
-                findViewById(R.id.details),
-                sharedPref.getBoolean(Config.KEY_PREF_DETAILS_VISIBLE, false));
+        TextView detailsBtn = (TextView)findViewById(R.id.details_button);
+        if (!Training.hatZugesagt() && !Training.hatAbgesagt()) {
+            // Force details to be open and hide button
+            setSectionVisibility(detailsBtn,
+                    findViewById(R.id.details),
+                    true);
+            detailsBtn.setVisibility(View.GONE);
+        } else {
+            // Show or hide details according to preferences, and show button
+            setSectionVisibility(detailsBtn,
+                    findViewById(R.id.details),
+                    sharedPref.getBoolean(Config.KEY_PREF_DETAILS_VISIBLE, false));
+            detailsBtn.setVisibility(View.VISIBLE);
+        }
         setSectionVisibility((TextView)findViewById(R.id.title_absagen),
                 findViewById(R.id.training_ab_list),
-                sharedPref.getBoolean(Config.KEY_PREF_ABSAGER_VISIBLE, false));
+                sharedPref.getBoolean(Config.KEY_PREF_ABSAGER_VISIBLE, true));
         setSectionVisibility((TextView)findViewById(R.id.title_nixsagen),
                 findViewById(R.id.training_nix_container),
                 sharedPref.getBoolean(Config.KEY_PREF_NIXSAGER_VISIBLE, false));
@@ -530,14 +541,10 @@ public class ShowTrainingActivity
         btnNo.invalidate();
     }
 
-    private void setSectionVisibility(TextView header, View content, boolean visible) {
-        setSectionVisibility(header, new View[]{content}, visible);
-    }
-	private void setSectionVisibility(TextView header, View[] content, boolean visible) {
+	private void setSectionVisibility(TextView header, View content, boolean visible) {
+        // display correct icon and content
 		showExpandCollapseIcon(header, visible);
-        for (View _item : content) {
-            _item.setVisibility(visible ? View.VISIBLE : View.GONE);
-        }
+        content.setVisibility(visible ? View.VISIBLE : View.GONE);
 
 		// save to prefs
 		String key = "";
@@ -559,12 +566,6 @@ public class ShowTrainingActivity
 	}
     private void toggleSectionVisibility(TextView header, View content) {
         setSectionVisibility(header, content, View.GONE == content.getVisibility());
-    }
-    private void toggleSectionVisibility(TextView header, View[] content) {
-        if (0 == content.length)
-            return;
-
-        setSectionVisibility(header, content, View.GONE == content[0].getVisibility());
     }
 
 	private void showExpandCollapseIcon(TextView view, boolean isExpanded) {
