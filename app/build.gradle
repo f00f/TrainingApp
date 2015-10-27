@@ -1,4 +1,10 @@
-apply plugin: 'android'
+apply plugin: 'com.android.application'
+
+// Load keystore
+def keystorePropertiesFile = rootProject.file("keystore.properties");
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 
 android {
     final Console console = System.console();
@@ -6,10 +12,10 @@ android {
         // Building from console
         signingConfigs {
             release {
-                storeFile file(System.console().readLine("\n\$ Enter keystore path: "))
-                storePassword new String(System.console().readPassword("\n\$ Enter keystore password: "))
-                keyAlias System.console().readLine("\n\$ Enter key alias: ")
-                keyPassword new String(System.console().readPassword("\n\$ Enter key password: "))
+                storeFile file(keystoreProperties['storeFile'])
+                storePassword keystoreProperties['storePassword']
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
             }
         }
     } else {
