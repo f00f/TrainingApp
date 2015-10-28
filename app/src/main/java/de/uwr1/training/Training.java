@@ -88,6 +88,7 @@ public class Training implements OnApiCallCompletedListener {
             return;
         }
 
+        Log.v(Config.logTag, "Storing TrainingData " + Training.trainingData.Date + " in cache");
         cache.put(url, Training.trainingData);
 
         if (null != onAsyncDataLoadedListener) {
@@ -234,16 +235,19 @@ public class Training implements OnApiCallCompletedListener {
         loadTrainingData(forceReload);
     }
     public static void loadTrainingData(boolean forceReload) {
+        Log.v(Config.logTag, "loadTrainingData(" + forceReload + ")");
         resetNixsager();
         String url = Config.getURL(context, Config.KEY_JSON_URL);
         loadTrainingDataCached(url, forceReload);
     }
 
     public void loadPlayersList() {
+        Log.v(Config.logTag, "loadPlayersList()");
         boolean forceReload = false;
         loadPlayersList(forceReload);
     }
     public static void loadPlayersList(boolean forceReload) {
+        Log.v(Config.logTag, "loadPlayersList(" + forceReload + ")");
         resetNixsager();
         PlayersList.load(forceReload);
     }
@@ -260,20 +264,29 @@ public class Training implements OnApiCallCompletedListener {
 
     // Load trainingData from web, cached
     private static void loadTrainingDataCached(String url, boolean forceReload) {
+        Log.v(Config.logTag, "loadTrainingDataCached(" + url + ", " + forceReload + ")");
+
         if (!forceReload) {
             if (cache.containsKey(url)) {
+                Log.v(Config.logTag, "loadTrainingDataCached: Found something in cache");
                 Training.trainingData = cache.get(url);
                 long now = new Date().getTime();
                 long age = now - Training.trainingData.Timestamp;
                 if (age < CACHE_MAX_AGE * 1000) {
                     if (!Training.trainingData.isExpired()){
-                        Log.i("Training::loadTrainingDataCached", "Found valid cache entry.");
+                        Log.d(Config.logTag, "loadTrainingDataCached: Found valid cache entry");
                         onAsyncDataLoadedListener.onAsyncDataLoaded(OnAsyncDataLoadedListener.STATUS_CACHED);
                         return;
+                    } else {
+                        Log.v(Config.logTag, "loadTrainingDataCached: Data in cache entry is expired");
                     }
+                } else {
+                    Log.v(Config.logTag, "loadTrainingDataCached: Cache entry is too old");
                 }
                 // Cache entry is old or expired
                 cache.remove(url);
+            } else {
+                Log.d(Config.logTag, "loadTrainingDataCached: Did not find matching cache entry for " + url);
             }
         }
 
@@ -282,6 +295,7 @@ public class Training implements OnApiCallCompletedListener {
 
     // Load trainingData from web, async
     private static void loadTrainingDataFromURLAsync(String url) {
+        Log.v(Config.logTag, "loadTrainingDataFromURLAsync(" + url + ")");
         new API_CALL(new Training()).execute(url);
     }
 }

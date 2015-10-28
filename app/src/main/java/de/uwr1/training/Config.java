@@ -18,11 +18,13 @@ import java.util.Vector;
  * Created by f00f on 03.07.2014.
  */
 public class Config {
+    public static final String logTag = "UWR_Training";
 
     public static final boolean EMULATE_NETWORK_CONNECTION = false;
 
     private static final int NUM_BUTTON_TEXTS = 32;
 
+    // Keys for the APP_CONFIG object
     private static final String KEY_NUM_BUTTON_TEXTS = "NUM_BUTTON_TEXTS";
     private static final String KEY_PLAY_STORE_URL = "PLAY_STORE_URL";
     public static final String KEY_BASE_URL = "BASE_URL";
@@ -34,6 +36,7 @@ public class Config {
     private static final String KEY_REPLY_URL_NO = "REPLY_URL_NO";
     private static final String KEY_PHOTO_URL = "PHOTO_URL";
     private static final String KEY_PHOTO_THUMB_URL = "PHOTO_THUMB_URL";
+    // Keys for SharedPreferences
     public static final String KEY_PREF_DETAILS_VISIBLE = "DETAILS_VISIBLE";
     public static final String KEY_PREF_ABSAGER_VISIBLE = "ABSAGER_VISIBLE";
     public static final String KEY_PREF_NIXSAGER_VISIBLE = "NIXSAGER_VISIBLE";

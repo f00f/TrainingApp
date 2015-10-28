@@ -87,6 +87,9 @@ public class ShowTrainingActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Log.v(Config.logTag, "onCreate");
+
         Firebase.setAndroidContext(this);
         // Create a dummy connection to measure peak concurrency
         Firebase myFirebaseRef = new Firebase("https://uwr-training.firebaseio.com/peak-concurrency-test");
@@ -130,6 +133,7 @@ public class ShowTrainingActivity
     // Handler for SwipeRefreshLayout.
     // Force a data refresh
     public void onRefresh() {
+        Log.v(Config.logTag, "onRefresh");
         if (null != swipeLayout) {
             swipeLayout.setRefreshing(true);
         }
@@ -141,6 +145,8 @@ public class ShowTrainingActivity
     protected void onResume() {
         super.onResume();
 
+        Log.v(Config.logTag, "onResume");
+
         boolean isConfigured = true;
         // check if username is set
         String usernamePref = Config.getUsername(this);
@@ -148,16 +154,19 @@ public class ShowTrainingActivity
             isConfigured = false;
         // check if config was loaded
         String appConfig = Config.getClubId(this);
-        if (appConfig.isEmpty())
+        if (appConfig.isEmpty()) {
             isConfigured = false;
+        }
 
         if (isConfigured) {
+            Log.d(Config.logTag, "App is configured, loading data...");
             ((TextView)findViewById(R.id.t_loading))
                     .setText(R.string.loading_data);
             findViewById(R.id.btn_settings).setVisibility(View.GONE);
 
             refresh();
         } else {
+            Log.d(Config.logTag, "App is not configured. Show welcome message.");
             ((TextView)findViewById(R.id.t_loading))
                     .setText(R.string.msg_welcome);
             findViewById(R.id.btn_settings).setVisibility(View.VISIBLE);
@@ -165,11 +174,13 @@ public class ShowTrainingActivity
     }
 
     private void refresh() {
+        Log.v(Config.logTag, "refresh()");
         boolean forceReload = false;
         refresh(forceReload);
     }
     private void refresh(boolean forceReload) {
-        Log.d("UWR_Training", "Refreshing data.");
+        Log.v(Config.logTag, "refresh(" + forceReload + ")");
+        Log.d(Config.logTag, "Refreshing data.");
 
         // load JSON data, rendering will happen async after the data was loaded
         Training.loadTrainingData(forceReload);
@@ -181,17 +192,19 @@ public class ShowTrainingActivity
     // - No PlayersList: Render TrainingData
     // - Both: render everything
     private void render() {
+        Log.v(Config.logTag, "render()");
+
         if (null != swipeLayout) {
             swipeLayout.setRefreshing(false);
         }
 
         if (!Training.isTrainingDataLoaded()) {
-            Log.e("UWR_Training", "render: Loading training data failed.");
+            Log.e(Config.logTag, "render: Loading training data failed.");
             renderLoadingTrainingDataFailed();
             return;
         }
 
-        Log.d("UWR_Training", "Rendering new data.");
+        Log.d(Config.logTag, "Rendering new data.");
 
         findViewById(R.id.view_show_overview).scrollTo(0, 0);
 
@@ -398,7 +411,7 @@ public class ShowTrainingActivity
     public void onNixSagerListItemClick(View view) {
         // TODO: create dialog
         CharSequence name = ((TextView)view).getText();
-        Log.d("", name.toString());
+        Log.d(Config.logTag, name.toString());
         NixsagerDialogFragment d = new NixsagerDialogFragment();
         // Supply index input as an argument.
         Bundle args = new Bundle();
@@ -476,7 +489,7 @@ public class ShowTrainingActivity
     // The callback after loading data async
     public void onAsyncDataLoaded(int statusCode) {
         if (OnAsyncDataLoadedListener.STATUS_ERROR == statusCode) {
-            Log.e("", "ShowTrainingActivity: Error loading data.");
+            Log.e(Config.logTag, "ShowTrainingActivity: Error loading data.");
         }
 
         render();
@@ -486,7 +499,7 @@ public class ShowTrainingActivity
     // This callback is only invoked after sending a reply.
     // TODO: Is it?
     public void onApiCallCompleted(String url, String result) {
-        Log.e("", "Is this callback really required? Can this be handled inside the Training class?");
+        Log.e(Config.logTag, "Is this callback really required? Can this be handled inside the Training class?");
         boolean forceReload = true;
         refresh(forceReload);
     }
