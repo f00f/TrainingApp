@@ -22,7 +22,7 @@ public class Config {
 
     public static final boolean EMULATE_NETWORK_CONNECTION = false;
 
-    private static final int NUM_BUTTON_TEXTS = 32;
+    private static final int NUM_BUTTON_TEXTS = 34;
 
     // Keys for the APP_CONFIG object
     private static final String KEY_NUM_BUTTON_TEXTS = "NUM_BUTTON_TEXTS";
@@ -260,6 +260,11 @@ public class Config {
                 "- 3 neue Button Texte.\n");
         addVersionToChangeLog(15, "2015-10-27", "1.8.1",
                 "- Bug fix: Crash der PlayStore-Version behoben. Sorry.\n" +
+                "- 2 neue Button Texte.\n");
+        addVersionToChangeLog(16, "2015-12-13", "1.8.2",
+                "- Bug fix: Bug fix: Probleme mit Umlauten behoben.\n" +
+                "- Bug fix: Kleinere Probleme mit der App Oberfläche.\n" +
+                "- Wasserfreunde entfernt.\n" +
                 "- 2 neue Button Texte.\n");
     }
 

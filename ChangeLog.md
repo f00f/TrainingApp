@@ -1,6 +1,13 @@
 TrainingApp -- ChangeLog
 ========================
 
+Version 1.8.2 2015-12-13
+------------------------
+- Bug fix: Probleme mit Umlauten behoben.
+- Bug fix: Kleinere Probleme mit der App Oberfläche.
+- Wasserfreunde entfernt.
+- 2 neue Button Texte
+
 Version 1.8.1 2015-10-27
 ------------------------
 - Bug fix: Crash der PlayStore-Version behoben. Sorry.
