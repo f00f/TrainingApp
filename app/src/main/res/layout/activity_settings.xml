@@ -28,12 +28,12 @@
         android:background="@color/separator" />
 
     <fragment
-        android:id="@+id/fragment_version"
-        android:name="de.uwr1.training.VersionFragment"
+        android:id="@+id/fragment_feedback"
+        android:name="de.uwr1.training.FeedbackFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="7dp"
-        tools:layout="@layout/fragment_version" />
+        tools:layout="@layout/fragment_feedback" />
 
     <View
         android:layout_width="fill_parent"
@@ -43,11 +43,11 @@
         android:background="@color/separator" />
 
     <fragment
-        android:id="@+id/fragment_feedback"
-        android:name="de.uwr1.training.FeedbackFragment"
+        android:id="@+id/fragment_version"
+        android:name="de.uwr1.training.VersionFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="7dp"
-        tools:layout="@layout/fragment_feedback" />
+        tools:layout="@layout/fragment_version" />
 
 </LinearLayout>

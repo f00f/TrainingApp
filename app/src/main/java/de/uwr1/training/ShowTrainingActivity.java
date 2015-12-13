@@ -304,7 +304,11 @@ public class ShowTrainingActivity
                 comment = "";
             }
         }
-        ((TextView) findViewById(R.id.edit_comment)).setText(comment);
+        EditText commentField = (EditText) findViewById(R.id.edit_comment);
+        if (comment != commentField.getText().toString()) {
+            Log.d(Config.logTag, "Updating comment field text.");
+            commentField.setText(comment);
+        }
 
         showView(R.id.view_show_overview);
 
